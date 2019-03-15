@@ -7,7 +7,7 @@
 
 open cmd/git bash
 
-`git clone https://github.com/NicollasMatheus37/algoritmo-de-ordenacao.git`
+`git clone https://github.com/NicollasMatheus37/LiuKangAcademySystem.git`
 
 # Comandos git Comumente Usados
 
