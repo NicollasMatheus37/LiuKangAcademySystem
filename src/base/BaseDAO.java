@@ -58,7 +58,7 @@ public abstract class BaseDAO {
 	}
 	
 	protected void apply() {
-		
+		this.getSql();
 	}
 	// select("name").from("alunos").where("id", "1").orderBy("id").apply();
 }
