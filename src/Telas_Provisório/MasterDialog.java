@@ -1,3 +1,4 @@
+package Telas_Provisório;
 import java.awt.Insets;
 
 import javax.swing.Icon;
@@ -25,16 +26,12 @@ public class MasterDialog extends JFrame {
 	}
 	
 	public MasterDialog() {
-		setSize(550, 400);
-		setTitle("Excluir Usuário");
+		setSize(500, 350);
 		setLayout(null);
-		setResizable(false);
-		//setClosable(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
 		createComponnents();
-
-		setVisible(true);
+		setLocationRelativeTo(null);
+		setResizable(false);
 	}
 	
 	public void createComponnents() {
@@ -45,15 +42,15 @@ public class MasterDialog extends JFrame {
 		btnSearch.setHorizontalAlignment(SwingConstants.LEFT);
 		btnSearch.setHorizontalTextPosition(SwingConstants.RIGHT);
 		btnSearch.setMargin(new Insets(0, 0, 0, 0));
-		btnSearch.setBounds(30,10,106,35);
+		btnSearch.setBounds(30,10,90,35);
 		getContentPane().add(btnSearch);
 		
 		//Botao Add
 		btnAdd = new JButton("Adicionar", new ImageIcon(System.getProperty("user.dir")+"\\images\\22x22\\adicionar.png"));
 		btnAdd.setHorizontalAlignment(SwingConstants.LEFT);
-		btnAdd.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnAdd.setHorizontalTextPosition(SwingConstants.RIGHT);
 		btnAdd.setMargin(new Insets(0, 0, 0, 0));
-		btnAdd.setBounds(142,10,106,35);
+		btnAdd.setBounds(124,10,90,35);
 		getContentPane().add(btnAdd);
 		
 		
@@ -61,9 +58,9 @@ public class MasterDialog extends JFrame {
 		//Botao Add
 		btnDelete = new JButton("Remover", new ImageIcon(System.getProperty("user.dir")+"\\images\\22x22\\remover.png"));
 		btnDelete.setHorizontalAlignment(SwingConstants.LEFT);
-		btnDelete.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnDelete.setHorizontalTextPosition(SwingConstants.RIGHT);
 		btnDelete.setMargin(new Insets(0, 0, 0, 0));
-		btnDelete.setBounds(254,10,106,35);
+		btnDelete.setBounds(218,10,90,35);
 		getContentPane().add(btnDelete);
 		
 		//Botao Add
@@ -71,7 +68,7 @@ public class MasterDialog extends JFrame {
 		btnSave.setHorizontalAlignment(SwingConstants.LEFT);
 		btnSave.setHorizontalTextPosition(SwingConstants.RIGHT);
 		btnSave.setMargin(new Insets(0, 0, 0, 0));
-		btnSave.setBounds(366,10,106,35);
+		btnSave.setBounds(312,10,90,35);
 		getContentPane().add(btnSave);
 	
 	}
