@@ -1,38 +1,37 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.ArrayList;
 import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDesktopPane;
+import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.SwingConstants;
 
-public class Matriculas extends JInternalFrame {
+public class AdicionarModalidades extends JInternalFrame{
 
-	
+	public AdicionarModalidades(){
 
-	public Matriculas() throws IOException {
-
-		setSize(690, 538);
-		setTitle("Relatório de Matricula");
+		setSize(300, 300);
+		setTitle("Adicionar Modalidades");
 		setLayout(null);
 		setResizable(false);
 		setClosable(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		
 		setVisible(true);
-
 	}
+	
+
+	
 }
