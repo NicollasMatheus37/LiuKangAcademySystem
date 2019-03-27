@@ -9,15 +9,17 @@ import java.text.ParseException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 
 public class Menu extends JFrame {
 
 	// Painéis e items do menu
 	private JDesktopPane desktopPane;
 	private JMenuBar menuBar;
-	private JMenu faturamento, matricular, sistema, cadastro, processos, relatorios, utilitarios, ajuda;
+	private JMenu faturas, faturamento, matricular, sistema, cadastro, processos, relatorios, utilitarios, ajuda;
 	private JMenuItem alunos, gerarF, realizaP, consultarF, planos, usuarios, sair, cadaluno,
-			modalidades, matriculas, faturas, utility, help;
+			modalidades, matriculas, utility, help, faturasemaberto, faturaspagas;
 	// Classes/frames
 	private Usuarios frameUm;
 	private Sair frameDois;
@@ -26,7 +28,7 @@ public class Menu extends JFrame {
 	private Planos frameCinco;
 	private Matricular frameSeis;
 	private Faturamento frameSete;
-	private Matriculas frameOito;
+	private RelatorioMatriculas frameOito;
 	private Faturas frameNove;
 	private Utilitarios frameDez;
 	private Ajuda frameOnze;
@@ -34,7 +36,13 @@ public class Menu extends JFrame {
 	private GerarFatura frameTreze;
 	private ConsultarFatura frameQuatorze;
 	private RealizaPagamento frameQuinze;
-
+	private AdicionarModalidades frameDezesseis;
+	private FaturasEmAberto frameDezessete;
+	private FaturasPagas frameDezoito;
+	
+	
+	Menu menu = this;
+	
 	private int janelaAberta = 0;
 
 	public Menu() {
@@ -95,7 +103,7 @@ public class Menu extends JFrame {
 				janelaAberta = 3;
 
 				try {
-					frameTres = new Alunos(null);
+					frameTres = new Alunos();
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -113,7 +121,7 @@ public class Menu extends JFrame {
 				fecharJanelaAberta();
 				janelaAberta = 4;
 
-				frameQuatro = new Modalidades(rootPaneCheckingEnabled, desktopPane);
+				frameQuatro = new Modalidades();
 				frameQuatro.setVisible(true);
 				desktopPane.add(frameQuatro);
 			}
@@ -170,7 +178,7 @@ public class Menu extends JFrame {
 				janelaAberta = 8;
 
 				try {
-					frameOito = new Matriculas();
+					frameOito = new RelatorioMatriculas();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -181,7 +189,7 @@ public class Menu extends JFrame {
 			}
 		});
 
-		faturas = new JMenuItem("Faturas");
+		faturas = new JMenu("Faturas");
 		faturas.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent evt) {
@@ -280,6 +288,36 @@ public class Menu extends JFrame {
 				desktopPane.add(frameQuinze);
 			}
 		});
+		
+			
+		faturasemaberto = new JMenuItem("Faturas Em Aberto");
+		faturasemaberto.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent evt) {
+
+				fecharJanelaAberta();
+				janelaAberta = 17;
+
+				frameDezessete = new FaturasEmAberto();
+				frameDezessete.setVisible(true);
+				desktopPane.add(frameDezessete);
+			}
+		});
+		
+		faturaspagas = new JMenuItem("Faturas Pagas");
+		faturaspagas.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent evt) {
+
+				fecharJanelaAberta();
+				janelaAberta = 18;
+
+				frameDezoito = new FaturasPagas();
+				frameDezoito.setVisible(true);
+				desktopPane.add(frameDezoito);
+			}
+		});
+		
 
 		menuBar = new JMenuBar();
 		sistema = new JMenu("Sistema");
@@ -315,6 +353,9 @@ public class Menu extends JFrame {
 		relatorios.add(matriculas);
 		relatorios.add(faturas);
 
+		faturas.add(faturasemaberto);
+		faturas.add(faturaspagas);
+		
 		menuBar.add(relatorios);
 
 		utilitarios = new JMenu("Utilitários");
@@ -396,10 +437,10 @@ public class Menu extends JFrame {
 			frameNove.dispose();
 			break;
 		case 10:
-			frameNove.dispose();
+			frameDez.dispose();
 			break;
 		case 11:
-			frameNove.dispose();
+			frameOnze.dispose();
 			break;
 		case 12:
 			frameDoze.dispose();
@@ -413,7 +454,17 @@ public class Menu extends JFrame {
 		case 15:
 			frameQuinze.dispose();
 			break;
-
+		case 16:
+			frameQuinze.dispose();
+			break;
+		case 17:
+			frameQuinze.dispose();
+			break;
+		case 18:
+			frameQuinze.dispose();
+			break;
+			
+			
 		default:
 			break;
 		}
