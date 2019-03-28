@@ -6,19 +6,19 @@ import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 
-public class GerarFatura extends JInternalFrame {
+public class Gerar_Faturas extends JInternalFrame {
 
 	private JLabel DataFatura;
 	private JButton btnGerarFatura;
+	MasterMonthChooser data;
 	
-	
-	public GerarFatura() {
+	public Gerar_Faturas() {
 
-		setSize(690, 538);
+		setSize(305, 110);
 		setTitle("Gerar Faturas");
-		setLayout(null);
 		setResizable(false);
 		setClosable(true);
+		setLayout(null);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		createComponnents();
 		setVisible(true);
@@ -27,13 +27,20 @@ public class GerarFatura extends JInternalFrame {
 
 	public void createComponnents() {
 		
+		data = new MasterMonthChooser();
+		data.setBounds(100, 10, 185, 26);
+		getContentPane().add(data);
+		
+		
 		DataFatura = new JLabel("Data da fatura: ");
-		DataFatura.setBounds(10, 0, 100, 100);
+		DataFatura.setBounds(10, 0, 100, 45);
 		getContentPane().add(DataFatura);
 		
 		btnGerarFatura = new JButton("Gerar Fatura");
-		btnGerarFatura.setBounds(110, 80, 120, 30);
+		btnGerarFatura.setBounds(100, 40, 185, 30);
 		getContentPane().add(btnGerarFatura);
+		
+		
 				
 
 	}

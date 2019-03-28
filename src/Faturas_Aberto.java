@@ -11,12 +11,12 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
-public class FaturasPagas extends JInternalFrame {
+public class Faturas_Aberto extends JInternalFrame {
 
 	private DefaultTableModel model;
 	private JTable table;
 
-	public FaturasPagas() {
+	public Faturas_Aberto() {
 
 		setSize(690, 538);
 		setTitle("Faturas Em Aberto");

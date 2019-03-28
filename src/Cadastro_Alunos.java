@@ -19,7 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
-public class Alunos extends JInternalFrame {
+public class Cadastro_Alunos extends JInternalFrame {
 
 	private JButton btnSearch, btnAdd, btnDelete, btnSave;
 	private JLabel Aluno, DataNasc, Tel, Email, Obs, Endereco, Complemento, Bairro, Estado,
@@ -29,7 +29,7 @@ public class Alunos extends JInternalFrame {
 	private JTextArea JTObs;
 	private JComboBox<String> ComboSexo;
 	
-	public Alunos() throws ParseException {
+	public Cadastro_Alunos() throws ParseException {
 
 		setSize(690, 538);
 		setTitle("Cadastro de Alunos");

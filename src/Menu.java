@@ -18,36 +18,34 @@ public class Menu extends JFrame {
 	private JDesktopPane desktopPane;
 	private JMenuBar menuBar;
 	private JMenu faturas, faturamento, matricular, sistema, cadastro, processos, relatorios, utilitarios, ajuda;
-	private JMenuItem alunos, gerarF, realizaP, consultarF, planos, usuarios, sair, cadaluno,
-			modalidades, matriculas, utility, help, faturasemaberto, faturaspagas;
+	private JMenuItem alunos, gerarF, realizaP, consultarF, planos, usuarios, sair, cadaluno, modalidades, matriculas,
+			utility, help, faturasemaberto, faturaspagas;
 	// Classes/frames
 	private Usuarios frameUm;
 	private Sair frameDois;
-	private Alunos frameTres;
-	private Modalidades frameQuatro;
+	private Cadastro_Alunos frameTres;
+	private ModalidadesGraduacoes frameQuatro;
 	private Planos frameCinco;
-	private Matricular frameSeis;
+	private Matricular_Alunos frameSeis;
 	private Faturamento frameSete;
-	private RelatorioMatriculas frameOito;
+	private Relatorio_Matricula frameOito;
 	private Faturas frameNove;
 	private Utilitarios frameDez;
 	private Ajuda frameOnze;
-	private Matricular frameDoze;
-	private GerarFatura frameTreze;
-	private ConsultarFatura frameQuatorze;
-	private RealizaPagamento frameQuinze;
-	private AdicionarModalidades frameDezesseis;
-	private FaturasEmAberto frameDezessete;
-	private FaturasPagas frameDezoito;
-	
-	
+	private Matricular_Alunos frameDoze;
+	private Gerar_Faturas frameTreze;
+	private Consultar_Faturas frameQuatorze;
+	private Pagamentos_Faturas frameQuinze;
+	private Adicionar_Modalidades frameDezesseis;
+	private Faturas_Aberto frameDezessete;
+	private Faturas_Pagas frameDezoito;
+
 	Menu menu = this;
-	
+
 	private int janelaAberta = 0;
 
 	public Menu() {
 
-		
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (ClassNotFoundException e1) {
@@ -63,7 +61,7 @@ public class Menu extends JFrame {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		desktopPane = new JDesktopPane();
 
 		usuarios = new JMenuItem("Usuários");
@@ -103,7 +101,7 @@ public class Menu extends JFrame {
 				janelaAberta = 3;
 
 				try {
-					frameTres = new Alunos();
+					frameTres = new Cadastro_Alunos();
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -121,7 +119,7 @@ public class Menu extends JFrame {
 				fecharJanelaAberta();
 				janelaAberta = 4;
 
-				frameQuatro = new Modalidades();
+				frameQuatro = new ModalidadesGraduacoes();
 				frameQuatro.setVisible(true);
 				desktopPane.add(frameQuatro);
 			}
@@ -149,7 +147,7 @@ public class Menu extends JFrame {
 				fecharJanelaAberta();
 				janelaAberta = 6;
 
-				frameSeis = new Matricular();
+				frameSeis = new Matricular_Alunos();
 				frameSeis.setVisible(true);
 				desktopPane.add(frameSeis);
 			}
@@ -178,7 +176,7 @@ public class Menu extends JFrame {
 				janelaAberta = 8;
 
 				try {
-					frameOito = new RelatorioMatriculas();
+					frameOito = new Relatorio_Matricula();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -241,7 +239,7 @@ public class Menu extends JFrame {
 				fecharJanelaAberta();
 				janelaAberta = 12;
 
-				frameDoze = new Matricular();
+				frameDoze = new Matricular_Alunos();
 				frameDoze.setVisible(true);
 				desktopPane.add(frameDoze);
 			}
@@ -255,7 +253,7 @@ public class Menu extends JFrame {
 				fecharJanelaAberta();
 				janelaAberta = 13;
 
-				frameTreze = new GerarFatura();
+				frameTreze = new Gerar_Faturas();
 				frameTreze.setVisible(true);
 				desktopPane.add(frameTreze);
 			}
@@ -269,7 +267,7 @@ public class Menu extends JFrame {
 				fecharJanelaAberta();
 				janelaAberta = 14;
 
-				frameQuatorze = new ConsultarFatura();
+				frameQuatorze = new Consultar_Faturas();
 				frameQuatorze.setVisible(true);
 				desktopPane.add(frameQuatorze);
 			}
@@ -283,13 +281,14 @@ public class Menu extends JFrame {
 				fecharJanelaAberta();
 				janelaAberta = 15;
 
-				frameQuinze = new RealizaPagamento();
+				frameQuinze = new Pagamentos_Faturas();
 				frameQuinze.setVisible(true);
 				desktopPane.add(frameQuinze);
 			}
 		});
+
+	
 		
-			
 		faturasemaberto = new JMenuItem("Faturas Em Aberto");
 		faturasemaberto.addActionListener(new ActionListener() {
 
@@ -298,12 +297,12 @@ public class Menu extends JFrame {
 				fecharJanelaAberta();
 				janelaAberta = 17;
 
-				frameDezessete = new FaturasEmAberto();
+				frameDezessete = new Faturas_Aberto();
 				frameDezessete.setVisible(true);
 				desktopPane.add(frameDezessete);
 			}
 		});
-		
+
 		faturaspagas = new JMenuItem("Faturas Pagas");
 		faturaspagas.addActionListener(new ActionListener() {
 
@@ -312,12 +311,11 @@ public class Menu extends JFrame {
 				fecharJanelaAberta();
 				janelaAberta = 18;
 
-				frameDezoito = new FaturasPagas();
+				frameDezoito = new Faturas_Pagas();
 				frameDezoito.setVisible(true);
 				desktopPane.add(frameDezoito);
 			}
 		});
-		
 
 		menuBar = new JMenuBar();
 		sistema = new JMenu("Sistema");
@@ -355,7 +353,7 @@ public class Menu extends JFrame {
 
 		faturas.add(faturasemaberto);
 		faturas.add(faturaspagas);
-		
+
 		menuBar.add(relatorios);
 
 		utilitarios = new JMenu("Utilitários");
@@ -386,7 +384,8 @@ public class Menu extends JFrame {
 			Image im = (new ImageIcon("C:/download.jpg")).getImage();
 
 			public void paintComponent(Graphics g) {
-				g.drawImage(im, 0, 0, this);
+				g.drawImage(im, 0,0,this);
+				
 			}
 		};
 
@@ -455,16 +454,15 @@ public class Menu extends JFrame {
 			frameQuinze.dispose();
 			break;
 		case 16:
-			frameQuinze.dispose();
+			frameDezesseis.dispose();
 			break;
 		case 17:
-			frameQuinze.dispose();
+			frameDezessete.dispose();
 			break;
 		case 18:
-			frameQuinze.dispose();
+			frameDezoito.dispose();
 			break;
-			
-			
+
 		default:
 			break;
 		}

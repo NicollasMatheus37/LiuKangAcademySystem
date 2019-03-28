@@ -15,7 +15,7 @@ public class Planos extends JInternalFrame {
 	
 	public Planos() {
 
-		setSize(690, 538);
+		setSize(690, 180);
 		setTitle("Planos");
 		setLayout(null);
 		setResizable(false);

@@ -19,7 +19,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-public class Matricular extends JInternalFrame {
+public class Matricular_Alunos extends JInternalFrame {
 
 	private JButton btnSearch, btnAdd, btnDelete, btnSave, btnModalidade;
 	private JLabel Matricula, Aluno, DataMat, DataFat;
@@ -27,9 +27,10 @@ public class Matricular extends JInternalFrame {
 	private DefaultTableModel model;
 	private JTable tableMod;
 	private JDesktopPane desktopPane;
-	
+	private Adicionar_Modalidades frameDezesseis;
+		
 
-	public Matricular() {
+	public Matricular_Alunos() {
 
 		setSize(690, 538);
 		setTitle("Matricular Aluno");
@@ -91,14 +92,7 @@ public class Matricular extends JInternalFrame {
 		// Botao Add
 		btnAdd = new JButton("Adicionar",
 				new ImageIcon(System.getProperty("user.dir") + "\\images\\22x22\\adicionar.png"));
-		btnAdd.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				
-			
-
-			}
-		});
+		
 		btnAdd.setHorizontalAlignment(SwingConstants.LEFT);
 		btnAdd.setHorizontalTextPosition(SwingConstants.RIGHT);
 		/* btnAdd.setMargin(new Insets(0, 0, 0, 0)); */
@@ -124,6 +118,15 @@ public class Matricular extends JInternalFrame {
 		
 		btnModalidade = new JButton("Adicionar Modalidade");
 		btnModalidade.setBounds(10, 155, 160, 26);
+		btnModalidade.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				
+				new Adicionar_Modalidades();
+				
+			}
+		});
+		
 		getContentPane().add(btnModalidade);
 		
 		String colunas[] = { "Modalidade", "Graduação", "Plano", "Data início", "Data fim ",  };
