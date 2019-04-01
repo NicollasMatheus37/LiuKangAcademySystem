@@ -9,7 +9,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDesktopPane;
+import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -19,15 +21,16 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
-public class AdicionarModalidades extends JInternalFrame{
+public class Adicionar_Modalidades extends JDialog{
 
-	public AdicionarModalidades(){
+	public Adicionar_Modalidades(){
 
 		setSize(300, 300);
 		setTitle("Adicionar Modalidades");
 		setLayout(null);
 		setResizable(false);
-		setClosable(true);
+		setLocationRelativeTo(null);
+		setModal(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setVisible(true);
 	}

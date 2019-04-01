@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
-public class ConsultarFatura extends JInternalFrame {
+public class Pagamentos_Faturas extends JInternalFrame {
 
 	private JLabel De, Ate, Situacao;
 	private JTextField JTDe, JTAte;
@@ -20,10 +20,10 @@ public class ConsultarFatura extends JInternalFrame {
 	private DefaultTableModel model;
 	private JTable table;
 
-	public ConsultarFatura() {
+	public Pagamentos_Faturas() {
 
 		setSize(690, 538);
-		setTitle("Consultar Faturas");
+		setTitle("Pagamento de Faturas");
 		setLayout(null);
 		setResizable(false);
 		setClosable(true);

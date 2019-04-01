@@ -29,6 +29,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.LookAndFeel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SizeRequirements;
@@ -44,7 +45,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-public class Modalidades extends JInternalFrame {
+public class ModalidadesGraduacoes extends JInternalFrame {
 
 		// Botoes
 		private JButton btnAdd;
@@ -70,10 +71,10 @@ public class Modalidades extends JInternalFrame {
 		private DefaultTableModel model;
 	
 
-	public Modalidades() {
+	public ModalidadesGraduacoes() {
 
 		setLayout(null);
-		setSize(500, 350);
+		setSize(510, 350);
 		setTitle("Modalidades e Graduações");
 		setResizable(false);
 		setClosable(true);
@@ -86,7 +87,7 @@ public class Modalidades extends JInternalFrame {
 	}
 	
 	public static void main(String [] Args) {
-		new Modalidades();
+		new ModalidadesGraduacoes();
 	}
 
 	public void createComponnents() {
@@ -96,7 +97,7 @@ public class Modalidades extends JInternalFrame {
 		btnSearch.setHorizontalAlignment(SwingConstants.LEFT);
 		btnSearch.setHorizontalTextPosition(SwingConstants.RIGHT);
 		btnSearch.setMargin(new Insets(0, 0, 0, 0));
-		btnSearch.setBounds(30,10,105,35);
+		btnSearch.setBounds(10, 10, 120, 35);
 		getContentPane().add(btnSearch);
 		
 		//Botao Add
@@ -104,7 +105,7 @@ public class Modalidades extends JInternalFrame {
 		btnAdd.setHorizontalAlignment(SwingConstants.LEFT);
 		btnAdd.setHorizontalTextPosition(SwingConstants.RIGHT);
 		btnAdd.setMargin(new Insets(0, 0, 0, 0));
-		btnAdd.setBounds(135,10,105,35);
+		btnAdd.setBounds(130, 10, 120, 35);
 		getContentPane().add(btnAdd);
 		
 		
@@ -114,7 +115,7 @@ public class Modalidades extends JInternalFrame {
 		btnDelete.setHorizontalAlignment(SwingConstants.LEFT);
 		btnDelete.setHorizontalTextPosition(SwingConstants.RIGHT);
 		btnDelete.setMargin(new Insets(0, 0, 0, 0));
-		btnDelete.setBounds(240,10,105,35);
+		btnDelete.setBounds(250, 10, 120, 35);
 		getContentPane().add(btnDelete);
 		
 		//Botao Add
@@ -122,31 +123,31 @@ public class Modalidades extends JInternalFrame {
 		btnSave.setHorizontalAlignment(SwingConstants.LEFT);
 		btnSave.setHorizontalTextPosition(SwingConstants.RIGHT);
 		btnSave.setMargin(new Insets(0, 0, 0, 0));
-		btnSave.setBounds(345,10,105,35);
+		btnSave.setBounds(370, 10, 120, 35);
 		getContentPane().add(btnSave);
 		
 
 		
 		//add - labels
 		infoLabel[0] = new JLabel("Modalidade: ");
-		infoLabel[0].setBounds(5, 10, 350, 110);
+		infoLabel[0].setBounds(10, 10, 350, 110);
 		getContentPane().add(infoLabel[0]);
 		
 		infoLabel[1] = new JLabel("Graduação: ");
-		infoLabel[1].setBounds(5, 10, 350, 170);
+		infoLabel[1].setBounds(14, 10, 350, 170);
 		getContentPane().add(infoLabel[1]);
 		
 		infoLabel[2] = new JLabel("Duplo clique na linha de graduação para remové-la.");
-		infoLabel[2].setBounds(5, 10, 350, 570);
+		infoLabel[2].setBounds(10, 10, 350, 570);
 		getContentPane().add(infoLabel[2]);
 		
 		//add - TextFields
 		txtModalidade = new JTextField();
-		txtModalidade.setBounds(80, 55, 400, 25);
+		txtModalidade.setBounds(80, 55, 410, 25);
 		getContentPane().add(txtModalidade);
 		
 		txtGraduacao = new JTextField();
-		txtGraduacao.setBounds(80, 87, 335, 25);
+		txtGraduacao.setBounds(80, 87, 345, 25);
 		getContentPane().add(txtGraduacao);
 		
 		//add - Botões
@@ -163,7 +164,7 @@ public class Modalidades extends JInternalFrame {
 				txtGraduacao.setText(null);
 			}
 		});
-		btnOk.setBounds(420, 83, 60, 25);
+		btnOk.setBounds(428, 86, 60, 25);
 		getContentPane().add(btnOk);
 		
 		//Colunas pra Jtable
@@ -174,15 +175,16 @@ public class Modalidades extends JInternalFrame {
 		table = new JTable(model);
 		table.setBorder(BorderFactory.createLineBorder(Color.black));
 		table.setEnabled(true);
-		table.setRowSelectionAllowed(true);
 		table.getTableHeader().setEnabled(false);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setAutoCreateColumnsFromModel(false);
 		table.setSelectionBackground(Color.cyan);
-		table.setCellSelectionEnabled(true);
-		
+
+				
 		
 		// Criando o scrollPane
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(10, 115, 460, 170);
+		scrollPane.setBounds(10, 115, 479, 170);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		this.getContentPane().add(scrollPane);
 		

@@ -19,14 +19,14 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-public class RelatorioMatriculas extends JInternalFrame {
+public class Relatorio_Matricula extends JInternalFrame {
 
 	private JLabel De, Ate, Periodo;
 	private JButton btnProcessar;
 	private JComboBox<String> ComboHTML;
 	private JTextField JTDe, JTAte;
 
-	public RelatorioMatriculas() throws IOException {
+	public Relatorio_Matricula() throws IOException {
 
 		setSize(220, 200);
 		setTitle("Relatório de Matricula");

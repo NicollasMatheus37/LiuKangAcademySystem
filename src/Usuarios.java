@@ -19,13 +19,12 @@ public class Usuarios extends JInternalFrame {
 	private JLabel Usuario, Senha, ConfSenha, Perfil;
 	private JComboBox<String> ComboPerfil;
 	private JTextField JTUsuario, JTSenha, JTConfSenha;
-
-	private AdicionarModalidades frameDezesseis;
+	
 	JDesktopPane desktopPane;
 
 	public Usuarios() {
 
-		setSize(510, 300);
+		setSize(510, 210);
 		setTitle("Usuários");
 		setLayout(null);
 		setResizable(false);
@@ -94,7 +93,7 @@ public class Usuarios extends JInternalFrame {
 
 			public void actionPerformed(ActionEvent e) {
 
-				desktopPane.add(new AdicionarModalidades());
+				desktopPane.add(new Adicionar_Modalidades());
 				setVisible(true);
 
 			}
