@@ -7,8 +7,6 @@ import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 
-import base.BaseMonthChooser;
-
 public class GerarFaturas extends JInternalFrame {
 
 	private JLabel DataFatura;

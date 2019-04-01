@@ -1,4 +1,4 @@
-package base;
+package dao;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -10,16 +10,6 @@ public abstract class BaseDAO {
 	public BaseDAO() {}
 	
 	private String sql = "";
-	
-//	protected abstract List<Object> index() throws SQLException;
-//	
-//	protected abstract Object view(int id) throws SQLException;
-//	
-//	protected abstract void store() throws SQLException;
-//	
-//	protected abstract void update() throws SQLException;
-//	
-//	protected abstract void destroy() throws SQLException;
 	
 	protected void _set(PreparedStatement preparedStatement, int position, Object params) throws SQLException {
 		if(params == null) {
