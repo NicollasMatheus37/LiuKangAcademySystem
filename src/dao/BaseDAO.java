@@ -19,6 +19,31 @@ public abstract class BaseDAO {
 		}
 	}
 	
+	protected BaseDAO delete(String statement) {
+		this.setSql(getSql() + "Delete ");
+		return this;
+	}
+	
+	protected BaseDAO setValue(String statement, String value) {
+		this.setSql(this.getSql() + "SET " + statement + "=" + value);
+		return this;
+	}
+	
+	protected BaseDAO update(String statement) {
+		this.setSql(this.getSql() + "UPDATE " + statement);
+		return this;
+	}
+	
+	protected BaseDAO insertInto(String table, String statement) {
+		this.setSql(this.getSql() + "INSERT INTO " + table + " (" + statement + ") ");
+		return this;
+	}
+	
+	protected BaseDAO values(String statement) {
+		this.setSql(getSql() + "VALUES " + statement);
+		return this;
+	}
+	
 	protected BaseDAO select(String statement) {
 		this.setSql(this.getSql() + "SELECT " + statement); 
 		return this;
@@ -29,8 +54,8 @@ public abstract class BaseDAO {
 		return this;
 	}
 	
-	protected BaseDAO where(String statement, String value) {
-		this.setSql(this.getSql() + "WHERE " + statement);
+	protected BaseDAO where(String statement, String operator, String value) {
+		this.setSql(this.getSql() + "WHERE " + statement + operator + value);
 		return this;
 	}
 	

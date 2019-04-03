@@ -1,12 +1,13 @@
 package model;
 
 import java.util.Date;
+import java.util.Map;
 
 public class AlunoModel {
 
-	private int codigo_aluno;	
+	private int codigoAluno;	
 	private String aluno; 
-	private Date data_nascimento;
+	private Date dataNascimento;
 	private char sexo;
 	private String telefone;
 	private String celular;
@@ -22,103 +23,118 @@ public class AlunoModel {
 	private String cep;
 
 
-	public int getcodigo_aluno() {
-		return codigo_aluno;
+	public int getcodigoAluno() {
+		return codigoAluno;
 	}
-	public void setCodigo_aluno(int codigo_aluno) {
-		codigo_aluno = this.codigo_aluno;		
+	public AlunoModel setCodigo_aluno(int codigo_aluno) {
+		codigo_aluno = this.codigoAluno;	
+		return this;
 	}
 
 	public String getAluno() {
 		return aluno;
 	}
-	public void setAluno(String aluno) {
+	public AlunoModel setAluno(String aluno) {
 		this.aluno = aluno;
+		return this;
 	}
-	public Date getData_nascimento() {
-		return data_nascimento;
+	public Date getDataNascimento() {
+		return dataNascimento;
 	}
-	public void setData_nascimento(Date data_nascimento) {
-		this.data_nascimento = data_nascimento;
+	public AlunoModel setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
+		return this;
 	}
 	public char getSexo() {
 		return sexo;
 	}
-	public void setSexo(char sexo) {
+	public AlunoModel setSexo(char sexo) {
 		this.sexo = sexo;
+		return this;
 	}
 	public String getTelefone() {
 		return telefone;
 	}
-	public void setTelefone(String telefone) {
+	public AlunoModel setTelefone(String telefone) {
 		this.telefone = telefone;
+		return this;
 	}
 	public String getCelular() {
 		return celular;
 	}
-	public void setCelular(String celular) {
+	public AlunoModel setCelular(String celular) {
 		this.celular = celular;
+		return this;
 	}
 	public String getEmail() {
 		return email;
 	}
-	public void setEmail(String email) {
+	public AlunoModel setEmail(String email) {
 		this.email = email;
+		return this;
 	}
 	public String getObservacao() {
 		return observacao;
 	}
-	public void setObservacao(String observacao) {
+	public AlunoModel setObservacao(String observacao) {
 		this.observacao = observacao;
+		return this;
 	}
 	public String getEndereco() {
 		return endereco;
 	}
-	public void setEndereco(String endereco) {
+	public AlunoModel setEndereco(String endereco) {
 		this.endereco = endereco;
+		return this;
 	}
 	public String getNumero() {
 		return numero;
 	}
-	public void setNumero(String numero) {
+	public AlunoModel setNumero(String numero) {
 		this.numero = numero;
+		return this;
 	}
 	public String getComplemento() {
 		return complemento;
 	}
-	public void setComplemento(String complemento) {
+	public AlunoModel setComplemento(String complemento) {
 		this.complemento = complemento;
+		return this;
 	}
 	public String getBairro() {
 		return bairro;
 	}
-	public void setBairro(String bairro) {
+	public AlunoModel setBairro(String bairro) {
 		this.bairro = bairro;
+		return this;
 	}
 	public String getCidade() {
 		return cidade;
 	}
-	public void setCidade(String cidade) {
+	public AlunoModel setCidade(String cidade) {
 		this.cidade = cidade;
+		return this;
 	}
 	public String getEstado() {
 		return estado;
 	}
-	public void setEstado(String estado) {
+	public AlunoModel setEstado(String estado) {
 		this.estado = estado;
+		return this;
 	}
 	public String getPais() {
 		return pais;
 	}
-	public void setPais(String pais) {
+	public AlunoModel setPais(String pais) {
 		this.pais = pais;
+		return this;
 	}
 	public String getCep() {
 		return cep;
 	}
-	public void setCep(String cep) {
+	public AlunoModel setCep(String cep) {
 		this.cep = cep;
+		return this;
 	}
-
 
 }

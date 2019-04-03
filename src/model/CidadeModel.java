@@ -13,16 +13,18 @@ package model;
 		return cidade;	
 	}	
 
- 	public void setCidade(String cidade) {	
-		this.cidade = cidade;	
-	}	
+ 	public CidadeModel setCidade(String cidade) {	
+		this.cidade = cidade;
+		return this;
+	}
 
  	public String getEstado() {	
-		return estado;	
+		return estado;
 	}	
 
- 	public void setEstado(String estado) {	
+ 	public CidadeModel setEstado(String estado) {	
 		this.estado = estado;	
+		return this;
 	}	
 
  	public String getPais() {	
