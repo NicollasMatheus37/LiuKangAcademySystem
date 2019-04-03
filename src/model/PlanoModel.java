@@ -13,24 +13,27 @@ package model;
 		return modalidade;	
 	}	
 
- 	public void setModalidade(String modalidade) {	
+ 	public PlanoModel setModalidade(String modalidade) {	
 		this.modalidade = modalidade;	
+		return this;
 	}	
 
  	public String getPlano() {	
 		return plano;	
 	}	
 
- 	public void setPlano(String plano) {	
+ 	public PlanoModel setPlano(String plano) {	
 		this.plano = plano;	
+		return this;
 	}	
 
  	public float getValor_mensal() {	
 		return valor_mensal;	
 	}	
 
- 	public void setValor_mensal(float valor_mensal) {	
+ 	public PlanoModel setValor_mensal(float valor_mensal) {	
 		this.valor_mensal = valor_mensal;	
+		return this;
 	}	
 
 

@@ -10,15 +10,17 @@ package model;
 		return usuario;	
 	}	
 
- 	public void setUsuario(int usuario) {	
-		this.usuario = usuario ;			
+ 	public UsuarioModel setUsuario(int usuario) {	
+		this.usuario = usuario ;	
+		return this;
 	}	
 
  	public String getPerfil() {	
 		return perfil;	
 	}	
-	public void setPerfil(String perfil) {	
+	public UsuarioModel setPerfil(String perfil) {	
 		this.perfil = perfil;	
+		return this;
 	}	
 
  }	

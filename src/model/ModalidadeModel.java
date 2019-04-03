@@ -11,8 +11,9 @@ package model;
 		return modalidade;	
 	}	
 
- 	public void setModalidade(String modalidade) {	
+ 	public ModalidadeModel setModalidade(String modalidade) {	
 		this.modalidade = modalidade;	
+		return this;
 	}	
 
 }

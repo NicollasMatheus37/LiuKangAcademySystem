@@ -16,48 +16,54 @@ package model;
 		return codigo_matricula;	
 	}	
 
- 	public void setCodigo_matricula(int codigo_matricula) {	
-		codigo_matricula = this.codigo_matricula;			
+ 	public MatriculaModalidadeModel setCodigo_matricula(int codigo_matricula) {	
+		codigo_matricula = this.codigo_matricula;		
+		return this;
 	}	
 
  	public String getModalidade() {	
 		return modalidade;	
 	}	
 
- 	public void setModalidade(String modalidade) {	
+ 	public MatriculaModalidadeModel setModalidade(String modalidade) {	
 		modalidade = this.modalidade;			
+		return this;
 	}	
 
  	public String getGraduacao() {	
 		return modalidade;	
 	}	
 
- 	public void setGraduacao(String graduacao) {	
+ 	public MatriculaModalidadeModel setGraduacao(String graduacao) {	
 		graduacao = this.graduacao;			
+		return this;
 	}	
 
  	public String getPlano() {	
 		return plano;	
 	}	
 
- 	public void setPlano(String plano) {	
-		plano = this.plano;			
+ 	public MatriculaModalidadeModel setPlano(String plano) {	
+		plano = this.plano;		
+		return this;
 	}	
 
  	public Date getData_matricula() {	
 		return data_inicio;	
 	}	
 
- 	public void setData_inicio(Date data_inicio) {	
+ 	public MatriculaModalidadeModel setData_inicio(Date data_inicio) {	
 		this.data_inicio = data_inicio;	
+		return this;
 	}	
 
  	public Date getData_fim() {	
 		return data_fim;	
 	}	
 
- 	public void setData_fim(Date data_fim) {	
+ 	public MatriculaModalidadeModel setData_fim(Date data_fim) {	
 		this.data_fim = data_fim;	
+		return this;
 	}	
 
 
