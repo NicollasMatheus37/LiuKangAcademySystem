@@ -1,4 +1,5 @@
 package view;
+
 import java.awt.*;
 
 import java.awt.event.*;
@@ -18,9 +19,10 @@ public class Menu extends JFrame {
 	// Painéis e items do menu
 	private JDesktopPane desktopPane;
 	private JMenuBar menuBar;
-	private JMenu faturas, faturamento, matricular, sistema, cadastro, processos, relatorios, utilitarios, ajuda;
-	private JMenuItem alunos, gerarF, realizaP, consultarF, planos, usuarios, sair, cadaluno, modalidades, matriculas,
-			utility, help, faturasemaberto, faturaspagas;
+	private JMenu faturas, faturamento, matricular, sistema, cadastro, processos, relatorios, utilitarios,
+			ajuda;
+	private JMenuItem alunos, gerarF, realizaP, consultarF, planos, usuarios, sair, cadaluno,
+			modalidades, matriculas, utility, help, faturasemaberto, faturaspagas;
 	// Classes/frames
 	private Usuarios frameUm;
 	private Sair frameDois;
@@ -40,8 +42,7 @@ public class Menu extends JFrame {
 	private AdicionarModalidades frameDezesseis;
 	private FaturasAberto frameDezessete;
 	private FaturasPagas frameDezoito;
-
-	Menu menu = this;
+	private ControleAlunos frameDezenove;
 
 	private int janelaAberta = 0;
 
@@ -288,8 +289,6 @@ public class Menu extends JFrame {
 			}
 		});
 
-	
-		
 		faturasemaberto = new JMenuItem("Faturas Em Aberto");
 		faturasemaberto.addActionListener(new ActionListener() {
 
@@ -318,10 +317,10 @@ public class Menu extends JFrame {
 			}
 		});
 
+		setContentPane(desktopPane);
+
 		menuBar = new JMenuBar();
 		sistema = new JMenu("Sistema");
-
-		setContentPane(desktopPane);
 
 		sistema.add(usuarios);
 		sistema.add(sair);
@@ -369,12 +368,14 @@ public class Menu extends JFrame {
 
 		setJMenuBar(menuBar);
 		setTitle("Liu Kang Academy System");
-		setSize(705, 600);
+		/*setSize(705, 600);*/
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setLocationRelativeTo(null);
 		setBackground(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(true);
 		setContentPane(CreateContentPane());
+		FramePrincipal();
 		setVisible(true);
 	}
 
@@ -382,17 +383,25 @@ public class Menu extends JFrame {
 
 		JPanel contentPane = new JPanel(new BorderLayout());
 		desktopPane = new JDesktopPane() {
-			Image im = (new ImageIcon("C:/download.jpg")).getImage();
+			Image im = (new ImageIcon("C:/liukang.jpg")).getImage();
 
 			public void paintComponent(Graphics g) {
-				g.drawImage(im, 0,0,this);
-				
+				g.drawImage(im, 0, 0, this);
+
 			}
 		};
 
 		contentPane.setOpaque(true);
 		contentPane.add(desktopPane);
 		return contentPane;
+	}
+
+	public void FramePrincipal() {
+
+		frameDezenove = new ControleAlunos();
+		frameDezenove.setVisible(true);
+		desktopPane.add(frameDezenove);
+
 	}
 
 	public void mostrarJanela(boolean o) {
@@ -463,7 +472,7 @@ public class Menu extends JFrame {
 		case 18:
 			frameDezoito.dispose();
 			break;
-
+	
 		default:
 			break;
 		}

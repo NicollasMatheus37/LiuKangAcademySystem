@@ -10,6 +10,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -17,9 +18,8 @@ public class Login extends JFrame {
 
 	private JTextField txfNome;
 	private JPasswordField txfSenha;
-	private JLabel lblNome, lblSenha, lblMsgNoUser, lblSenhaInvalida, lblNoPass, lblMsgNoName;
-	private JButton btnProximo, btnLogin, btnVoltar, circle;
-	File user;
+	private JLabel lblNome, lblSenha;
+	private JButton btnLogin;
 
 	public Login() {
 
@@ -56,16 +56,24 @@ public class Login extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-			
-				
+				if (txfNome.getText().toString().equals("admin") && txfSenha.getText().toString().equals("admin") == true) {
+
+					dispose();
+					new Menu();
+
+				} else {
+
+					JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos, faça o login novamente.");
+
+				}
 			}
-			
 		});
 		btnLogin.setBounds(155, 230, 90, 26);
 		getContentPane().add(btnLogin);
 	}
-/*	public static void main(String args[]) {
+
+	public static void main(String args[]) {
 
 		new Login();
-	}*/
+	}
 }
