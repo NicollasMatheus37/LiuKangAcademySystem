@@ -31,8 +31,9 @@ package model;
 		return pais;	
 	}	
 
- 	public void setPais(String pais) {	
-		this.pais = pais;	
+ 	public CidadeModel setPais(String pais) {	
+		this.pais = pais;
+		return this;
 	}	
 
 
