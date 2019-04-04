@@ -94,8 +94,7 @@ public class Usuarios extends JInternalFrame {
 
 			public void actionPerformed(ActionEvent e) {
 
-				desktopPane.add(new AdicionarModalidades());
-				setVisible(true);
+				
 
 			}
 		});

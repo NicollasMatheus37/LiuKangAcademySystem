@@ -386,7 +386,7 @@ public class Menu extends JFrame {
 			Image im = (new ImageIcon("C:/liukang.jpg")).getImage();
 
 			public void paintComponent(Graphics g) {
-				g.drawImage(im, 0, 0, this);
+				g.drawImage(im, 0, 0, getWidth(), getHeight(), this);
 
 			}
 		};
