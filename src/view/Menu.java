@@ -383,7 +383,7 @@ public class Menu extends JFrame {
 
 		JPanel contentPane = new JPanel(new BorderLayout());
 		desktopPane = new JDesktopPane() {
-			Image im = (new ImageIcon("C:/liukang.jpg")).getImage();
+			Image im = (new ImageIcon("Images/background/liukang.jpg")).getImage();
 
 			public void paintComponent(Graphics g) {
 				g.drawImage(im, 0, 0, getWidth(), getHeight(), this);

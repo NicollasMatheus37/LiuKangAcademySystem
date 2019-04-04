@@ -24,6 +24,6 @@ O `git status` mostra as modificações feitas no projeto desde a última versã
 ## git add
 O `git add` adiciona arquivos desejados que estão no diretório de trabalho ao índice. O `git add .` ou `git add *` adiciona TODOS os arquivos do diretório de trabalho ao índice.
 ## git commit
-O `git commit` grava o conteúdo do índice e coloca em no repositório local.
+O `git commit -m` grava o conteúdo do índice com uma mensagem e coloca em no repositório local.
 ## git push
 O `git push` sobe os commits gravados para o repositório remoto.

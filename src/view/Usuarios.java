@@ -92,11 +92,12 @@ public class Usuarios extends JInternalFrame {
 				new ImageIcon(System.getProperty("user.dir") + "\\images\\22x22\\adicionar.png"));
 		btnAdd.addActionListener(new ActionListener() {
 
-			public void actionPerformed(ActionEvent e) {
-
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
 				
-
 			}
+
 		});
 		btnAdd.setHorizontalAlignment(SwingConstants.LEFT);
 		btnAdd.setHorizontalTextPosition(SwingConstants.RIGHT);
