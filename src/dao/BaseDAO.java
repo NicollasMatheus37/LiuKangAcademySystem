@@ -19,18 +19,18 @@ public abstract class BaseDAO {
 		}
 	}
 	
-	protected BaseDAO delete(String statement) {
+	protected BaseDAO delete() {
 		this.setSql(getSql() + "Delete ");
 		return this;
 	}
 	
-	protected BaseDAO setValue(String statement, String value) {
-		this.setSql(this.getSql() + "SET " + statement + "=" + value);
+	protected BaseDAO setValue(String field, String value) {
+		this.setSql(this.getSql() + "SET " + field + "=" + value);
 		return this;
 	}
 	
-	protected BaseDAO update(String statement) {
-		this.setSql(this.getSql() + "UPDATE " + statement);
+	protected BaseDAO update(String table) {
+		this.setSql(this.getSql() + "UPDATE " + table);
 		return this;
 	}
 	
