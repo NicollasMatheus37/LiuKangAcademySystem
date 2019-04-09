@@ -1,16 +1,18 @@
-package model;	
+package model;
 
- public class GraduacaoModel {	
+import java.util.Map;
+
+public class GraduacaoModel {	
 
  	private String modalidade;	
-	private String graduacao; 	
+	private Map<Integer, String> graduacao; 	
 
 
- 	public String getModalidade() {	
+ 	public Map getModalidade() {	
 		return graduacao;	
 	}	
 
- 	public GraduacaoModel setModalidade(String graduacao) {	
+ 	public GraduacaoModel setModalidade(Map graduacao) {	
 		this.graduacao = graduacao;	
 		return this;
 	}	
