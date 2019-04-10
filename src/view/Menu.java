@@ -43,6 +43,7 @@ public class Menu extends JFrame {
 	private FaturasAberto frameDezessete;
 	private FaturasPagas frameDezoito;
 	private ControleAlunos frameDezenove;
+	private BuscarAluno frameVinte;
 
 	private int janelaAberta = 0;
 
@@ -472,7 +473,10 @@ public class Menu extends JFrame {
 		case 18:
 			frameDezoito.dispose();
 			break;
-	
+		case 20:
+			frameVinte.dispose();
+			break;
+			
 		default:
 			break;
 		}
