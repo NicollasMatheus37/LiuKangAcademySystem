@@ -4,9 +4,9 @@ import java.util.Date;
 
 public class AssiduidadeModel {
 
-	private int codigo_matricula;	
-	private Date data_entrada; 
-
+	private int codigo_matricula;
+	private Date data_entrada;
+	private AlunoModel aluno;
 
 	public int getCodigo_matricula() {
 		return codigo_matricula;
@@ -20,9 +20,14 @@ public class AssiduidadeModel {
 	public Date getPerfil() {
 		return data_entrada;
 	}
+	
 	public AssiduidadeModel setData_entrada(Date data_entrada) {
 		this.data_entrada = data_entrada;
 		return this;
+	}
+	
+	public void aluno() {
+//		return new AlunoModel().getAluno();
 	}
 
 }
