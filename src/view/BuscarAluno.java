@@ -1,9 +1,16 @@
 package view;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
+import javax.rmi.CORBA.Util;
+import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -13,6 +20,9 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
+import dao.AlunoDAO;
+import model.AlunoModel;
+
 public class BuscarAluno extends JFrame {
 
 	private JLabel lbBusca;
@@ -20,51 +30,102 @@ public class BuscarAluno extends JFrame {
 	private JButton btnOk;
 	private JTable table;
 	private DefaultTableModel model;
-		
-	
+	private ResultSet alunos;
+	private AlunoDAO alunoDao; 
+	private Utils utils;
+	JComboBox<String> campos;
+
+
 	public BuscarAluno() {
-	
-	setSize(400, 400);
-	setTitle("Buscar Aluno");
-	setLayout(null);
-	setResizable(false);
-	setLocationRelativeTo(null);
-	setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-	createComponnents();
-	setVisible(true);
+
+		alunoDao = new AlunoDAO();
+		utils = new Utils();
+		setSize(400, 400);
+		setTitle("Buscar Aluno");
+		setLayout(null);
+		setResizable(false);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		createComponnents();
+		setVisible(true);
 	}
-	
+
 	public void createComponnents() {
-		
-		lbBusca = new JLabel("Buscar aluno:");
-		lbBusca.setBounds(10, 0, 100, 40);
-		getContentPane().add(lbBusca);
-		
+
+		campos = new JComboBox<String>();
+		campos.addItem("Código");
+		campos.addItem("Nome");
+		campos.setBounds(10, 8, 110, 26);
+		getContentPane().add(campos);
+
+		//		lbBusca = new JLabel("Buscar aluno:");
+		//		lbBusca.setBounds(10, 0, 100, 40);
+		//		getContentPane().add(lbBusca);
+
 		jTxtBusca = new JTextField();
-		jTxtBusca.setBounds(93, 8, 240, 26);
+		jTxtBusca.setBounds(115, 8, 215, 26);
 		getContentPane().add(jTxtBusca);
-		
-		btnOk = new JButton("OK");
-		btnOk.setBounds(338, 6, 50, 30);
+
+		btnOk = new JButton(new AbstractAction("Buscar") {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				alunos = alunoDao.getAllAlunos(); 
+				int codigo;
+				String nome;
+
+				try {
+					alunos.first();
+
+
+					while(!alunos.isAfterLast()) {
+
+						codigo = alunos.getInt(0);
+						nome = alunos.getString(1);
+
+						if(campos.getSelectedIndex() > 0) {
+							if(utils.compareStrings(nome, jTxtBusca.getText())) {
+								InsertAluno(codigo, nome);
+							}
+						}else {
+							if(codigo == Integer.parseInt(jTxtBusca.getText())) {
+								InsertAluno(codigo, nome);
+							}
+						}
+
+						alunos.next();
+					}
+
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+		});
+		btnOk.setBounds(338, 6, 50, 30);	
 		getContentPane().add(btnOk);
-		
+
 		String colunas1[] = { "Nome", "Código" };
 		/*	String dados[][] = */
-			model = new DefaultTableModel(colunas1, 0);
+		model = new DefaultTableModel(colunas1, 0);
 
-			table = new JTable(model);
-			table.setBorder(BorderFactory.createLineBorder(Color.black));
-			table.setEnabled(true);
+		table = new JTable(model);
+		table.setBorder(BorderFactory.createLineBorder(Color.black));
+		table.setEnabled(true);
 
-			JScrollPane scrollPane = new JScrollPane(table);
-			scrollPane.setBounds(10, 40, 375, 100);
-			scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-			this.getContentPane().add(scrollPane);
-			table.getTableHeader().setEnabled(false);
-			
-		
-		
+		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(10, 40, 375, 400);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		this.getContentPane().add(scrollPane);
+		table.getTableHeader().setEnabled(false);		
+
+
+	}	
+
+	private void InsertAluno(int Codigo, String nome) {
+		model.addRow(new String[]{Integer.toString(Codigo),nome});
 	}
-	
-	
+
 }
