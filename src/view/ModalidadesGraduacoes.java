@@ -193,12 +193,14 @@ public class ModalidadesGraduacoes extends JInternalFrame {
 		
 		table.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
+				table.setEnabled(false);
 				int linha = 0;
 				if(e.getClickCount() == 2) {
 					linha=table.getSelectedRow();
 					
 					System.out.println("Linha:::::" + linha);
 					model.removeRow(linha);
+					table.setEnabled(true);
 				}
 			}
 			public void mouseEntered(MouseEvent arg0) {}
