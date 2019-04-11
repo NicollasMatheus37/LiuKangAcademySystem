@@ -1,13 +1,18 @@
 package dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.List;
+
+import database.ConnectionFactory;
 
 public abstract class BaseDAO {
 	
 	public BaseDAO() {}
+	
+	Connection conn;
 	
 	private String sql = "";
 	
@@ -92,8 +97,40 @@ public abstract class BaseDAO {
 		this.sql = sql;
 	}
 	
-	protected void apply() {
-		this.getSql();
+	protected ResultSet apply() throws SQLException {
+		return this.excecuteQuery();
+	}
+	
+	protected Boolean commit() {
+		try {
+			this.excecuteQuery();
+			return true;
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+		
+	}
+	
+	protected ResultSet excecuteQuery() throws SQLException {
+		PreparedStatement prepStatement = null;
+		prepStatement = conn.prepareStatement(this.getSql());
+		return prepStatement.executeQuery();
+	}
+	
+	protected void connection() {
+		conn = ConnectionFactory.getConnection
+				(
+					"master", 
+					"admin", 
+					"root"
+				);
+		try {
+			conn.setAutoCommit(true);
+			System.out.println("Conectado com sucesso!");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	// select("name").from("alunos").where("id", "1").orderBy("id").apply();
 }
