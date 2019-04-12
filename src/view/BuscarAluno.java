@@ -2,6 +2,8 @@ package view;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -35,6 +37,7 @@ public class BuscarAluno extends JFrame {
 	private Utils utils;
 	JComboBox<String> campos;
 
+	public int codAluno;
 
 	public BuscarAluno() {
 
@@ -58,10 +61,6 @@ public class BuscarAluno extends JFrame {
 		campos.setBounds(10, 8, 110, 26);
 		getContentPane().add(campos);
 
-		//		lbBusca = new JLabel("Buscar aluno:");
-		//		lbBusca.setBounds(10, 0, 100, 40);
-		//		getContentPane().add(lbBusca);
-
 		jTxtBusca = new JTextField();
 		jTxtBusca.setBounds(115, 8, 215, 26);
 		getContentPane().add(jTxtBusca);
@@ -71,13 +70,13 @@ public class BuscarAluno extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				alunos = alunoDao.getAllAlunos(); 
-				int codigo;
-				String nome;
-
+				
 				try {
-					alunos.first();
+					alunos = alunoDao.getAllAlunos(); 
+					int codigo;
+					String nome;
 
+					alunos.first();
 
 					while(!alunos.isAfterLast()) {
 
@@ -113,6 +112,21 @@ public class BuscarAluno extends JFrame {
 
 		table = new JTable(model);
 		table.setBorder(BorderFactory.createLineBorder(Color.black));
+		
+		table.addMouseListener(new MouseAdapter() {
+			
+			public void mouseClicked(MouseEvent e) {
+				
+				if(e.getClickCount() == 2 ) {
+					codAluno = Integer.parseInt(table.getValueAt(table.getSelectedRow() , 0).toString());
+					
+					dispose();
+				}
+				
+			}
+			
+		});
+		
 		table.setEnabled(true);
 
 		JScrollPane scrollPane = new JScrollPane(table);
