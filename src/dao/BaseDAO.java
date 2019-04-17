@@ -114,6 +114,7 @@ public abstract class BaseDAO {
 	
 	protected ResultSet excecuteQuery() throws SQLException {
 		PreparedStatement prepStatement = null;
+		this.connection();
 		prepStatement = conn.prepareStatement(this.getSql());
 		return prepStatement.executeQuery();
 	}
@@ -123,7 +124,7 @@ public abstract class BaseDAO {
 				(
 					"master", 
 					"admin", 
-					"root"
+					"admin"
 				);
 		try {
 			conn.setAutoCommit(true);

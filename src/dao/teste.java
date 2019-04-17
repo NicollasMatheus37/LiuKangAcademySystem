@@ -1,14 +1,21 @@
 package dao;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class teste {
 	
 	public static void main(String args[]) throws SQLException {
 		
-		AlunoDAO aluno = null;
+		AlunoDAO aluno = new AlunoDAO();
 		String vrau = "";
-		vrau = aluno.getAllAlunos().toString();
-		System.out.println(vrau);
+		
+		ResultSet rst = aluno.getAllAlunos();
+		
+		while (rst.next()) {
+			System.out.println(rst.getString("aluno"));
+		}
+		
+		
 	}
 }
