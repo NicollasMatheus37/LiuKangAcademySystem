@@ -1,37 +1,45 @@
 package dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class UsuarioDAO extends BaseDAO {
 	
-	public void getAllUsuarios() {
-		this.select("*")
+	public ResultSet getAllUsuarios() throws SQLException{
+		ResultSet result = null;
+		result = this.select("*")
 			.from("usuario")
 			.apply();
+		return result;
 	}
 	
-	public void getOneUsuario(Integer id) {
-		this.select("*")
+	public ResultSet getOneUsuario(Integer id) throws SQLException{
+		ResultSet result = null;
+		result = this.select("*")
 			.from("usuario")
 			.where("id", "=", id.toString())
 			.apply();
+		return result;
 	}
 	
-	public void createUsuario(String fields, String values) {
+	public void createUsuario(String fields, String values) throws SQLException{
 		this.insertInto("usuario", fields)
-			.values(values)
-			.apply();
+		.values(values)
+		.commit();
 	}
 	
-	public void updateUsuario(String fields, String value, Integer id) {
+	public void updateUsuario(String fields, String value, Integer id) throws SQLException{
 		this.update("usuario")
-			.setValue(fields, value)
-			.where("id", "=", id.toString())
-			.apply();
+		.setValue(fields, value)
+		.where("id", "=", id.toString())
+		.commit();
 	}
 	
-	public void deleteUsuario(Integer id) {
+	public void deleteUsuario(Integer id) throws SQLException{
 		this.delete()
-			.from("usuario")
-			.where("id", "=", id.toString());
+		.from("usuario")
+		.where("id", "=", id.toString())
+		.commit();
 	}
 
 }

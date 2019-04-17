@@ -1,37 +1,45 @@
 package dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class GraduacaoDAO extends BaseDAO {
 	
-	public void getAllGraduacoes() {
-		this.select("*")
+	public ResultSet getAllGraduacoes() throws SQLException{
+		ResultSet result = null;
+		result = this.select("*")
 			.from("graduacoes")
 			.apply();
+		return result;
 	}
 	
-	public void getOneGraduacao(Integer id) {
-		this.select("*")
+	public ResultSet getOneGraduacao(Integer id) throws SQLException{
+		ResultSet result = null;
+		result = this.select("*")
 			.from("graduacoes")
 			.where("id", "=", id.toString())
 			.apply();
+		return result;
 	}
 	
-	public void createGraduacao(String fields, String values) {
+	public void createGraduacao(String fields, String values) throws SQLException{
 		this.insertInto("graduacoes", fields)
-			.values(values)
-			.apply();
+		.values(values)
+		.commit();
 	}
 	
-	public void updateGraduacao(String fields, String value, Integer id) {
+	public void updateGraduacao(String fields, String value, Integer id) throws SQLException{
 		this.update("graduacoes")
-			.setValue(fields, value)
-			.where("id", "=", id.toString())
-			.apply();
+		.setValue(fields, value)
+		.where("id", "=", id.toString())
+		.commit();
 	}
 	
-	public void deleteGraduacao(Integer id) {
+	public void deleteGraduacao(Integer id) throws SQLException{
 		this.delete()
-			.from("graduacoes")
-			.where("id", "=", id.toString());
+		.from("graducoes")
+		.where("id", "=", id.toString())
+		.commit();
 	}
 
 }
