@@ -114,7 +114,9 @@ public abstract class BaseDAO {
 	
 	protected ResultSet excecuteQuery() throws SQLException {
 		PreparedStatement prepStatement = null;
+		
 		this.connection();
+		
 		prepStatement = conn.prepareStatement(this.getSql());
 		return prepStatement.executeQuery();
 	}
@@ -133,5 +135,5 @@ public abstract class BaseDAO {
 			e.printStackTrace();
 		}
 	}
-	// select("name").from("alunos").where("id", "1").orderBy("id").apply();
+
 }

@@ -26,7 +26,7 @@ public class AlunoModel {
 	public int getcodigoAluno() {
 		return codigoAluno;
 	}
-	public AlunoModel setCodigo_aluno(int codigo_aluno) {
+	public AlunoModel setCodigoAluno(int codigo_aluno) {
 		codigo_aluno = this.codigoAluno;	
 		return this;
 	}
