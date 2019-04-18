@@ -6,6 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.rmi.CORBA.Util;
 import javax.swing.AbstractAction;
@@ -32,7 +33,7 @@ public class BuscarAluno extends JFrame {
 	private JButton btnOk;
 	private JTable table;
 	private DefaultTableModel model;
-	private ResultSet alunos;
+	private ArrayList<AlunoModel> alunos;
 	private AlunoDAO alunoDao; 
 	private Utils utils;
 	JComboBox<String> campos;
@@ -70,7 +71,7 @@ public class BuscarAluno extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 				try {
 					alunos = alunoDao.getAllAlunos(); 
 					int codigo;
@@ -78,22 +79,25 @@ public class BuscarAluno extends JFrame {
 
 					alunos.first();
 
-					while(!alunos.isAfterLast()) {
+					if (alunos.getRow()!=0) {
 
-						codigo = alunos.getInt(0);
-						nome = alunos.getString(1);
+						while(!alunos.isAfterLast()) {
 
-						if(campos.getSelectedIndex() > 0) {
-							if(utils.compareStrings(nome, jTxtBusca.getText())) {
-								InsertAluno(codigo, nome);
+							codigo = alunos.getInt(0);
+							nome = alunos.getString(1);
+
+							if(campos.getSelectedIndex() > 0) {
+								if(utils.compareStrings(nome, jTxtBusca.getText())) {
+									InsertAluno(codigo, nome);
+								}
+							}else {
+								if(codigo == Integer.parseInt(jTxtBusca.getText())) {
+									InsertAluno(codigo, nome);
+								}
 							}
-						}else {
-							if(codigo == Integer.parseInt(jTxtBusca.getText())) {
-								InsertAluno(codigo, nome);
-							}
+
+							alunos.next();
 						}
-
-						alunos.next();
 					}
 
 				} catch (SQLException e1) {
@@ -112,21 +116,21 @@ public class BuscarAluno extends JFrame {
 
 		table = new JTable(model);
 		table.setBorder(BorderFactory.createLineBorder(Color.black));
-		
+
 		table.addMouseListener(new MouseAdapter() {
-			
+
 			public void mouseClicked(MouseEvent e) {
-				
+
 				if(e.getClickCount() == 2 ) {
 					codAluno = Integer.parseInt(table.getValueAt(table.getSelectedRow() , 0).toString());
-					
+
 					dispose();
 				}
-				
+
 			}
-			
+
 		});
-		
+
 		table.setEnabled(true);
 
 		JScrollPane scrollPane = new JScrollPane(table);

@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import javax.swing.AbstractAction;
@@ -22,15 +24,19 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
+import dao.AlunoDAO;
+
 public class CadastroAlunos extends JInternalFrame {
 
 	private JButton btnSearch, btnAdd, btnDelete, btnSave;
 	private JLabel Aluno, DataNasc, Tel, Email, Obs, Endereco, Complemento, Bairro, Estado, CEP, Numero, Cidade, Pais,
-			Sexo, Celular;
+	Sexo, Celular;
 	private JTextField JTAluno, JTDataNasc, JTTel, JTEmail, JTEndereco, JTComplemento, JTBairro, JTEstado, JTCEP,
-			JTNumero, JTCidade, JTPais, JTCel;
+	JTNumero, JTCidade, JTPais, JTCel;
 	private JTextArea JTObs;
 	private JComboBox<String> ComboSexo;
+	private ResultSet aluno;
+	private AlunoDAO alunoDao;
 
 	public CadastroAlunos() throws ParseException {
 
@@ -43,8 +49,52 @@ public class CadastroAlunos extends JInternalFrame {
 		createComponnents();
 		setVisible(true);
 	}
+	
+	private void fillFields() {
+		
+		try {
+			JTAluno.setText(aluno.getString(1));
+			/*			 
+			 * Continuar preenchendo os Fields			  
+			 * 			
+			 */
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		
+	}
+	
+	private void applyFields() {
+		
+	}
 
-	public void createComponnents() {
+	private void createComponnents() {
+
+		// Botao btnSearch
+		btnSearch = new JButton("Buscar",
+				new ImageIcon(System.getProperty("user.dir") + "\\images\\22x22\\localizar.png"));
+		btnSearch.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				BuscarAluno busca = new BuscarAluno();
+				try {
+					aluno = new AlunoDAO().getOneAluno(busca.codAluno);
+					fillFields();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+
+			}
+		});
+		btnSearch.setHorizontalAlignment(SwingConstants.LEFT);
+		btnSearch.setHorizontalTextPosition(SwingConstants.RIGHT);
+		/* btnSearch.setMargin(0, 0, 0, 0); */
+		btnSearch.setBounds(10, 10, 120, 35);
+		getContentPane().add(btnSearch);
+
 
 		Aluno = new JLabel("Aluno:");
 		Aluno.setBounds(10, 10, 100, 100);
@@ -174,22 +224,6 @@ public class CadastroAlunos extends JInternalFrame {
 		ComboSexo.setBounds(435, 80, 235, 26);
 		getContentPane().add(ComboSexo);
 
-		// Botao btnSearch
-		btnSearch = new JButton("Buscar",
-				new ImageIcon(System.getProperty("user.dir") + "\\images\\22x22\\localizar.png"));
-		btnSearch.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				
-				new BuscarAluno();
-				
-			}
-		});
-		btnSearch.setHorizontalAlignment(SwingConstants.LEFT);
-		btnSearch.setHorizontalTextPosition(SwingConstants.RIGHT);
-		/* btnSearch.setMargin(0, 0, 0, 0); */
-		btnSearch.setBounds(10, 10, 120, 35);
-		getContentPane().add(btnSearch);
 
 		// Botao Add
 		btnAdd = new JButton("Adicionar",
