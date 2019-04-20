@@ -4,19 +4,14 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.rmi.CORBA.Util;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -28,7 +23,6 @@ import model.AlunoModel;
 
 public class BuscarAluno extends JFrame {
 
-	private JLabel lbBusca;
 	private JTextField jTxtBusca;
 	private JButton btnOk;
 	private JTable table;
@@ -38,7 +32,7 @@ public class BuscarAluno extends JFrame {
 	private Utils utils;
 	JComboBox<String> campos;
 
-	public int codAluno;
+	public AlunoModel alunoReturn;
 
 	public BuscarAluno() {
 
@@ -77,28 +71,23 @@ public class BuscarAluno extends JFrame {
 					int codigo;
 					String nome;
 
-					alunos.first();
+					for(int i = 0; i < alunos.size(); i++) {
 
-					if (alunos.getRow()!=0) {
+						codigo = alunos.get(i).getcodigoAluno();
+						nome = alunos.get(i).getAluno();
 
-						while(!alunos.isAfterLast()) {
-
-							codigo = alunos.getInt(0);
-							nome = alunos.getString(1);
-
-							if(campos.getSelectedIndex() > 0) {
-								if(utils.compareStrings(nome, jTxtBusca.getText())) {
-									InsertAluno(codigo, nome);
-								}
-							}else {
-								if(codigo == Integer.parseInt(jTxtBusca.getText())) {
-									InsertAluno(codigo, nome);
-								}
+						if(campos.getSelectedIndex() > 0) {
+							if(utils.compareStrings(nome, jTxtBusca.getText())) {
+								InsertAluno(codigo, nome);
 							}
-
-							alunos.next();
+						}else {
+							if(codigo == Integer.parseInt(jTxtBusca.getText())) {
+								InsertAluno(codigo, nome);
+							}
 						}
+
 					}
+
 
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -122,7 +111,7 @@ public class BuscarAluno extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 
 				if(e.getClickCount() == 2 ) {
-					codAluno = Integer.parseInt(table.getValueAt(table.getSelectedRow() , 0).toString());
+					alunoReturn = alunos.get(table.getSelectedRow());
 
 					dispose();
 				}

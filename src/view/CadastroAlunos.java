@@ -1,23 +1,18 @@
 package view;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.sql.ResultSet;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDesktopPane;
-import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -25,6 +20,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
 import dao.AlunoDAO;
+import model.AlunoModel;
 
 public class CadastroAlunos extends JInternalFrame {
 
@@ -35,8 +31,9 @@ public class CadastroAlunos extends JInternalFrame {
 	JTNumero, JTCidade, JTPais, JTCel;
 	private JTextArea JTObs;
 	private JComboBox<String> ComboSexo;
-	private ResultSet aluno;
 	private AlunoDAO alunoDao;
+	private AlunoModel aluno, alunoChange;
+	
 
 	public CadastroAlunos() throws ParseException {
 
@@ -52,21 +49,24 @@ public class CadastroAlunos extends JInternalFrame {
 	
 	private void fillFields() {
 		
-		try {
-			JTAluno.setText(aluno.getString(1));
-			/*			 
-			 * Continuar preenchendo os Fields			  
-			 * 			
-			 */
-			
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}		
+		JTAluno.setText(aluno.getAluno());
+		JTDataNasc.setText(new SimpleDateFormat("dd-mm-yyyy").format(aluno.getDataNascimento()));
+		JTTel.setText(aluno.getTelefone());
+		JTEmail.setText(aluno.getEmail());
+		JTEndereco.setText(aluno.getEndereco());
+		JTComplemento.setText(aluno.getComplemento());
+		JTBairro.setText(aluno.getBairro());
+		JTEstado.setText(aluno.getEstado());
+		JTCEP.setText(aluno.getCep());
+		JTNumero.setText(aluno.getNumero());
+		JTCidade.setText(aluno.getCidade());
+		JTPais.setText(aluno.getPais());
+		JTCel.setText(aluno.getCelular());
+		JTObs.setText(aluno.getObservacao());
+		JTCel.setText(aluno.getCelular());	
+		ComboSexo.setSelectedIndex((aluno.getSexo() == 'M') ? 1 : 2);
 		
-	}
-	
-	private void applyFields() {
+		alunoChange = aluno;
 		
 	}
 
@@ -80,12 +80,8 @@ public class CadastroAlunos extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				BuscarAluno busca = new BuscarAluno();
-				try {
-					aluno = new AlunoDAO().getOneAluno(busca.codAluno);
-					fillFields();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+				aluno = busca.alunoReturn;
+				fillFields();
 
 			}
 		});
@@ -93,10 +89,247 @@ public class CadastroAlunos extends JInternalFrame {
 		btnSearch.setHorizontalTextPosition(SwingConstants.RIGHT);
 		/* btnSearch.setMargin(0, 0, 0, 0); */
 		btnSearch.setBounds(10, 10, 120, 35);
-		getContentPane().add(btnSearch);
+		getContentPane().add(btnSearch);		
+		
+		JTAluno = new JTextField();
+		JTAluno.addFocusListener(new FocusAdapter() {
+			
+			public void focusLost(FocusEvent e) {
+				alunoChange.setAluno(JTAluno.getText());
+			}
+			
+		});
+		JTAluno.setBounds(135, 50, 250, 26);
+		getContentPane().add(JTAluno);
+
+		JTDataNasc = new JTextField();
+		JTDataNasc.addFocusListener(new FocusAdapter() {
+			
+			public void focusLost(FocusEvent e) {
+				try {
+					alunoChange.setDataNascimento(new SimpleDateFormat("dd-mm-yyyy").parse(JTDataNasc.getText()));
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
+			}
+			
+		});
+		JTDataNasc.setBounds(135, 80, 250, 26);
+		getContentPane().add(JTDataNasc);
+
+		JTTel = new JTextField();
+		JTTel.addFocusListener(new FocusAdapter() {
+			
+			public void focusLost(FocusEvent e) {
+				alunoChange.setTelefone(JTTel.getText());
+			}
+			
+		});
+		JTTel.setBounds(135, 110, 250, 26);
+		getContentPane().add(JTTel);
+
+		JTEmail = new JTextField();
+		JTEmail.addFocusListener(new FocusAdapter() {
+			
+			public void focusLost(FocusEvent e) {
+				alunoChange.setEmail(JTEmail.getText());
+			}
+			
+		});
+		JTEmail.setBounds(135, 140, 250, 26);
+		getContentPane().add(JTEmail);
+
+		JTEndereco = new JTextField();
+		JTEndereco.addFocusListener(new FocusAdapter() {
+			
+			public void focusLost(FocusEvent e) {
+				alunoChange.setEndereco(JTEndereco.getText());
+			}
+			
+		});
+		JTEndereco.setBounds(100, 315, 250, 26);
+		getContentPane().add(JTEndereco);
+
+		JTComplemento = new JTextField();
+		JTComplemento.addFocusListener(new FocusAdapter() {
+			
+			public void focusLost(FocusEvent e) {
+				alunoChange.setComplemento(JTComplemento.getText());
+			}
+			
+		});
+		JTComplemento.setBounds(100, 345, 570, 26);
+		getContentPane().add(JTComplemento);
+
+		JTBairro = new JTextField();
+		JTBairro.addFocusListener(new FocusAdapter() {
+			
+			public void focusLost(FocusEvent e) {
+				alunoChange.setBairro(JTBairro.getText());
+			}
+			
+		});
+		JTBairro.setBounds(100, 375, 250, 26);
+		getContentPane().add(JTBairro);
+
+		JTEstado = new JTextField();
+		JTEstado.addFocusListener(new FocusAdapter() {
+			
+			public void focusLost(FocusEvent e) {
+				alunoChange.setEstado(JTEstado.getText());
+			}
+			
+		});
+		JTEstado.setBounds(100, 405, 250, 26);
+		getContentPane().add(JTEstado);
+
+		JTCEP = new JTextField();
+		JTCEP.addFocusListener(new FocusAdapter() {
+			
+			public void focusLost(FocusEvent e) {
+				alunoChange.setCep(JTCEP.getText());
+			}
+			
+		});
+		JTCEP.setBounds(100, 435, 250, 26);
+		getContentPane().add(JTCEP);
+
+		JTNumero = new JTextField();
+		JTNumero.addFocusListener(new FocusAdapter() {
+			
+			public void focusLost(FocusEvent e) {
+				alunoChange.setNumero(JTNumero.getText());
+			}
+			
+		});
+		JTNumero.setBounds(420, 315, 250, 26);
+		getContentPane().add(JTNumero);
+
+		JTCidade = new JTextField();
+		JTCidade.addFocusListener(new FocusAdapter() {
+			
+			public void focusLost(FocusEvent e) {
+				alunoChange.setCidade(JTCidade.getText());
+			}
+			
+		});
+		JTCidade.setBounds(420, 375, 250, 26);
+		getContentPane().add(JTCidade);
+
+		JTPais = new JTextField();
+		JTPais.addFocusListener(new FocusAdapter() {
+			
+			public void focusLost(FocusEvent e) {
+				alunoChange.setPais(JTPais.getText());
+			}
+			
+		});
+		JTPais.setBounds(420, 405, 250, 26);
+		getContentPane().add(JTPais);
+
+		JTCel = new JTextField();
+		JTCel.addFocusListener(new FocusAdapter() {
+			
+			public void focusLost(FocusEvent e) {
+				alunoChange.setCelular(JTCel.getText());
+			}
+			
+		});
+		JTCel.setBounds(435, 110, 235, 26);
+		getContentPane().add(JTCel);
+
+		JTObs = new JTextArea();
+		JTObs.addFocusListener(new FocusAdapter() {
+			
+			public void focusLost(FocusEvent e) {
+				alunoChange.setObservacao(JTObs.getText());
+			}
+			
+		});
+		getContentPane().add(JTObs);
+		JTObs.setLineWrap(true);
+
+		JScrollPane sp = new JScrollPane(JTObs);
+		sp.setBounds(10, 210, 657, 70);
+		sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		this.getContentPane().add(sp);
+
+		ComboSexo = new JComboBox<String>();
+		ComboSexo.addFocusListener(new FocusAdapter() {
+			
+			public void focusLost(FocusEvent e) {
+				if(ComboSexo.getSelectedIndex()>0) {
+					alunoChange.setSexo((ComboSexo.getSelectedIndex() == 1) ? 'M' : 'F');
+				}else {
+					alunoChange.setSexo(' ');
+				}
+			}
+			
+		});
+		ComboSexo.addItem("--Selecione--");
+		ComboSexo.addItem("Masculino");
+		ComboSexo.addItem("Feminino");
+		ComboSexo.setBounds(435, 80, 235, 26);
+		getContentPane().add(ComboSexo);
 
 
-		Aluno = new JLabel("Aluno:");
+		// Botao Add
+		btnAdd = new JButton("Adicionar", new ImageIcon(System.getProperty("user.dir") + "\\images\\22x22\\adicionar.png"));
+		btnAdd.addActionListener(new AbstractAction() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//A função precisa ser mudada para aceitar um model para dar insert em todos campos de uma vez
+				//alunoDao.createAluno(alunoChange);								
+				
+			}
+		});
+		btnAdd.setHorizontalAlignment(SwingConstants.LEFT);
+		btnAdd.setHorizontalTextPosition(SwingConstants.RIGHT);
+		/* btnAdd.setMargin(new Insets(0, 0, 0, 0)); */
+		btnAdd.setBounds(130, 10, 120, 35);
+		getContentPane().add(btnAdd);
+
+		// Botao Add
+		btnDelete = new JButton("Remover", new ImageIcon(System.getProperty("user.dir") + "\\images\\22x22\\remover.png"));
+		btnDelete.addActionListener(new AbstractAction() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(alunoChange != null) {
+					try {
+						alunoDao.deleteAluno(alunoChange.getcodigoAluno());
+					} catch (SQLException e1) {
+					}
+				}				
+			}
+		});
+		btnDelete.setHorizontalAlignment(SwingConstants.LEFT);
+		btnDelete.setHorizontalTextPosition(SwingConstants.RIGHT);
+		/* btnDelete.setMargin(new Insets(0, 0, 0, 0)); */
+		btnDelete.setBounds(250, 10, 120, 35);
+		getContentPane().add(btnDelete);
+
+		// Botao Add
+		btnSave = new JButton("Salvar", new ImageIcon(System.getProperty("user.dir") + "\\images\\22x22\\salvar.png"));
+		btnSave.addActionListener(new AbstractAction() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				//A função precisa ser mudada para aceitar um model para dar Update em todos campos de uma vez
+				//alunoDao.updateAluno(alunoChange);				
+			}
+		});
+		btnSave.setHorizontalAlignment(SwingConstants.LEFT);
+		btnSave.setHorizontalTextPosition(SwingConstants.RIGHT);
+		/* btnSave.setMargin(new Insets(0, 0, 0, 0)); */
+		btnSave.setBounds(370, 10, 120, 35);
+		getContentPane().add(btnSave);
+		
+		
+		//labels
+		
+		Aluno = new JLabel("Aluno:");		
 		Aluno.setBounds(10, 10, 100, 100);
 		getContentPane().add(Aluno);
 
@@ -155,101 +388,6 @@ public class CadastroAlunos extends JInternalFrame {
 		Obs = new JLabel("Observações:");
 		Obs.setBounds(10, 130, 110, 100);
 		getContentPane().add(Obs);
-
-		JTAluno = new JTextField();
-		JTAluno.setBounds(135, 50, 250, 26);
-		getContentPane().add(JTAluno);
-
-		JTDataNasc = new JTextField();
-		JTDataNasc.setBounds(135, 80, 250, 26);
-		getContentPane().add(JTDataNasc);
-
-		JTTel = new JTextField();
-		JTTel.setBounds(135, 110, 250, 26);
-		getContentPane().add(JTTel);
-
-		JTEmail = new JTextField();
-		JTEmail.setBounds(135, 140, 250, 26);
-		getContentPane().add(JTEmail);
-
-		JTEndereco = new JTextField();
-		JTEndereco.setBounds(100, 315, 250, 26);
-		getContentPane().add(JTEndereco);
-
-		JTComplemento = new JTextField();
-		JTComplemento.setBounds(100, 345, 570, 26);
-		getContentPane().add(JTComplemento);
-
-		JTBairro = new JTextField();
-		JTBairro.setBounds(100, 375, 250, 26);
-		getContentPane().add(JTBairro);
-
-		JTEstado = new JTextField();
-		JTEstado.setBounds(100, 405, 250, 26);
-		getContentPane().add(JTEstado);
-
-		JTCEP = new JTextField();
-		JTCEP.setBounds(100, 435, 250, 26);
-		getContentPane().add(JTCEP);
-
-		JTNumero = new JTextField();
-		JTNumero.setBounds(420, 315, 250, 26);
-		getContentPane().add(JTNumero);
-
-		JTCidade = new JTextField();
-		JTCidade.setBounds(420, 375, 250, 26);
-		getContentPane().add(JTCidade);
-
-		JTPais = new JTextField();
-		JTPais.setBounds(420, 405, 250, 26);
-		getContentPane().add(JTPais);
-
-		JTCel = new JTextField();
-		JTCel.setBounds(435, 110, 235, 26);
-		getContentPane().add(JTCel);
-
-		JTObs = new JTextArea();
-		getContentPane().add(JTObs);
-		JTObs.setLineWrap(true);
-
-		JScrollPane sp = new JScrollPane(JTObs);
-		sp.setBounds(10, 210, 657, 70);
-		sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		this.getContentPane().add(sp);
-
-		ComboSexo = new JComboBox<String>();
-		ComboSexo.addItem("--Selecione--");
-		ComboSexo.addItem("Masculino");
-		ComboSexo.addItem("Feminino");
-		ComboSexo.setBounds(435, 80, 235, 26);
-		getContentPane().add(ComboSexo);
-
-
-		// Botao Add
-		btnAdd = new JButton("Adicionar",
-				new ImageIcon(System.getProperty("user.dir") + "\\images\\22x22\\adicionar.png"));
-		btnAdd.setHorizontalAlignment(SwingConstants.LEFT);
-		btnAdd.setHorizontalTextPosition(SwingConstants.RIGHT);
-		/* btnAdd.setMargin(new Insets(0, 0, 0, 0)); */
-		btnAdd.setBounds(130, 10, 120, 35);
-		getContentPane().add(btnAdd);
-
-		// Botao Add
-		btnDelete = new JButton("Remover",
-				new ImageIcon(System.getProperty("user.dir") + "\\images\\22x22\\remover.png"));
-		btnDelete.setHorizontalAlignment(SwingConstants.LEFT);
-		btnDelete.setHorizontalTextPosition(SwingConstants.RIGHT);
-		/* btnDelete.setMargin(new Insets(0, 0, 0, 0)); */
-		btnDelete.setBounds(250, 10, 120, 35);
-		getContentPane().add(btnDelete);
-
-		// Botao Add
-		btnSave = new JButton("Salvar", new ImageIcon(System.getProperty("user.dir") + "\\images\\22x22\\salvar.png"));
-		btnSave.setHorizontalAlignment(SwingConstants.LEFT);
-		btnSave.setHorizontalTextPosition(SwingConstants.RIGHT);
-		/* btnSave.setMargin(new Insets(0, 0, 0, 0)); */
-		btnSave.setBounds(370, 10, 120, 35);
-		getContentPane().add(btnSave);
 
 	}
 
