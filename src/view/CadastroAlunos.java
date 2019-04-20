@@ -45,6 +45,7 @@ public class CadastroAlunos extends JInternalFrame {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		createComponnents();
 		setVisible(true);
+		
 	}
 	
 	private void fillFields() {
@@ -87,7 +88,6 @@ public class CadastroAlunos extends JInternalFrame {
 		});
 		btnSearch.setHorizontalAlignment(SwingConstants.LEFT);
 		btnSearch.setHorizontalTextPosition(SwingConstants.RIGHT);
-		/* btnSearch.setMargin(0, 0, 0, 0); */
 		btnSearch.setBounds(10, 10, 120, 35);
 		getContentPane().add(btnSearch);		
 		
@@ -390,5 +390,5 @@ public class CadastroAlunos extends JInternalFrame {
 		getContentPane().add(Obs);
 
 	}
-
+	
 }
