@@ -67,26 +67,21 @@ public class BuscarAluno extends JFrame {
 				// TODO Auto-generated method stub
 
 				try {
-					alunos = alunoDao.getAllAlunos(); 
-					int codigo;
-					String nome;
+					if(campos.getSelectedIndex()==1) {
+						alunos = alunoDao.getAllAlunos();
+						for(int i = 0; i < alunos.size(); i++) {
 
-					for(int i = 0; i < alunos.size(); i++) {
-
-						codigo = alunos.get(i).getcodigoAluno();
-						nome = alunos.get(i).getAluno();
-
-						if(campos.getSelectedIndex() > 0) {
-							if(utils.compareStrings(nome, jTxtBusca.getText())) {
-								InsertAluno(codigo, nome);
+							if(campos.getSelectedIndex() > 0) {
+								if(utils.compareStrings(alunos.get(i).getAluno(), jTxtBusca.getText())) {
+									InsertAluno(alunos.get(i).getcodigoAluno(), alunos.get(i).getAluno());
+								}
 							}
-						}else {
-							if(codigo == Integer.parseInt(jTxtBusca.getText())) {
-								InsertAluno(codigo, nome);
-							}
+
 						}
-
-					}
+					}else {						
+						alunoReturn = alunoDao.getOneAluno(Integer.parseInt(jTxtBusca.getText()));
+						InsertAluno(alunoReturn.getcodigoAluno(), alunoReturn.getAluno());
+					}		
 
 
 				} catch (SQLException e1) {
