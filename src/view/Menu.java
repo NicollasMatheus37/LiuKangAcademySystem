@@ -31,7 +31,6 @@ public class Menu extends JFrame {
 	private Planos frameCinco;
 	private MatricularAlunos frameSeis;
 	private Faturamento frameSete;
-	private RelatorioMatricula frameOito;
 	private Faturas frameNove;
 	private Utilitarios frameDez;
 	private Ajuda frameOnze;
@@ -170,25 +169,7 @@ public class Menu extends JFrame {
 			}
 		});
 
-		matriculas = new JMenuItem("Matriculas");
-		matriculas.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent evt) {
-
-				fecharJanelaAberta();
-				janelaAberta = 8;
-
-				try {
-					frameOito = new RelatorioMatricula();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				frameOito.setVisible(true);
-				desktopPane.add(frameOito);
-
-			}
-		});
+		
 
 		faturas = new JMenu("Faturas");
 		faturas.addActionListener(new ActionListener() {
@@ -347,15 +328,6 @@ public class Menu extends JFrame {
 		processos.add(faturamento);
 		menuBar.add(processos);
 
-		relatorios = new JMenu("Relatórios");
-
-		relatorios.add(matriculas);
-		relatorios.add(faturas);
-
-		faturas.add(faturasemaberto);
-		faturas.add(faturaspagas);
-
-		menuBar.add(relatorios);
 
 		utilitarios = new JMenu("Utilitários");
 		utilitarios.add(utility);
@@ -377,6 +349,8 @@ public class Menu extends JFrame {
 		setResizable(true);
 		setContentPane(CreateContentPane());
 		FramePrincipal();
+		ImageIcon imagemTituloJanela = new ImageIcon("Images/background/lkicon.png");
+		setIconImage(imagemTituloJanela.getImage());
 		setVisible(true);
 	}
 
@@ -437,10 +411,6 @@ public class Menu extends JFrame {
 
 		case 7:
 			frameSete.dispose();
-			break;
-
-		case 8:
-			frameOito.dispose();
 			break;
 
 		case 9:
