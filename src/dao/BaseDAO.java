@@ -29,8 +29,8 @@ public abstract class BaseDAO {
 		return this;
 	}
 	
-	protected BaseDAO setValue(String field, String value) {
-		this.setSql(this.getSql() + "SET " + field + "=" + value);
+	protected BaseDAO setValue(String fields) {
+		this.setSql(this.getSql() + "SET " + fields);
 		return this;
 	}
 	

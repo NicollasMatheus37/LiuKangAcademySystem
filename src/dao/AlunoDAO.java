@@ -53,7 +53,7 @@ public class AlunoDAO extends BaseDAO {
 					.setCelular(result.getString("celular"))
 					.setCep(result.getString("cep"))
 					.setCidade(result.getString("cidade"))
-					.setCodigoAluno(result.getInt("codigoAluno"))
+					.setCodigoAluno(result.getInt("codigo"))
 					.setComplemento(result.getString("complemento"))
 					.setDataNascimento(result.getDate("data_nascimento"))
 					.setEmail(result.getString("email"))
@@ -66,15 +66,50 @@ public class AlunoDAO extends BaseDAO {
 					.setTelefone(result.getString("telefone"));
 	}
 	
-	public void createAluno(String fields, String values) throws SQLException {
+	public void createAluno(AlunoModel aluno) throws SQLException {
+		String fields = "aluno, bairro, celular, cep, cidade, codigo, complemento, data_nascimento, email, endereco, " +
+	"estado, numero, observacao, pais, sexo, telefone";
 		this.insertInto("alunos", fields)
-			.values(values)
+			.values(
+					aluno.getAluno()+","+
+					aluno.getBairro()+","+
+					aluno.getCelular()+","+
+					aluno.getCep()+","+
+					aluno.getCidade()+","+
+					Integer.toString(aluno.getcodigoAluno())+","+
+					aluno.getComplemento()+","+
+					aluno.getEmail()+","+
+					aluno.getEndereco()+","+
+					aluno.getEstado()+","+
+					aluno.getNumero()+","+
+					aluno.getObservacao()+","+
+					aluno.getPais()+","+
+					aluno.getSexo()+","+
+					aluno.getTelefone()+","+
+					aluno.getDataNascimento())
 			.commit();
 	}
 	
-	public void updateAluno(String fields, String value, Integer id) throws SQLException {
+	public void updateAluno(AlunoModel aluno, Integer id) throws SQLException {
 		this.update("alunos")
-			.setValue(fields, value)
+			.setValue(
+					"aluno = "+aluno.getAluno()+
+					", bairro = "+aluno.getBairro()+
+					", celular = "+aluno.getCelular()+
+					", cep = "+aluno.getCep()+
+					", cidade = "+ aluno.getCidade()+
+					", codigo = "+aluno.getcodigoAluno()+
+					", complemento = "+aluno.getComplemento()+
+					", data_nascimento = "+aluno.getDataNascimento()+
+					", email = "+aluno.getEmail()+
+					", endereco = "+aluno.getEndereco()+
+					", estado = "+aluno.getEstado()+
+					", numero = "+aluno.getNumero()+
+					", observacao = "+aluno.getObservacao()+
+					", pais = "+aluno.getPais()+
+					", sexo = "+aluno.getSexo()+
+					", telefone = "+aluno.getTelefone()
+					)
 			.where("id", "=", id.toString())
 			.commit();
 	}
