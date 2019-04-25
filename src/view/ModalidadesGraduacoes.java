@@ -1,65 +1,24 @@
 package view;
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Insets;
-import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.IOException;
-import java.text.ParseException;
-
-import javax.management.modelmbean.ModelMBean;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JDesktopPane;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-import javax.swing.LookAndFeel;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.SizeRequirements;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
-public class ModalidadesGraduacoes extends JInternalFrame {
+public class ModalidadesGraduacoes extends MasterDialogCad {
 
-		// Botoes
-		private JButton btnAdd;
-		private JButton btnSearch;	
-		private JButton btnDelete;
-		private JButton btnSave;
 		private JButton btnOk;
-		
-		// icones
-		private Icon icAdd;
-		private Icon icSearch;
-		private Icon icDelete;
-		private Icon icSave;
 		
 		//labels
 		private JLabel infoLabel[] = new JLabel[3];
@@ -92,42 +51,6 @@ public class ModalidadesGraduacoes extends JInternalFrame {
 	}
 
 	public void createComponnents() {
-		
-		//Botao btnSearch
-		btnSearch = new JButton("Buscar", new ImageIcon(System.getProperty("user.dir")+"\\images\\22x22\\localizar.png"));
-		btnSearch.setHorizontalAlignment(SwingConstants.LEFT);
-		btnSearch.setHorizontalTextPosition(SwingConstants.RIGHT);
-		btnSearch.setMargin(new Insets(0, 0, 0, 0));
-		btnSearch.setBounds(10, 10, 120, 35);
-		getContentPane().add(btnSearch);
-		
-		//Botao Add
-		btnAdd = new JButton("Adicionar", new ImageIcon(System.getProperty("user.dir")+"\\images\\22x22\\adicionar.png"));
-		btnAdd.setHorizontalAlignment(SwingConstants.LEFT);
-		btnAdd.setHorizontalTextPosition(SwingConstants.RIGHT);
-		btnAdd.setMargin(new Insets(0, 0, 0, 0));
-		btnAdd.setBounds(130, 10, 120, 35);
-		getContentPane().add(btnAdd);
-		
-		
-		
-		//Botao Add
-		btnDelete = new JButton("Remover", new ImageIcon(System.getProperty("user.dir")+"\\images\\22x22\\remover.png"));
-		btnDelete.setHorizontalAlignment(SwingConstants.LEFT);
-		btnDelete.setHorizontalTextPosition(SwingConstants.RIGHT);
-		btnDelete.setMargin(new Insets(0, 0, 0, 0));
-		btnDelete.setBounds(250, 10, 120, 35);
-		getContentPane().add(btnDelete);
-		
-		//Botao Add
-		btnSave = new JButton("Salvar", new ImageIcon(System.getProperty("user.dir")+"\\images\\22x22\\salvar.png"));
-		btnSave.setHorizontalAlignment(SwingConstants.LEFT);
-		btnSave.setHorizontalTextPosition(SwingConstants.RIGHT);
-		btnSave.setMargin(new Insets(0, 0, 0, 0));
-		btnSave.setBounds(370, 10, 120, 35);
-		getContentPane().add(btnSave);
-		
-
 		
 		//add - labels
 		infoLabel[0] = new JLabel("Modalidade: ");

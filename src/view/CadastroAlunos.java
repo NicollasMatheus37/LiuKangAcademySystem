@@ -8,10 +8,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -22,9 +19,8 @@ import javax.swing.SwingConstants;
 import dao.AlunoDAO;
 import model.AlunoModel;
 
-public class CadastroAlunos extends JInternalFrame {
+public class CadastroAlunos extends MasterDialogCad {
 
-	private JButton btnSearch, btnAdd, btnDelete, btnSave;
 	private JLabel Aluno, DataNasc, Tel, Email, Obs, Endereco, Complemento, Bairro, Estado, CEP, Numero, Cidade, Pais,
 	Sexo, Celular;
 	private JTextField JTAluno, JTDataNasc, JTTel, JTEmail, JTEndereco, JTComplemento, JTBairro, JTEstado, JTCEP,
@@ -74,8 +70,7 @@ public class CadastroAlunos extends JInternalFrame {
 	private void createComponnents() {
 
 		// Botao btnSearch
-		btnSearch = new JButton("Buscar",
-				new ImageIcon(System.getProperty("user.dir") + "\\images\\22x22\\localizar.png"));
+		
 		btnSearch.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -273,8 +268,6 @@ public class CadastroAlunos extends JInternalFrame {
 		getContentPane().add(ComboSexo);
 
 
-		// Botao Add
-		btnAdd = new JButton("Adicionar", new ImageIcon(System.getProperty("user.dir") + "\\images\\22x22\\adicionar.png"));
 		btnAdd.addActionListener(new AbstractAction() {
 			
 			@Override
@@ -284,14 +277,7 @@ public class CadastroAlunos extends JInternalFrame {
 				
 			}
 		});
-		btnAdd.setHorizontalAlignment(SwingConstants.LEFT);
-		btnAdd.setHorizontalTextPosition(SwingConstants.RIGHT);
-		/* btnAdd.setMargin(new Insets(0, 0, 0, 0)); */
-		btnAdd.setBounds(130, 10, 120, 35);
-		getContentPane().add(btnAdd);
 
-		// Botao Add
-		btnDelete = new JButton("Remover", new ImageIcon(System.getProperty("user.dir") + "\\images\\22x22\\remover.png"));
 		btnDelete.addActionListener(new AbstractAction() {
 			
 			@Override
@@ -304,14 +290,7 @@ public class CadastroAlunos extends JInternalFrame {
 				}				
 			}
 		});
-		btnDelete.setHorizontalAlignment(SwingConstants.LEFT);
-		btnDelete.setHorizontalTextPosition(SwingConstants.RIGHT);
-		/* btnDelete.setMargin(new Insets(0, 0, 0, 0)); */
-		btnDelete.setBounds(250, 10, 120, 35);
-		getContentPane().add(btnDelete);
 
-		// Botao Add
-		btnSave = new JButton("Salvar", new ImageIcon(System.getProperty("user.dir") + "\\images\\22x22\\salvar.png"));
 		btnSave.addActionListener(new AbstractAction() {
 			
 			@Override
@@ -320,11 +299,6 @@ public class CadastroAlunos extends JInternalFrame {
 				//alunoDao.updateAluno(alunoChange);				
 			}
 		});
-		btnSave.setHorizontalAlignment(SwingConstants.LEFT);
-		btnSave.setHorizontalTextPosition(SwingConstants.RIGHT);
-		/* btnSave.setMargin(new Insets(0, 0, 0, 0)); */
-		btnSave.setBounds(370, 10, 120, 35);
-		getContentPane().add(btnSave);
 		
 		
 		//labels
