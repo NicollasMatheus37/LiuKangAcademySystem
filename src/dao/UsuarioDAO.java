@@ -2,24 +2,43 @@ package dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
+import model.AssiduidadeModel;
+import model.UsuarioModel;
 
 public class UsuarioDAO extends BaseDAO {
 	
-	public ResultSet getAllUsuarios() throws SQLException{
+	public ArrayList<UsuarioModel> getAllUsuarios() throws SQLException{
 		ResultSet result = null;
 		result = this.select("*")
 			.from("usuario")
 			.apply();
-		return result;
+		
+		result.first();
+		
+		ArrayList<UsuarioModel> usuarioList = new ArrayList<UsuarioModel>();
+		while((result.getRow() != 0) && (!result.isAfterLast())) {
+			usuarioList.add(new UsuarioModel()
+					
+					.setPerfil(result.getString("perfil"))
+					.setUsuario(result.getInt("usuario"))
+					);
+					result.next();
+					}
+					return usuarioList;
 	}
 	
-	public ResultSet getOneUsuario(Integer id) throws SQLException{
+	public UsuarioModel getOneUsuario(Integer id) throws SQLException{
 		ResultSet result = null;
 		result = this.select("*")
 			.from("usuario")
 			.where("id", "=", id.toString())
 			.apply();
-		return result;
+		
+		UsuarioModel usuario = new UsuarioModel();
+		return usuario .setPerfil(result.getString("perfil"))
+				.setUsuario(result.getInt("usuario"));
 	}
 	
 	public void createUsuario(String fields, String values) throws SQLException{

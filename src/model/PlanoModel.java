@@ -27,11 +27,11 @@ package model;
 		return this;
 	}	
 
- 	public float getValor_mensal() {	
+ 	public float getValorMensal() {	
 		return valor_mensal;	
 	}	
 
- 	public PlanoModel setValor_mensal(float valor_mensal) {	
+ 	public PlanoModel setValorMensal(float valor_mensal) {	
 		this.valor_mensal = valor_mensal;	
 		return this;
 	}	

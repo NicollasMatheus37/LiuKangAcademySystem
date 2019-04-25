@@ -1,15 +1,14 @@
 package dao;
 
-import java.awt.List;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Map;
 import model.AlunoModel;
 
 public class AlunoDAO extends BaseDAO {
 
-	public ArrayList getAllAlunos() throws SQLException {
+	public ArrayList<AlunoModel> getAllAlunos() throws SQLException {
 		ResultSet result = null;
 		result = this.select("*")
 			.from("alunos")

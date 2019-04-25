@@ -2,24 +2,41 @@ package dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
+import model.AssiduidadeModel;
+import model.ModalidadeModel;
 
 public class ModalidadeDAO extends BaseDAO {
 
-	public ResultSet getAllModalidades() throws SQLException{
+	public ArrayList<ModalidadeModel> getAllModalidades() throws SQLException{
 		ResultSet result = null;
 		result = this.select("*")
 			.from("modalidades")
 			.apply();
-		return result;
+		
+		result.first();
+		
+		ArrayList<ModalidadeModel> modalidadeList = new ArrayList<ModalidadeModel>();
+		while((result.getRow() != 0) && (!result.isAfterLast())) {
+			modalidadeList.add(new ModalidadeModel()
+					
+					.setModalidade(result.getString("modalidade"))
+					);
+					result.next();
+					}
+					return modalidadeList;
 	}
 	
-	public ResultSet getOneModalidade(Integer id) throws SQLException{
+	public ModalidadeModel getOneModalidade(Integer id) throws SQLException{
 		ResultSet result = null;
 		result = this.select("*")
 			.from("modalidades")
 			.where("id", "=", id.toString())
 			.apply();
-		return result;
+		
+		ModalidadeModel modalidade = new ModalidadeModel();
+		return modalidade .setModalidade(result.getString("modalidade"));
 	}
 	
 	public void createModalidade(String fields, String values) throws SQLException{

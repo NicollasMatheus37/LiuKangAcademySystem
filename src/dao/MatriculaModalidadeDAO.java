@@ -2,24 +2,51 @@ package dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
+import model.AssiduidadeModel;
+import model.MatriculaModalidadeModel;
 
 public class MatriculaModalidadeDAO extends BaseDAO {
 	
-	public ResultSet getAllMatriculasModalidades() throws SQLException{
+	public ArrayList<MatriculaModalidadeModel> getAllMatriculasModalidades() throws SQLException{
 		ResultSet result = null;
 		result = this.select("*")
 			.from("matriculas_modalidades")
 			.apply();
-		return result;
+			
+		result.first();
+		
+		ArrayList<MatriculaModalidadeModel> matriculaModalidadeList = new ArrayList<MatriculaModalidadeModel>();
+		while((result.getRow() != 0) && (!result.isAfterLast())) {
+			matriculaModalidadeList.add(new MatriculaModalidadeModel()
+					
+					.setCodigoMatricula(result.getInt("codigo_matricula"))
+					.setModalidade(result.getString("modalidade"))
+					.setGraduacao(result.getString("graduacao"))
+					.setPlano(result.getString("plano"))
+					.setDataInicio(result.getDate("data_inicio"))
+					.setDataFim(result.getDate("data_fim"))
+					);
+					result.next();
+					}
+					return matriculaModalidadeList;
 	}
 	
-	public ResultSet getOneMatriculaModalidade(Integer id) throws SQLException{
+	public MatriculaModalidadeModel getOneMatriculaModalidade(Integer id) throws SQLException{
 		ResultSet result = null;
 		result = this.select("*")
 			.from("matriculas_modalidades")
 			.where("id", "=", id.toString())
 			.apply();
-		return result;
+		
+		MatriculaModalidadeModel matriculaModalidade = new MatriculaModalidadeModel();
+		return matriculaModalidade.setCodigoMatricula(result.getInt("codigo_matricula"))
+				.setModalidade(result.getString("modalidade"))
+				.setGraduacao(result.getString("graduacao"))
+				.setPlano(result.getString("plano"))
+				.setDataInicio(result.getDate("data_inicio"))
+				.setDataFim(result.getDate("data_fim"));
 	}
 	
 	public void createMatriculaModalidade(String fields, String values) throws SQLException{
