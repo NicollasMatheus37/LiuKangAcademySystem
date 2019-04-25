@@ -12,20 +12,20 @@ package model;
 
 
 
- 	public int getCodigo_matricula() {	
+ 	public int getCodigoMatricula() {	
 		return codigo_matricula;	
 	}	
 
- 	public FaturaMatriculaModel setCodigo_matricula(int codigo_matricula) {	
+ 	public FaturaMatriculaModel setCodigoMatricula(int codigo_matricula) {	
 		this.codigo_matricula = codigo_matricula ;
 		return this;
 	}		
 
- 	public Date getData_vencimento() {	
+ 	public Date getDataVencimento() {	
 		return data_vencimento;	
 	}	
 
- 	public FaturaMatriculaModel setData_vencimento(Date data_vencimento) {	
+ 	public FaturaMatriculaModel setDataVencimento(Date data_vencimento) {	
 		this.data_vencimento = data_vencimento;	
 		return this;
 	}	
@@ -39,20 +39,20 @@ package model;
 		return this;
 	}	
 
- 	public Date getData_pagamento() {	
+ 	public Date getDataPagamento() {	
 		return data_pagamento;	
 	}	
 
- 	public FaturaMatriculaModel setData_pagamento(Date data_pagamento) {	
+ 	public FaturaMatriculaModel setDataPagamento(Date data_pagamento) {	
 		this.data_pagamento = data_pagamento;	
 		return this;
 	}	
 
- 	public Date getData_cancelamento() {	
+ 	public Date getDataCancelamento() {	
 		return data_cancelamento;	
 	}	
 
- 	public FaturaMatriculaModel setData_cancelamento(Date data_cancelamento) {	
+ 	public FaturaMatriculaModel setDataCancelamento(Date data_cancelamento) {	
 		this.data_cancelamento = data_cancelamento;	
 		return this;
 	}	

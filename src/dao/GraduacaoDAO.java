@@ -2,24 +2,44 @@ package dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import model.GraduacaoModel;
 
 public class GraduacaoDAO extends BaseDAO {
 	
-	public ResultSet getAllGraduacoes() throws SQLException{
+	public ArrayList<GraduacaoModel> getAllGraduacoes() throws SQLException{
 		ResultSet result = null;
 		result = this.select("*")
 			.from("graduacoes")
 			.apply();
-		return result;
+		
+		result.first();
+		
+		ArrayList<GraduacaoModel> graduacaoList = new ArrayList<GraduacaoModel>();
+			while((result.getRow() != 0) && (!result.isAfterLast())) {
+				graduacaoList.add(new GraduacaoModel()
+					.setModalidade(result.getString("modalidade"))
+					.setGraduacao(result.getString("graduacao"))
+					);
+				
+				result.next();
+					}
+			
+		return graduacaoList;
+				
 	}
 	
-	public ResultSet getOneGraduacao(Integer id) throws SQLException{
+	public GraduacaoModel getOneGraduacao(Integer id) throws SQLException{
 		ResultSet result = null;
 		result = this.select("*")
 			.from("graduacoes")
 			.where("id", "=", id.toString())
 			.apply();
-		return result;
+		
+		GraduacaoModel graduacao = new GraduacaoModel();
+		return graduacao.setModalidade(result.getString("modalidade"))
+						.setGraduacao(result.getString("graduacao"));
+		
 	}
 	
 	public void createGraduacao(String fields, String values) throws SQLException{
