@@ -2,24 +2,48 @@ package dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
+import model.AssiduidadeModel;
+import model.CidadeModel;
 
 public class CidadeDAO extends BaseDAO {
 
-	public ResultSet getAllCidades() throws SQLException {
+	public ArrayList<CidadeModel> getAllCidades() throws SQLException {
 		ResultSet result = null;
 		result = this.select("*")
 			.from("cidades")
 			.apply();
-		return result;
+		
+		
+	result.first();
+		
+		ArrayList<CidadeModel> cidadeList = new ArrayList<CidadeModel>();
+		while((result.getRow() != 0) && (!result.isAfterLast())) {
+			cidadeList.add(new CidadeModel()
+					
+					.setCidade(result.getString("cidade"))
+					.setEstado(result.getString("estado"))
+					.setPais(result.getString("pais"))
+					);
+					result.next();
+					}
+					return cidadeList;
 	}
 	
-	public ResultSet getOneCidade(Integer id) throws SQLException {
+	public CidadeModel getOneCidade(Integer id) throws SQLException {
 		ResultSet result = null;
 		result = this.select("*")
 			.from("cidades")
 			.where("id", "=", id.toString())
 			.apply();
-		return result;
+		
+		CidadeModel cidade = new CidadeModel();
+		return cidade.setCidade(result.getString("cidade"))
+					 .setEstado(result.getString("estado"))
+					 .setPais(result.getString("pais"));
+						 
+		
 	}
 	
 	public void createCidade(String fields, String values) throws SQLException {

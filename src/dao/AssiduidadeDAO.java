@@ -2,24 +2,44 @@ package dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import model.AssiduidadeModel;
 
 public class AssiduidadeDAO extends BaseDAO {
 	
-	public ResultSet getAllAssiduidades() throws SQLException {
+ 	public ArrayList<AssiduidadeModel> getAllAssiduidades() throws SQLException {
 		ResultSet result = null;
 		result = this.select("*")
 			.from("assiduidade")
 			.apply();
-		return result;
+
+		result.first();
+		
+		ArrayList<AssiduidadeModel> assiduidadeList = new ArrayList<AssiduidadeModel>();
+		while((result.getRow() != 0) && (!result.isAfterLast())) {
+			assiduidadeList.add(new AssiduidadeModel()
+					
+					.setCodigoMatricula(result.getInt("codigo_matricula"))
+					.setDataEntrada(result.getDate("data_entrada"))
+					);
+					result.next();
+					}
+					return assiduidadeList;
+				
 	}
 	
-	public ResultSet getOneAssiduidade(Integer id) throws SQLException {
+	public AssiduidadeModel getOneAssiduidade(Integer id) throws SQLException {
 		ResultSet result = null;
 		result = this.select("*")
 			.from("assiduidade")
 			.where("id", "=", id.toString())
 			.apply();
-		return result;
+		
+		AssiduidadeModel assiduidade = new AssiduidadeModel();
+		return assiduidade.setCodigoMatricula(result.getInt("codigo_matricula"))
+						  .setDataEntrada(result.getDate("data_entrada"));
+						 
+					
 	}
 	
 	public void createAssiduidade(String fields, String values) throws SQLException {
