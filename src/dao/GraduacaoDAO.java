@@ -42,15 +42,23 @@ public class GraduacaoDAO extends BaseDAO {
 		
 	}
 	
-	public void createGraduacao(String fields, String values) throws SQLException{
+	public void createGraduacao(GraduacaoModel graduacao) throws SQLException{
+		String fields = "modalidade, graduacao";
 		this.insertInto("graduacoes", fields)
-		.values(values)
+		.values(
+				graduacao.getModalidade()+","+
+				graduacao.getGraduacao()
+				)
 		.commit();
 	}
 	
-	public void updateGraduacao(String fields, String value, Integer id) throws SQLException{
+	public void updateGraduacao(GraduacaoModel graduacao, Integer id) throws SQLException{
 		this.update("graduacoes")
-		.setValue(fields, value)
+		.setValue(
+				  "modalidade = "+graduacao.getModalidade()+
+				  "graduacao = "+graduacao.getGraduacao()
+				
+				)
 		.where("id", "=", id.toString())
 		.commit();
 	}

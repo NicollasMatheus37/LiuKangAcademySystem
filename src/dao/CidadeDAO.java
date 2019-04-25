@@ -3,8 +3,6 @@ package dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import model.AssiduidadeModel;
 import model.CidadeModel;
 
 public class CidadeDAO extends BaseDAO {
@@ -46,15 +44,25 @@ public class CidadeDAO extends BaseDAO {
 		
 	}
 	
-	public void createCidade(String fields, String values) throws SQLException {
+	public void createCidade(CidadeModel cidade) throws SQLException {
+		String fields = "cidade, estado, pais";
 		this.insertInto("cidades", fields)
-		.values(values)
+		.values(
+				cidade.getCidade()+","+
+				cidade.getEstado()+","+
+				cidade.getPais()
+				)
 		.commit();
 	}
 	
-	public void updateCidade(String fields, String value, Integer id) throws SQLException {
+	public void updateCidade(CidadeModel cidade, Integer id) throws SQLException {
 		this.update("cidades")
-		.setValue(fields, value)
+		.setValue(
+				  "cidade = "+cidade.getCidade()+
+				  "estado = "+cidade.getEstado()+
+				  "pais = "+cidade.getPais()
+				
+				 )
 		.where("id", "=", id.toString())
 		.commit();
 	}

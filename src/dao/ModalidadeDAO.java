@@ -3,8 +3,6 @@ package dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import model.AssiduidadeModel;
 import model.ModalidadeModel;
 
 public class ModalidadeDAO extends BaseDAO {
@@ -39,15 +37,20 @@ public class ModalidadeDAO extends BaseDAO {
 		return modalidade .setModalidade(result.getString("modalidade"));
 	}
 	
-	public void createModalidade(String fields, String values) throws SQLException{
+	public void createModalidade(ModalidadeModel modalidade) throws SQLException{
+		String fields = "modalidade";
 		this.insertInto("modalidades", fields)
-		.values(values)
+		.values(
+				modalidade.getModalidade()
+				)
 		.commit();
 	}
 	
-	public void updateModalidade(String fields, String value, Integer id) throws SQLException{
+	public void updateModalidade(ModalidadeModel modalidade, Integer id) throws SQLException{
 		this.update("modalidades")
-		.setValue(fields, value)
+		.setValue(
+				"modalidade = "+modalidade.getModalidade()
+				)
 		.where("id", "=", id.toString())
 		.commit();
 	}

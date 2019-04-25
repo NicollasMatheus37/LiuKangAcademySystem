@@ -42,15 +42,25 @@ public class AssiduidadeDAO extends BaseDAO {
 					
 	}
 	
-	public void createAssiduidade(String fields, String values) throws SQLException {
+	public void createAssiduidade(AssiduidadeModel assiduidade) throws SQLException {
+		
+		String fields = "codigo_matricula, data_entrada";
 		this.insertInto("assiduidade", fields)
-			.values(values)
-			.apply();
+			.values(
+					Integer.toString(assiduidade.getCodigoMatricula())+","+
+					assiduidade.getPerfil()
+						)
+			.commit();
 	}
 	
-	public void updateAssiduidade(String fields, String value, Integer id) throws SQLException {
+	public void updateAssiduidade(AssiduidadeModel assiduidade, Integer id) throws SQLException {
 		this.update("assiduidade")
-		.setValue(fields, value)
+		
+		.setValue(
+				"codigo_matricula = "+ assiduidade.getCodigoMatricula()+
+				"data_entrega = "+assiduidade.getPerfil()
+				)
+		
 		.where("id", "=", id.toString())
 		.commit();;
 	}

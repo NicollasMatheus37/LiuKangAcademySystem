@@ -3,9 +3,6 @@ package dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import model.FaturaMatriculaModel;
-import model.GraduacaoModel;
 import model.MatriculaModel;
 
 public class MatriculaDAO extends BaseDAO {
@@ -50,15 +47,28 @@ public class MatriculaDAO extends BaseDAO {
 				.setDataEncerramento(result.getDate("data_encerramento"));
 	}
 	
-	public void createMatricula(String fields, String values) throws SQLException{
+	public void createMatricula(MatriculaModel matricula) throws SQLException{
+		String fields ="codigo_matricula, codigo_aluno,  data_matricula, dia_vencimento, data_encerramento";
 		this.insertInto("matriculas", fields)
-		.values(values)
+		.values(
+				Integer.toString(matricula.getCodigoMatricula())+","+
+				Integer.toString(matricula.getCodigoAluno())+","+
+				matricula.getDataMatricula()+","+
+				Integer.toString(matricula.getDiaVencimento())+","+
+				matricula.getDataEncerramento()	
+				)
 		.commit();
 	}
 	
-	public void updateMatricula(String fields, String value, Integer id) throws SQLException{
+	public void updateMatricula(MatriculaModel matricula, Integer id) throws SQLException{
 		this.update("matriculas")
-		.setValue(fields, value)
+		.setValue(
+				  "codigo_matricula = "+matricula.getCodigoMatricula()+
+				  "codigo_aluno = "+matricula.getCodigoAluno()+
+				  "data_matricula = "+matricula.getDataMatricula()+
+				  "dia_vencimento = "+matricula.getDiaVencimento()+
+				  "data_encerramento = "+matricula.getDataEncerramento()
+				)
 		.where("id", "=", id.toString())
 		.commit();
 	}
