@@ -89,7 +89,7 @@ public class AlunoDAO extends BaseDAO {
 			.commit();
 	}
 	
-	public void updateAluno(AlunoModel aluno, Integer id) throws SQLException {
+	public void updateAluno(AlunoModel aluno) throws SQLException {
 		this.update("alunos")
 			.setValue(
 					"aluno = "+aluno.getAluno()+
@@ -109,7 +109,7 @@ public class AlunoDAO extends BaseDAO {
 					", sexo = "+aluno.getSexo()+
 					", telefone = "+aluno.getTelefone()
 					)
-			.where("id", "=", id.toString())
+			.where("id", "=", Integer.toString((aluno.getcodigoAluno())))
 			.commit();
 	}
 	

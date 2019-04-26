@@ -21,7 +21,7 @@ public class ModalidadesGraduacoes extends MasterDialogCad {
 		private JButton btnOk;
 		
 		//labels
-		private JLabel infoLabel[] = new JLabel[3];
+		private JLabel lblModalidade, lblGraduacao, lblTip;
 		
 		//Text Fields
 		private JTextField txtModalidade, txtGraduacao;
@@ -39,31 +39,29 @@ public class ModalidadesGraduacoes extends MasterDialogCad {
 		setResizable(false);
 		setClosable(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		createComponnents();
-
 		getRootPane().setWindowDecorationStyle(JRootPane.NONE);
-
 		setVisible(true);
 	}
 	
 	public static void main(String [] Args) {
 		new ModalidadesGraduacoes();
 	}
+	
 
-	public void createComponnents() {
+	protected void subComponnents() {
 		
 		//add - labels
-		infoLabel[0] = new JLabel("Modalidade: ");
-		infoLabel[0].setBounds(10, 10, 350, 110);
-		getContentPane().add(infoLabel[0]);
+		lblModalidade = new JLabel("Modalidade: ");
+		lblModalidade.setBounds(10, 10, 350, 110);
+		getContentPane().add(lblModalidade);
 		
-		infoLabel[1] = new JLabel("Graduação: ");
-		infoLabel[1].setBounds(14, 10, 350, 170);
-		getContentPane().add(infoLabel[1]);
+		lblGraduacao = new JLabel("Graduação: ");
+		lblGraduacao.setBounds(14, 10, 350, 170);
+		getContentPane().add(lblGraduacao);
 		
-		infoLabel[2] = new JLabel("Duplo clique na linha de graduação para remové-la.");
-		infoLabel[2].setBounds(10, 10, 350, 570);
-		getContentPane().add(infoLabel[2]);
+		lblTip = new JLabel("Duplo clique na linha de graduação para remové-la.");
+		lblTip.setBounds(10, 10, 350, 570);
+		getContentPane().add(lblTip);
 		
 		//add - TextFields
 		txtModalidade = new JTextField();
@@ -135,6 +133,8 @@ public class ModalidadesGraduacoes extends MasterDialogCad {
 
 		setTitle("Modalidade e Graduações");
 		setVisible(true);
+		
+		btnCancel.setVisible(false);
 	
 	}
 	public boolean isCellEditable(int row, int col) {

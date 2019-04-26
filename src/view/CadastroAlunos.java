@@ -7,14 +7,19 @@ import java.awt.event.FocusEvent;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import javax.swing.AbstractAction;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import javax.swing.text.MaskFormatter;
 
 import dao.AlunoDAO;
 import model.AlunoModel;
@@ -23,12 +28,14 @@ public class CadastroAlunos extends MasterDialogCad {
 
 	private JLabel Aluno, DataNasc, Tel, Email, Obs, Endereco, Complemento, Bairro, Estado, CEP, Numero, Cidade, Pais,
 	Sexo, Celular;
-	private JTextField JTAluno, JTDataNasc, JTTel, JTEmail, JTEndereco, JTComplemento, JTBairro, JTEstado, JTCEP,
+	private JTextField JTAluno, JTTel, JTEmail, JTEndereco, JTComplemento, JTBairro, JTEstado, JTCEP,
 	JTNumero, JTCidade, JTPais, JTCel;
+	JFormattedTextField JTDataNasc;
 	private JTextArea JTObs;
 	private JComboBox<String> ComboSexo;
 	private AlunoDAO alunoDao;
 	private AlunoModel aluno, alunoChange;
+	
 	
 
 	public CadastroAlunos() throws ParseException {
@@ -39,9 +46,32 @@ public class CadastroAlunos extends MasterDialogCad {
 		setResizable(false);
 		setClosable(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		createComponnents();
 		setVisible(true);
 		
+		
+	}
+	
+	protected boolean actionDelete() {
+		if(aluno!=null) {
+			try {
+				alunoDao.deleteAluno(aluno.getcodigoAluno());
+				return true;
+			} catch (SQLException e) {
+				return false;
+			}						
+		}else {
+			return false;
+		}
+	}
+	
+	protected boolean actionAdd() {
+		try {
+			aluno = new AlunoModel();
+			fillFields();
+			return true;
+		} catch (Exception e) {
+			return false;
+		}			
 	}
 	
 	private void fillFields() {
@@ -66,10 +96,12 @@ public class CadastroAlunos extends MasterDialogCad {
 		alunoChange = aluno;
 		
 	}
-
-	private void createComponnents() {
-
-		// Botao btnSearch
+	
+	protected void setFieldsEnabled(boolean enabled) {
+		utils.setFieldsEnabled(getContentPane(), enabled);
+	}
+	
+	protected void subComponnents() {
 		
 		btnSearch.addActionListener(new ActionListener() {
 
@@ -85,6 +117,7 @@ public class CadastroAlunos extends MasterDialogCad {
 		btnSearch.setHorizontalTextPosition(SwingConstants.RIGHT);
 		btnSearch.setBounds(10, 10, 120, 35);
 		getContentPane().add(btnSearch);		
+	
 		
 		JTAluno = new JTextField();
 		JTAluno.addFocusListener(new FocusAdapter() {
@@ -96,17 +129,24 @@ public class CadastroAlunos extends MasterDialogCad {
 		});
 		JTAluno.setBounds(135, 50, 250, 26);
 		getContentPane().add(JTAluno);
-
-		JTDataNasc = new JTextField();
+		
+		try {
+			JTDataNasc = new JFormattedTextField(new MaskFormatter("##-##-####"));
+		} catch (ParseException e2) {
+		}
+		JTDataNasc.setText(DateTimeFormatter.ofPattern("dd-MM-yyyy").format(LocalDate.now()));
 		JTDataNasc.addFocusListener(new FocusAdapter() {
 			
 			public void focusLost(FocusEvent e) {
-				try {
-					alunoChange.setDataNascimento(new SimpleDateFormat("dd-mm-yyyy").parse(JTDataNasc.getText()));
+/*				try {
+					if(!JTDataNasc.hasFocus()) {
+						alunoChange.setDataNascimento(new SimpleDateFormat("dd-mm-yyyy").parse(JTDataNasc.getText()));
+						JOptionPane.showMessageDialog(null,"Saiu");
+					}
 				} catch (ParseException e1) {
 					e1.printStackTrace();
 				}
-			}
+*/			}
 			
 		});
 		JTDataNasc.setBounds(135, 80, 250, 26);
@@ -278,25 +318,14 @@ public class CadastroAlunos extends MasterDialogCad {
 			}
 		});
 
-		btnDelete.addActionListener(new AbstractAction() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(alunoChange != null) {
-					try {
-						alunoDao.deleteAluno(alunoChange.getcodigoAluno());
-					} catch (SQLException e1) {
-					}
-				}				
-			}
-		});
-
 		btnSave.addActionListener(new AbstractAction() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				//A função precisa ser mudada para aceitar um model para dar Update em todos campos de uma vez
-				//alunoDao.updateAluno(alunoChange);				
+				try {
+					alunoDao.updateAluno(alunoChange);
+				} catch (SQLException e) {
+				}				
 			}
 		});
 		
@@ -307,7 +336,7 @@ public class CadastroAlunos extends MasterDialogCad {
 		Aluno.setBounds(10, 10, 100, 100);
 		getContentPane().add(Aluno);
 
-		DataNasc = new JLabel("Data de Nascimento:");
+		DataNasc = new JLabel("Data de Nascimento:");		
 		DataNasc.setBounds(10, 40, 150, 100);
 		getContentPane().add(DataNasc);
 
@@ -363,6 +392,7 @@ public class CadastroAlunos extends MasterDialogCad {
 		Obs.setBounds(10, 130, 110, 100);
 		getContentPane().add(Obs);
 
+
+		
 	}
-	
 }

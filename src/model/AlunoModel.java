@@ -21,6 +21,33 @@ public class AlunoModel {
 	private String estado;
 	private String pais;
 	private String cep;
+	
+	public AlunoModel() {
+		
+		Clean();	
+		
+	}
+	
+	public void Clean() {
+		
+		setCodigoAluno(0);
+		setAluno("");
+		setDataNascimento(new Date(0));
+		setSexo(' ');
+		setTelefone("");
+		setCelular("");
+		setEmail("");
+		setObservacao("");
+		setEndereco("");
+		setNumero("");
+		setComplemento("");
+		setBairro("");
+		setCidade("");
+		setEstado("");
+		setPais("");
+		setCep("");	
+		
+	}
 
 
 	public int getcodigoAluno() {

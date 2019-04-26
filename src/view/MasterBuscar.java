@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import dao.AlunoDAO;
 import model.AlunoModel;
 
-public class Buscar extends JFrame {
+public class MasterBuscar extends JFrame {
 
 	protected JTextField jTxtBusca;
 	private JButton btnOk;
@@ -33,7 +33,7 @@ public class Buscar extends JFrame {
 
 	
 
-	public Buscar() {
+	public MasterBuscar() {
 
 		alunoDao = new AlunoDAO();
 		utils = new Utils();

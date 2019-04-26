@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import model.AlunoModel;
 
-public class BuscarAluno extends Buscar {
+public class BuscarAluno extends MasterBuscar {
 	
 	public AlunoModel alunoReturn;
 	private ArrayList<AlunoModel> alunos;
