@@ -3,8 +3,6 @@ package dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import model.AssiduidadeModel;
 import model.MatriculaModalidadeModel;
 
 public class MatriculaModalidadeDAO extends BaseDAO {
@@ -49,15 +47,30 @@ public class MatriculaModalidadeDAO extends BaseDAO {
 				.setDataFim(result.getDate("data_fim"));
 	}
 	
-	public void createMatriculaModalidade(String fields, String values) throws SQLException{
+	public void createMatriculaModalidade(MatriculaModalidadeModel matriculaModalidade) throws SQLException{
+		String fields = "codigo_matricula, modalidade, graduacao, plano, data_inicio, data_fim";
 		this.insertInto("matriculas_modalidades", fields)
-		.values(values)
+		.values(
+				Integer.toString(matriculaModalidade.getCodigoMatricula())+","+
+				matriculaModalidade.getModalidade()+","+
+				matriculaModalidade.getGraduacao()+","+
+				matriculaModalidade.getPlano()+","+
+				matriculaModalidade.getDataMatricula()+","+
+				matriculaModalidade.getData_fim()
+				)
 		.commit();
 	}
 	
-	public void updateMatriculaModalidade(String fields, String value, Integer id) throws SQLException{
+	public void updateMatriculaModalidade(MatriculaModalidadeModel matriculaModaliade, Integer id) throws SQLException{
 		this.update("matriculas_modalidades")
-		.setValue(fields, value)
+		.setValue(
+				  "codigo_matricula = "+matriculaModaliade.getCodigoMatricula()+
+				  "modalidade = "+matriculaModaliade.getModalidade()+
+				  "graduacao = "+matriculaModaliade.getGraduacao()+
+				  "plano = "+matriculaModaliade.getPlano()+
+				  "data_inicio = "+matriculaModaliade.getDataMatricula()+
+				  "data_fim = "+matriculaModaliade.getData_fim()
+				)
 		.where("id", "=", id.toString())
 		.commit();
 	}

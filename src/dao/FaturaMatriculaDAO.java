@@ -3,8 +3,6 @@ package dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import model.AssiduidadeModel;
 import model.FaturaMatriculaModel;
 
 public class FaturaMatriculaDAO extends BaseDAO {
@@ -44,21 +42,34 @@ public class FaturaMatriculaDAO extends BaseDAO {
 		FaturaMatriculaModel faturaMatricula = new FaturaMatriculaModel();
 		return faturaMatricula.setCodigoMatricula(result.getInt("codigo_matricula"))
 						      .setDataVencimento(result.getDate("data_vencimento"))
-							  .setValor(result.getFloat("Valor"))
+							  .setValor(result.getFloat("valor"))
 							  .setDataPagamento(result.getDate("data_pagamento"))
 							  .setDataCancelamento(result.getDate("data_cancelamento"));
 							  
 	}
 	
-	public void createFaturaMatricula(String fields, String values) throws SQLException{
+	public void createFaturaMatricula(FaturaMatriculaModel faturaMatricula) throws SQLException{
+		String fields = "codigo_matricula, data_vencimento, valor, data_pagamento, data_cancelamento";
 		this.insertInto("faturas_matriculas", fields)
-		.values(values)
+		.values(
+				Integer.toString(faturaMatricula.getCodigoMatricula())+","+
+				faturaMatricula.getDataVencimento()+","+
+				Float.toString(faturaMatricula.getValor())+","+
+				faturaMatricula.getDataPagamento()+","+
+				faturaMatricula.getDataCancelamento()
+				)
 		.commit();
 	}
 	
-	public void updateFaturaMatricula(String fields, String value, Integer id) throws SQLException{
+	public void updateFaturaMatricula(FaturaMatriculaModel faturaMatricula, Integer id) throws SQLException{
 		this.update("faturas_matriculas")
-		.setValue(fields, value)
+		.setValue(
+				  "codigo_matricula = "+faturaMatricula.getCodigoMatricula()+
+				  "data_vencimento = "+faturaMatricula.getDataVencimento()+
+				  "valor = "+faturaMatricula.getValor()+
+				  "data_pagamento = "+faturaMatricula.getDataPagamento()+
+				  "data_cancelamento = "+faturaMatricula.getDataCancelamento()				
+				 )
 		.where("id", "=", id.toString())
 		.commit();
 	}

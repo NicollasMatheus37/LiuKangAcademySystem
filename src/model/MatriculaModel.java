@@ -11,7 +11,7 @@ package model;
 	private Date data_encerramento;	
 
 
- 	public int getcodigoMatricula() {	
+ 	public int getCodigoMatricula() {	
 		return codigo_matricula;	
 	}	
 

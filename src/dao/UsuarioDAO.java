@@ -3,8 +3,6 @@ package dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import model.AssiduidadeModel;
 import model.UsuarioModel;
 
 public class UsuarioDAO extends BaseDAO {
@@ -41,15 +39,22 @@ public class UsuarioDAO extends BaseDAO {
 				.setUsuario(result.getInt("usuario"));
 	}
 	
-	public void createUsuario(String fields, String values) throws SQLException{
+	public void createUsuario(UsuarioModel usuario) throws SQLException{
+		String fields = "perfil, usuario";
 		this.insertInto("usuario", fields)
-		.values(values)
+		.values(
+				usuario.getPerfil()+","+
+				Integer.toString(usuario.getUsuario())
+				)
 		.commit();
 	}
 	
-	public void updateUsuario(String fields, String value, Integer id) throws SQLException{
+	public void updateUsuario(UsuarioModel usuario, Integer id) throws SQLException{
 		this.update("usuario")
-		.setValue(fields, value)
+		.setValue(
+				"perfil = "+usuario.getPerfil()+
+				"usuario = "+usuario.getUsuario()
+				)
 		.where("id", "=", id.toString())
 		.commit();
 	}

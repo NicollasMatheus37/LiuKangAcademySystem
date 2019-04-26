@@ -3,8 +3,6 @@ package dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import model.AssiduidadeModel;
 import model.PlanoModel;
 
 public class PlanoDAO extends BaseDAO {
@@ -38,20 +36,29 @@ public class PlanoDAO extends BaseDAO {
 
 		PlanoModel plano = new PlanoModel();
 		return plano.setModalidade(result.getString("modalidade"))
-				.setPlano(result.getString("plano"))
+				.setPlano(result.getString("planos"))
 				.setValorMensal(result.getFloat("valor_mensal"));
 		
 	}
 	
-	public void createPlano(String fields, String values) throws SQLException{
+	public void createPlano(PlanoModel plano) throws SQLException{
+		String fields = "modalidade, planos, valor_mensal";
 		this.insertInto("planos", fields)
-		.values(values)
+		.values(
+				plano.getModalidade()+","+
+				plano.getPlano()+","+
+				Float.toString(plano.getValorMensal())
+				)
 		.commit();
 	}
 	
-	public void updatePlano(String fields, String value, Integer id) throws SQLException{
+	public void updatePlano(PlanoModel plano, Integer id) throws SQLException{
 		this.update("planos")
-			.setValue(fields, value)
+			.setValue(
+					"modalidade = "+plano.getModalidade()+
+					"planos = "+plano.getPlano()+
+					"valor_mensal = "+plano.getValorMensal()
+					)
 			.where("id", "=", id.toString())
 			.apply();
 	}
