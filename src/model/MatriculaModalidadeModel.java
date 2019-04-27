@@ -52,7 +52,7 @@ package model;
 		return data_inicio;	
 	}	
 
- 	public MatriculaModalidadeModel setDataInicio(Date data_inicio) {	
+ 	public MatriculaModalidadeModel setDatamMatricula(Date data_inicio) {	
 		this.data_inicio = data_inicio;	
 		return this;
 	}	
