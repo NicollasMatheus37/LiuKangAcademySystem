@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -19,8 +17,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
 import dao.AlunoDAO;
-import model.AlunoModel;
 
+@SuppressWarnings("serial")
 public class MasterBuscar extends JFrame {
 
 	protected JTextField jTxtBusca;
@@ -82,15 +80,13 @@ public class MasterBuscar extends JFrame {
 
 		table.addMouseListener(new MouseAdapter() {
 
-			public void mouseClicked(MouseEvent e) {
-
-				if(e.getClickCount() == 2 ) {
-					setReturn();
-					
-					dispose();
-				}
-
-			}
+			public void mousePressed(MouseEvent mouseEvent) {
+		        JTable table =(JTable) mouseEvent.getSource();
+		        if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
+		            setReturn();
+		            dispose();
+		        }
+		    }
 
 		});
 

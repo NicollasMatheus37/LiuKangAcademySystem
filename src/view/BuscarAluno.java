@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import model.AlunoModel;
 
+@SuppressWarnings("serial")
 public class BuscarAluno extends MasterBuscar {
 	
 	public AlunoModel alunoReturn;
@@ -12,6 +13,7 @@ public class BuscarAluno extends MasterBuscar {
 	
 	public BuscarAluno() {
 		updateComp(new String[]{"Código","Nome"});
+		alunoReturn = null;
 	}
 		
 	protected void buscar() {
@@ -29,7 +31,7 @@ public class BuscarAluno extends MasterBuscar {
 				}
 			}else {						
 				alunos = new ArrayList<AlunoModel>();
-				alunos.add(alunoDao.getOneAluno(Integer.parseInt(jTxtBusca.getText())));
+				alunos.add(alunoDao.getOneAluno(Integer.parseInt(jTxtBusca.getText().trim())));
 				InsertRow(alunos.get(0).getcodigoAluno(), alunos.get(0).getAluno());
 			}	
 
