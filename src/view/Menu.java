@@ -3,46 +3,38 @@ package view;
 import java.awt.*;
 
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.text.ParseException;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
 
+@SuppressWarnings("serial")
 public class Menu extends JFrame {
 
 	// Painéis e items do menu
 	private JDesktopPane desktopPane;
 	private JMenuBar menuBar;
-	private JMenu faturas, faturamento, matricular, sistema, cadastro, processos, relatorios, utilitarios,
-			ajuda;
-	private JMenuItem alunos, gerarF, realizaP, consultarF, planos, usuarios, sair, cadaluno,
-			modalidades, matriculas, utility, help, faturasemaberto, faturaspagas;
+	private JMenu faturas, faturamento, matricular, sistema, cadastro, processos, utilitarios, ajuda;
+	private JMenuItem alunos, gerarF, realizaP, consultarF, planos, usuarios, sair, cadaluno, modalidades, utility,
+			help, faturasemaberto, faturaspagas;
 	// Classes/frames
-	private Usuarios frameUm;
-	private Sair frameDois;
-	private CadastroAlunos frameTres;
-	private ModalidadesGraduacoes frameQuatro;
-	private Planos frameCinco;
-	private MatricularAlunos frameSeis;
-	private Faturamento frameSete;
-	private Faturas frameNove;
-	private Utilitarios frameDez;
-	private Ajuda frameOnze;
-	private MatricularAlunos frameDoze;
-	private GerarFaturas frameTreze;
-	private ConsultarFaturas frameQuatorze;
-	private PagamentosFaturas frameQuinze;
-	private AdicionarModalidades frameDezesseis;
-	private FaturasAberto frameDezessete;
-	private FaturasPagas frameDezoito;
-	private ControleAlunos frameDezenove;
-	private BuscarAluno frameVinte;
+	private Usuarios fUsuario;
+	private Sair fSair;
+	private CadastroAlunos fCadastroAlunos;
+	private ModalidadesGraduacoes fModalidades;
+	private Planos fPlanos;
+	private MatricularAlunos fMatricularAlunos;
+	private Faturamento fFaturamento;
+	private Faturas fFaturas;
+	private Utilitarios fUtilitarios;
+	private Ajuda fAjuda;
+	private GerarFaturas fGerarFaturas;
+	private ConsultarFaturas fConsultarFaturas;
+	private PagamentosFaturas fPagamentosFaturas;
+	private AdicionarModalidades fAdicionarModalidades;
+	private FaturasAberto fFaturasAberto;
+	private FaturasPagas fFaturasPagas;
+	private ControleAlunos fControleAlunos;
+	private BuscarAluno fBuscarAluno;
 
 	private int janelaAberta = 0;
 
@@ -74,9 +66,9 @@ public class Menu extends JFrame {
 				fecharJanelaAberta();
 				janelaAberta = 1;
 
-				frameUm = new Usuarios();
-				frameUm.setVisible(true);
-				desktopPane.add(frameUm);
+				fUsuario = new Usuarios();
+				fUsuario.setVisible(true);
+				desktopPane.add(fUsuario);
 			}
 		});
 
@@ -88,9 +80,9 @@ public class Menu extends JFrame {
 				fecharJanelaAberta();
 				janelaAberta = 2;
 
-				frameDois = new Sair();
-				frameDois.setVisible(true);
-				desktopPane.add(frameDois);
+				fSair = new Sair();
+				fSair.setVisible(true);
+				desktopPane.add(fSair);
 			}
 		});
 
@@ -103,13 +95,13 @@ public class Menu extends JFrame {
 				janelaAberta = 3;
 
 				try {
-					frameTres = new CadastroAlunos();
+					fCadastroAlunos = new CadastroAlunos();
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				frameTres.setVisible(true);
-				desktopPane.add(frameTres);
+				fCadastroAlunos.setVisible(true);
+				desktopPane.add(fCadastroAlunos);
 			}
 		});
 
@@ -121,9 +113,9 @@ public class Menu extends JFrame {
 				fecharJanelaAberta();
 				janelaAberta = 4;
 
-				frameQuatro = new ModalidadesGraduacoes();
-				frameQuatro.setVisible(true);
-				desktopPane.add(frameQuatro);
+				fModalidades = new ModalidadesGraduacoes();
+				fModalidades.setVisible(true);
+				desktopPane.add(fModalidades);
 			}
 		});
 
@@ -135,9 +127,9 @@ public class Menu extends JFrame {
 				fecharJanelaAberta();
 				janelaAberta = 5;
 
-				frameCinco = new Planos();
-				frameCinco.setVisible(true);
-				desktopPane.add(frameCinco);
+				fPlanos = new Planos();
+				fPlanos.setVisible(true);
+				desktopPane.add(fPlanos);
 			}
 		});
 
@@ -149,9 +141,9 @@ public class Menu extends JFrame {
 				fecharJanelaAberta();
 				janelaAberta = 6;
 
-				frameSeis = new MatricularAlunos();
-				frameSeis.setVisible(true);
-				desktopPane.add(frameSeis);
+				fMatricularAlunos = new MatricularAlunos();
+				fMatricularAlunos.setVisible(true);
+				desktopPane.add(fMatricularAlunos);
 			}
 		});
 
@@ -163,13 +155,11 @@ public class Menu extends JFrame {
 				fecharJanelaAberta();
 				janelaAberta = 7;
 
-				frameSete = new Faturamento();
-				frameSete.setVisible(true);
-				desktopPane.add(frameSete);
+				fFaturamento = new Faturamento();
+				fFaturamento.setVisible(true);
+				desktopPane.add(fFaturamento);
 			}
 		});
-
-		
 
 		faturas = new JMenu("Faturas");
 		faturas.addActionListener(new ActionListener() {
@@ -179,9 +169,9 @@ public class Menu extends JFrame {
 				fecharJanelaAberta();
 				janelaAberta = 9;
 
-				frameNove = new Faturas();
-				frameNove.setVisible(true);
-				desktopPane.add(frameNove);
+				fFaturas = new Faturas();
+				fFaturas.setVisible(true);
+				desktopPane.add(fFaturas);
 
 			}
 		});
@@ -193,9 +183,9 @@ public class Menu extends JFrame {
 				fecharJanelaAberta();
 				janelaAberta = 10;
 
-				frameDez = new Utilitarios();
-				frameDez.setVisible(true);
-				desktopPane.add(frameDez);
+				fUtilitarios = new Utilitarios();
+				fUtilitarios.setVisible(true);
+				desktopPane.add(fUtilitarios);
 
 			}
 		});
@@ -208,9 +198,9 @@ public class Menu extends JFrame {
 				fecharJanelaAberta();
 				janelaAberta = 11;
 
-				frameOnze = new Ajuda();
-				frameOnze.setVisible(true);
-				desktopPane.add(frameOnze);
+				fAjuda = new Ajuda();
+				fAjuda.setVisible(true);
+				desktopPane.add(fAjuda);
 
 			}
 		});
@@ -223,9 +213,9 @@ public class Menu extends JFrame {
 				fecharJanelaAberta();
 				janelaAberta = 12;
 
-				frameDoze = new MatricularAlunos();
-				frameDoze.setVisible(true);
-				desktopPane.add(frameDoze);
+				fMatricularAlunos = new MatricularAlunos();
+				fMatricularAlunos.setVisible(true);
+				desktopPane.add(fMatricularAlunos);
 			}
 		});
 
@@ -237,9 +227,9 @@ public class Menu extends JFrame {
 				fecharJanelaAberta();
 				janelaAberta = 13;
 
-				frameTreze = new GerarFaturas();
-				frameTreze.setVisible(true);
-				desktopPane.add(frameTreze);
+				fGerarFaturas = new GerarFaturas();
+				fGerarFaturas.setVisible(true);
+				desktopPane.add(fGerarFaturas);
 			}
 		});
 
@@ -251,9 +241,9 @@ public class Menu extends JFrame {
 				fecharJanelaAberta();
 				janelaAberta = 14;
 
-				frameQuatorze = new ConsultarFaturas();
-				frameQuatorze.setVisible(true);
-				desktopPane.add(frameQuatorze);
+				fConsultarFaturas = new ConsultarFaturas();
+				fConsultarFaturas.setVisible(true);
+				desktopPane.add(fConsultarFaturas);
 			}
 		});
 
@@ -265,9 +255,9 @@ public class Menu extends JFrame {
 				fecharJanelaAberta();
 				janelaAberta = 15;
 
-				frameQuinze = new PagamentosFaturas();
-				frameQuinze.setVisible(true);
-				desktopPane.add(frameQuinze);
+				fPagamentosFaturas = new PagamentosFaturas();
+				fPagamentosFaturas.setVisible(true);
+				desktopPane.add(fPagamentosFaturas);
 			}
 		});
 
@@ -279,9 +269,9 @@ public class Menu extends JFrame {
 				fecharJanelaAberta();
 				janelaAberta = 17;
 
-				frameDezessete = new FaturasAberto();
-				frameDezessete.setVisible(true);
-				desktopPane.add(frameDezessete);
+				fFaturasAberto = new FaturasAberto();
+				fFaturasAberto.setVisible(true);
+				desktopPane.add(fFaturasAberto);
 			}
 		});
 
@@ -293,9 +283,9 @@ public class Menu extends JFrame {
 				fecharJanelaAberta();
 				janelaAberta = 18;
 
-				frameDezoito = new FaturasPagas();
-				frameDezoito.setVisible(true);
-				desktopPane.add(frameDezoito);
+				fFaturasPagas = new FaturasPagas();
+				fFaturasPagas.setVisible(true);
+				desktopPane.add(fFaturasPagas);
 			}
 		});
 
@@ -328,7 +318,6 @@ public class Menu extends JFrame {
 		processos.add(faturamento);
 		menuBar.add(processos);
 
-
 		utilitarios = new JMenu("Utilitários");
 		utilitarios.add(utility);
 
@@ -341,7 +330,7 @@ public class Menu extends JFrame {
 
 		setJMenuBar(menuBar);
 		setTitle("Liu Kang Academy System");
-		/*setSize(705, 600);*/
+		/* setSize(705, 600); */
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setLocationRelativeTo(null);
 		setBackground(null);
@@ -373,9 +362,9 @@ public class Menu extends JFrame {
 
 	public void FramePrincipal() {
 
-		frameDezenove = new ControleAlunos();
-		frameDezenove.setVisible(true);
-		desktopPane.add(frameDezenove);
+		fControleAlunos = new ControleAlunos();
+		fControleAlunos.setVisible(true);
+		desktopPane.add(fControleAlunos);
 
 	}
 
@@ -387,66 +376,66 @@ public class Menu extends JFrame {
 	private void fecharJanelaAberta() {
 		switch (janelaAberta) {
 		case 1:
-			frameUm.dispose();
+			fUsuario.dispose();
 			break;
 		case 2:
-			frameDois.dispose();
+			fSair.dispose();
 			break;
 
 		case 3:
-			frameTres.dispose();
+			fCadastroAlunos.dispose();
 			break;
 
 		case 4:
-			frameQuatro.dispose();
+			fModalidades.dispose();
 			break;
 
 		case 5:
-			frameCinco.dispose();
+			fPlanos.dispose();
 			break;
 
 		case 6:
-			frameSeis.dispose();
+			fMatricularAlunos.dispose();
 			break;
 
 		case 7:
-			frameSete.dispose();
+			fFaturamento.dispose();
 			break;
 
 		case 9:
-			frameNove.dispose();
+			fFaturas.dispose();
 			break;
 		case 10:
-			frameDez.dispose();
+			fUtilitarios.dispose();
 			break;
 		case 11:
-			frameOnze.dispose();
+			fAjuda.dispose();
 			break;
 		case 12:
-			frameDoze.dispose();
+			fMatricularAlunos.dispose();
 			break;
 		case 13:
-			frameTreze.dispose();
+			fGerarFaturas.dispose();
 			break;
 		case 14:
-			frameQuatorze.dispose();
+			fConsultarFaturas.dispose();
 			break;
 		case 15:
-			frameQuinze.dispose();
+			fPagamentosFaturas.dispose();
 			break;
 		case 16:
-			frameDezesseis.dispose();
+			fAdicionarModalidades.dispose();
 			break;
 		case 17:
-			frameDezessete.dispose();
+			fFaturasAberto.dispose();
 			break;
 		case 18:
-			frameDezoito.dispose();
+			fFaturasPagas.dispose();
 			break;
 		case 20:
-			frameVinte.dispose();
+			fBuscarAluno.dispose();
 			break;
-			
+
 		default:
 			break;
 		}

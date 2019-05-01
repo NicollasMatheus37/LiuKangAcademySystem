@@ -7,6 +7,7 @@ import java.util.Locale;
 
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
@@ -32,7 +33,8 @@ public class Utils {
 		JTextField.class,
 		JFormattedTextField.class,
 		JComboBox.class,
-		JTextArea.class
+		JTextArea.class,
+		JScrollPane.class
 	};
 
 
@@ -55,8 +57,8 @@ public class Utils {
 	private boolean isInstanceOfSomeTarget(Component component) {
 		
 		for(Class<?> target : targetClasses) {
-			if(target.isInstance(component)) {			
-				return true;
+			if(target.isInstance(component)) {
+				return true;								
 			}
 		}
 		return false;
@@ -68,14 +70,22 @@ public class Utils {
 	//e desabilita os que estao contidos em alvo e não sa nulos
 	public void setFieldsEnabled(Container contents, Boolean enabled) {
 
-		for(Component field : contents.getComponents()) {		
+		scrollComponents(contents.getComponents(), enabled);			
+
+	}
+	
+	private void scrollComponents(Component[] contents, Boolean enabled) {
+		for(Component field : contents) {		
 
 			if (field!=null && isInstanceOfSomeTarget(field)/*Target(field.getClass().getName())*/) {	
-				field.setEnabled(enabled);
+				if(JScrollPane.class.isInstance(field)) {
+					scrollComponents(((JScrollPane) field).getComponents(),enabled);			
+				}else {
+					field.setEnabled(enabled);
+				}				
 			}
 
-		}			
-
+		}
 	}
 
 	// Descontinuado - Use isInstanceOfSomeTarget(Component component) 
