@@ -15,6 +15,8 @@ public abstract class BaseDAO {
 	Connection conn;
 	
 	private String sql = "";
+	private String whereFilter = "";
+	private String group = "";
 	
 	protected void _set(PreparedStatement preparedStatement, int position, Object params) throws SQLException {
 		if(params == null) {
@@ -25,52 +27,67 @@ public abstract class BaseDAO {
 	}
 	
 	protected BaseDAO delete() {
-		this.setSql(getSql() + "Delete ");
+		this.setSql(getSql() + " DELETE ");
 		return this;
 	}
 	
 	protected BaseDAO setValue(String fields) {
-		this.setSql(this.getSql() + "SET " + fields);
+		this.setSql(this.getSql() + " SET " + fields);
 		return this;
 	}
 	
 	protected BaseDAO update(String table) {
-		this.setSql(this.getSql() + "UPDATE " + table);
+		this.setSql(this.getSql() + " UPDATE " + table);
 		return this;
 	}
 	
 	protected BaseDAO insertInto(String table, String statement) {
-		this.setSql(this.getSql() + "INSERT INTO " + table + " (" + statement + ") ");
+		this.setSql(this.getSql() + " INSERT INTO " + table + " (" + statement + ") ");
 		return this;
 	}
 	
 	protected BaseDAO values(String statement) {
-		this.setSql(getSql() + "VALUES " + statement);
+		this.setSql(getSql() + " VALUES " + statement);
 		return this;
 	}
 	
 	protected BaseDAO select(String statement) {
-		this.setSql(this.getSql() + "SELECT " + statement); 
+		this.setSql(this.getSql() + " SELECT " + statement); 
 		return this;
 	}
 	
 	protected BaseDAO from(String statement) {
-		this.setSql(this.getSql() + "FROM " + statement);
+		this.setSql(this.getSql() + " FROM " + statement);
 		return this;
 	}
 	
 	protected BaseDAO where(String statement, String operator, String value) {
-		this.setSql(this.getSql() + "WHERE " + statement + operator + value);
+		this.setSql(this.getSql() + " WHERE " + statement +" "+ operator +" "+ value);
+		return this;
+	}
+	
+	protected BaseDAO where() {
+		this.setSql(this.getSql() + " WHERE " + getWhereFilter());
+		return this;
+	}
+	
+	protected BaseDAO filter(String statement, String operator, String value) {
+		setWhereFilter(statement +" "+ operator +" "+ value);
+		return this;
+	}
+	
+	protected BaseDAO group(String group) {
+		setGroup(group);
 		return this;
 	}
 	
 	protected BaseDAO orderBy(String statement) {
-		this.setSql(this.getSql() + "ORDER BY " + statement);
+		this.setSql(this.getSql() + " ORDER BY " + statement);
 		return this;
 	}
 	
 	protected BaseDAO join(String statement) {
-		this.setSql(this.getSql() + "JOIN " + statement);
+		this.setSql(this.getSql() + " JOIN " + statement);
 		return this;
 	}
 	
@@ -88,6 +105,19 @@ public abstract class BaseDAO {
 		this.setSql(this.getSql() + "RIGHT JOIN " + statement);
 		return this;
 	}
+	
+	protected BaseDAO groupBy() {
+		setSql(getSql() + " GROUP BY " + getGroup());
+		return this;
+	}
+	
+	private String getGroup() {
+		return group;
+	}
+	
+	private void setGroup(String group) {
+		this.group = getGroup() + ((getGroup().isEmpty()) ? "" : ", ")  +  group; 
+	}
 
 	public String getSql() {
 		return sql;
@@ -97,13 +127,21 @@ public abstract class BaseDAO {
 		this.sql = sql;
 	}
 	
-	protected ResultSet apply() throws SQLException {
+	private String getWhereFilter() {
+		return whereFilter;
+	}
+	
+	private void setWhereFilter(String sql) {
+		whereFilter = ((whereFilter.isEmpty()) ? " " : whereFilter+" AND " ) + sql;		
+	}
+	
+	protected ResultSet apply() throws SQLException {		
 		return this.excecuteQuery();
 	}
 	
 	protected Boolean commit() {
 		try {
-			this.excecuteQuery();
+			this.excecuteUpdate();
 			return true;
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -118,7 +156,24 @@ public abstract class BaseDAO {
 		this.connection();
 		
 		prepStatement = conn.prepareStatement(this.getSql());
+		clean();
 		return prepStatement.executeQuery();
+	}
+	
+	protected int excecuteUpdate() throws SQLException {
+		PreparedStatement prepStatement = null;
+		
+		this.connection();
+		
+		prepStatement = conn.prepareStatement(this.getSql());
+		clean();
+		return prepStatement.executeUpdate();
+	}
+	
+	public void clean() {
+		sql = "";
+		whereFilter = "";
+		group = "";
 	}
 	
 	protected void connection() {

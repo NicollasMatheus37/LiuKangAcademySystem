@@ -10,6 +10,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JViewport;
 import javax.swing.text.JTextComponent;
 
 public class Utils {
@@ -23,70 +24,70 @@ public class Utils {
 			"javax.swing.JFormattedTextField",
 			"javax.swing.JTextArea"
 	};
-	*/
-	
+	 */
+
 	// Insira as classes dos componentes para serem desabilitados
 	// Note que para Classes como a JComboBox, deve ser implementado uma forma
 	// especifica para limpar o componente na função cleanFields(), ja os componentes
 	// que extendem JTextComponent como JtextArea e JTextField não é necessario implementar.
 	private Class<?> targetClasses[] = {
-		JTextField.class,
-		JFormattedTextField.class,
-		JComboBox.class,
-		JTextArea.class,
-		JScrollPane.class
+			JTextField.class,
+			JFormattedTextField.class,
+			JComboBox.class,
+			JTextArea.class,
+			JScrollPane.class
 	};
 
 
-	public void cleanFields(Container contents) {
-		for(Component field : contents.getComponents()) {		
+	public void cleanSubComponents(Container container) {
+		cleanComponents(container.getComponents());
+	}
 
-			if (field!=null) {
-				if (isInstanceOfSomeTarget(field)) {
-					if (field.getClass().equals(JComboBox.class)) {
-						((JComboBox<?>) field).setSelectedIndex(0);;	
-					}else {
-						((JTextComponent) field).setText("");
+	public void cleanComponents(Component[] components) {
+		for(Component component : components) {		
+
+			if (component!=null) {
+				if (isInstanceOfSomeTarget(component)) {
+					if (JComboBox.class.isInstance(component)) {
+						((JComboBox<?>) component).setSelectedIndex(0);;	
+					}else if (JScrollPane.class.isInstance(component)) {
+						cleanComponents(getSubComponents(component));
+					}else {					
+						((JTextComponent) component).setText("");
 					}
 				}
 			}
 
-		}	
-	}
-
-	private boolean isInstanceOfSomeTarget(Component component) {
-		
-		for(Class<?> target : targetClasses) {
-			if(target.isInstance(component)) {
-				return true;								
-			}
 		}
-		return false;
 	}
-
-
 
 	//Pega um container passado pela função getContentPane, traz todos componentes abaixo dele,
 	//e desabilita os que estao contidos em alvo e não sa nulos
-	public void setFieldsEnabled(Container contents, Boolean enabled) {
+	public void setSubComponentsEnabled(Container container, Boolean enabled) {
 
-		scrollComponents(contents.getComponents(), enabled);			
+		setComponentsEnabled(container.getComponents(), enabled);			
 
 	}
-	
-	private void scrollComponents(Component[] contents, Boolean enabled) {
-		for(Component field : contents) {		
 
-			if (field!=null && isInstanceOfSomeTarget(field)/*Target(field.getClass().getName())*/) {	
-				if(JScrollPane.class.isInstance(field)) {
-					scrollComponents(((JScrollPane) field).getComponents(),enabled);			
+	public void setComponentsEnabled(Component[] components, Boolean enabled) {
+		for(Component component : components) {		
+
+			if (component!=null && isInstanceOfSomeTarget(component)/*Target(field.getClass().getName())*/) {	
+				if(JScrollPane.class.isInstance(component)) {
+					//Tratamento especifico para SrollPane, é passado todos componentes dentro do Scroll de forma recursiva
+					setComponentsEnabled( getSubComponents(component), enabled);			
 				}else {
-					field.setEnabled(enabled);
+					component.setEnabled(enabled);
 				}				
 			}
 
 		}
 	}
+
+	private Component[] getSubComponents(Component component) {
+		return ((JViewport) ((JScrollPane) component).getComponent(0)).getComponents();
+	}
+
 
 	// Descontinuado - Use isInstanceOfSomeTarget(Component component) 
 	// Verifica se classe esta cadastrada como um alvo para ser desabilitada
@@ -102,12 +103,43 @@ public class Utils {
 
 	}*/
 
+
+	private boolean isInstanceOfSomeTarget(Component component) {
+
+		for(Class<?> target : targetClasses) {
+			if(target.isInstance(component)) {
+				return true;								
+			}
+		}
+		return false;
+	}
+	
+	public boolean containsIgnoreCase(String str, String searchStr)     {
+	    if(str == null || searchStr == null) return false;
+
+	    final int length = searchStr.length();
+	    if (length == 0)
+	        return true;
+	    
+	    if (length > str.length())
+	    	return false;
+
+	    for (int i = str.length() - length; i >= 0; i--) {
+	        if (str.regionMatches(true, i, searchStr, 0, length))
+	            return true;
+	    }
+	    return false;
+	}
+
 	public boolean compareStrings(String strA, String StrB) {
 
-		Collator col = Collator.getInstance(new Locale("pt", "BR"));
+		Collator coll = Collator.getInstance (new Locale ("pt", "BR"));
+		coll.setStrength(Collator.PRIMARY);
 
-		return col.compare(strA, StrB) == 0;
+		return coll.compare(strA, StrB) == 0;
 
 	}
+
+
 
 }

@@ -1,12 +1,11 @@
 package view;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+@SuppressWarnings("serial")
 public class Planos extends MasterDialogCad {
 
-	private JButton  btnOk;
 	private JLabel Modalidade, Plano, Valor;
 	private JTextField JTPlano,JTValor;
 	private JComboBox<String> ComboModalidade;
@@ -18,14 +17,12 @@ public class Planos extends MasterDialogCad {
 		setLayout(null);
 		setResizable(false);
 		setClosable(true);
-		// this.setBorder(javax.swing.BorderFactory.createLineBorder(Color.DARK_GRAY));
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		createComponnents();
 		setVisible(true);
 	}
-
-	public void createComponnents() {
-
+	
+	protected void subComponents() {
+		
 		Modalidade = new JLabel("Modalidade:");
 		Modalidade.setBounds(10, 10, 100, 100);
 		getContentPane().add(Modalidade);
@@ -50,7 +47,9 @@ public class Planos extends MasterDialogCad {
 		JTValor = new JTextField();
 		JTValor.setBounds(85, 110, 205, 26);
 		getContentPane().add(JTValor);
-
+		
+		childContainer = getContentPane();
+		
 	}
 
 }

@@ -7,39 +7,46 @@ import model.AlunoModel;
 
 @SuppressWarnings("serial")
 public class BuscarAluno extends MasterBuscar {
-	
+
 	public AlunoModel alunoReturn;
 	private ArrayList<AlunoModel> alunos;
-	
+
 	public BuscarAluno() {
 		updateComp(new String[]{"Código","Nome"});
 		alunoReturn = null;
 	}
-		
-	protected void buscar() {
+
+	protected void buscar() {		
 		try {
+			clean();
 			if(campos.getSelectedIndex()==1) {
 				alunos = alunoDao.getAllAlunos();
 				for(int i = 0; i < alunos.size(); i++) {
 
-					if(campos.getSelectedIndex() > 0) {
-						if(utils.compareStrings(alunos.get(i).getAluno(), jTxtBusca.getText())) {
-							InsertRow(alunos.get(i).getcodigoAluno(), alunos.get(i).getAluno());
-						}
+					if(utils.containsIgnoreCase(alunos.get(i).getAluno(), jTxtBusca.getText())) {						
+						InsertRow(alunos.get(i).getcodigoAluno(), alunos.get(i).getAluno());
+					}else {
+						alunos.remove(i);
+						i--;
 					}
 
 				}
-			}else {						
-				alunos = new ArrayList<AlunoModel>();
-				alunos.add(alunoDao.getOneAluno(Integer.parseInt(jTxtBusca.getText().trim())));
-				InsertRow(alunos.get(0).getcodigoAluno(), alunos.get(0).getAluno());
+			}else {			
+				if(jTxtBusca.getText().matches("[0123456789]+")) {
+					alunos = new ArrayList<AlunoModel>();
+					AlunoModel alunoResult = alunoDao.getOneAluno(Integer.parseInt(jTxtBusca.getText().trim()));
+					if(alunoResult!=null) {
+						alunos.add(alunoResult);
+						InsertRow(alunos.get(0).getcodigoAluno(), alunos.get(0).getAluno());
+					}
+				}
 			}	
 
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
 	}
-	
+
 	protected void setReturn() {
 		alunoReturn = alunos.get(table.getSelectedRow());
 	}

@@ -16,6 +16,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
+@SuppressWarnings("serial")
 public class ModalidadesGraduacoes extends MasterDialogCad {
 
 		private JButton btnOk;
@@ -48,7 +49,7 @@ public class ModalidadesGraduacoes extends MasterDialogCad {
 	}
 	
 
-	protected void subComponnents() {
+	protected void subComponents() {
 		
 		//add - labels
 		lblModalidade = new JLabel("Modalidade: ");
@@ -81,7 +82,6 @@ public class ModalidadesGraduacoes extends MasterDialogCad {
 					JOptionPane.showMessageDialog(null, "Campo de Graduação Vazio");
 				else {
 					model.addRow(new String[] {txtGraduacao.getText()});
-					int i=0;
 				}
 				txtGraduacao.setText(null);
 			}
@@ -135,6 +135,8 @@ public class ModalidadesGraduacoes extends MasterDialogCad {
 		setVisible(true);
 		
 		btnCancel.setVisible(false);
+		
+		childContainer = getContentPane();
 	
 	}
 	public boolean isCellEditable(int row, int col) {

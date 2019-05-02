@@ -30,6 +30,7 @@ public class MasterDialogCad extends JInternalFrame {
 			// TODO Auto-generated method stub
 			if (actionDelete()) {
 				setFieldsEnabled(false);
+				
 			}
 		}
 	};
@@ -42,7 +43,7 @@ public class MasterDialogCad extends JInternalFrame {
 				isInserting = true;
 				fillFields();
 				setFieldsEnabled(true);
-				utils.cleanFields(childContainer);
+				utils.cleanSubComponents(childContainer);
 			}
 		}
 	};
@@ -80,7 +81,9 @@ public class MasterDialogCad extends JInternalFrame {
 		public void actionPerformed(ActionEvent e) {
 			
 			if(actionSave()) {
-				isInserting = false;				
+				if(isInserting) {
+					btnCancel.doClick();
+				}
 			}
 			
 		}
@@ -93,7 +96,7 @@ public class MasterDialogCad extends JInternalFrame {
 			if(actionCancel()) {
 				isInserting = false;
 				setFieldsEnabled(false);
-				utils.cleanFields(childContainer);
+				clean();
 			}
 		}
 	};
@@ -106,16 +109,16 @@ public class MasterDialogCad extends JInternalFrame {
 
 		utils = new Utils();
 		Componnents();
-		subComponnents();
+		subComponents();
 		setFieldsEnabled(false);
 
 	}
 	
 	protected void setFieldsEnabled(boolean enabled) {
-		utils.setFieldsEnabled(childContainer, enabled);
+		utils.setSubComponentsEnabled(childContainer, enabled);
 	}
 
-	protected void subComponnents() {
+	protected void subComponents() {
 
 	}
 
@@ -145,8 +148,12 @@ public class MasterDialogCad extends JInternalFrame {
 	protected void fillFields() {
 		
 	}
+	
+	private void clean() {
+		utils.cleanSubComponents(childContainer);
+	}
 
-	public void Componnents() {
+	private void Componnents() {
 
 
 		//Botao Search
@@ -176,6 +183,7 @@ public class MasterDialogCad extends JInternalFrame {
 
 		// Botao Save
 		btnSave = new JButton("Salvar", new ImageIcon(System.getProperty("user.dir") + "\\images\\22x22\\salvar.png"));
+		btnSave.addActionListener(actSave);
 		btnSave.setHorizontalAlignment(SwingConstants.LEFT);
 		btnSave.setHorizontalTextPosition(SwingConstants.RIGHT);
 		btnSave.setBounds(370, 10, 120, 35);

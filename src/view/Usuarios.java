@@ -4,6 +4,7 @@ import javax.swing.JDesktopPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+@SuppressWarnings("serial")
 public class Usuarios extends MasterDialogCad {
 	
 	private JLabel Usuario, Senha, ConfSenha, Perfil;
@@ -20,15 +21,13 @@ public class Usuarios extends MasterDialogCad {
 		setResizable(false);
 		setClosable(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		createComponnents();
 		setVisible(true);
 
 	}
-
-	public void createComponnents() {
+	
+	protected void subComponents() {
 
 		desktopPane = new JDesktopPane();
-		// Botao btnSearch
 
 		Usuario = new JLabel("Usuário:");
 		Usuario.setBounds(10, 10, 100, 100);
@@ -67,7 +66,9 @@ public class Usuarios extends MasterDialogCad {
 		
 		ComboPerfil.setBounds(110, 140, 200, 26);
 		getContentPane().add(ComboPerfil);
-
+		
+		childContainer = getContentPane();
+		
 	}
 
 }

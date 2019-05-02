@@ -2,11 +2,15 @@ package view;
 
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -17,6 +21,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.text.MaskFormatter;
 
 import dao.AlunoDAO;
+import dao.CidadeDAO;
 import model.AlunoModel;
 
 @SuppressWarnings("serial")
@@ -24,21 +29,24 @@ public class CadastroAlunos extends MasterDialogCad {
 
 	private JLabel Aluno, DataNasc, Tel, Email, Obs, Endereco, Complemento, Bairro, Estado, CEP, Numero, Cidade, Pais,
 	Sexo, Celular;
-	private JTextField JTAluno, JTTel, JTEmail, JTEndereco, JTComplemento, JTBairro, JTEstado, JTCEP,
-	JTNumero, JTCidade, JTPais, JTCel;
+	private JTextField JTAluno, JTTel, JTEmail, JTEndereco, JTComplemento, JTBairro, JTCEP,
+	JTNumero,  JTCel;
 	JFormattedTextField JTDataNasc;
 	private JTextArea JTObs;
-	private JComboBox<String> ComboSexo;
+	private JComboBox<String> ComboSexo, ComboCidade, ComboEstado, ComboPais;
+	private CidadeDAO cidadeDAO;
 	private AlunoDAO alunoDao;
 	private AlunoModel aluno, alunoChange;
 	private BuscarAluno busca;
+	private boolean isFillingCombos;
 
 
 
 	public CadastroAlunos() throws ParseException {
 
 		alunoDao = new AlunoDAO();
-		
+		cidadeDAO = new CidadeDAO();
+
 		setSize(690, 538);
 		setTitle("Cadastro de Alunos");
 		setLayout(null);
@@ -46,6 +54,13 @@ public class CadastroAlunos extends MasterDialogCad {
 		setClosable(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);		
 		setVisible(true);
+		try {
+			isFillingCombos = true;
+			fillPais();
+		} catch (SQLException e) {
+		}finally {
+			isFillingCombos = false;
+		}
 
 	}
 
@@ -100,10 +115,11 @@ public class CadastroAlunos extends MasterDialogCad {
 				}else {
 					alunoDao.updateAluno(alunoChange);
 				}
-				return true;
-			}catch (Exception e) {
+			} catch (SQLException e) {
 				return false;
 			}
+
+			return true;
 		}else {
 			return false;
 		}
@@ -114,6 +130,7 @@ public class CadastroAlunos extends MasterDialogCad {
 			aluno = null;
 			alunoChange = null;			
 		}catch (Exception e) {
+			return false;
 		}				
 		return true;		
 	}
@@ -121,17 +138,17 @@ public class CadastroAlunos extends MasterDialogCad {
 	protected void fillFields() {
 
 		JTAluno.setText(aluno.getAluno());
-		JTDataNasc.setText(new SimpleDateFormat("dd-mm-yyyy").format(aluno.getDataNascimento()));
+		JTDataNasc.setText(aluno.getDataNascimento());
 		JTTel.setText(aluno.getTelefone());
 		JTEmail.setText(aluno.getEmail());
 		JTEndereco.setText(aluno.getEndereco());
 		JTComplemento.setText(aluno.getComplemento());
-		JTBairro.setText(aluno.getBairro());
-		JTEstado.setText(aluno.getEstado());
+		JTBairro.setText(aluno.getBairro());		
 		JTCEP.setText(aluno.getCep());
-		JTNumero.setText(aluno.getNumero());
-		JTCidade.setText(aluno.getCidade());
-		JTPais.setText(aluno.getPais());
+		JTNumero.setText(aluno.getNumero());		
+		ComboPais.setSelectedItem(aluno.getPais());
+		ComboEstado.setSelectedItem(aluno.getEstado());
+		ComboCidade.setSelectedItem(aluno.getCidade());
 		JTCel.setText(aluno.getCelular());
 		JTObs.setText(aluno.getObservacao());
 		JTCel.setText(aluno.getCelular());	
@@ -141,10 +158,7 @@ public class CadastroAlunos extends MasterDialogCad {
 
 	}
 
-	protected void subComponnents() {
-
-
-
+	protected void subComponents() {
 
 		JTAluno = new JTextField();
 		JTAluno.addFocusListener(new FocusAdapter() {
@@ -160,16 +174,15 @@ public class CadastroAlunos extends MasterDialogCad {
 		getContentPane().add(JTAluno);
 
 		try {
-			JTDataNasc = new JFormattedTextField(new MaskFormatter("##-##-####"));
+			JTDataNasc = new JFormattedTextField(new MaskFormatter("##/##/####"));
 		} catch (ParseException e2) {
 		}
-		JTDataNasc.setText(DateTimeFormatter.ofPattern("dd-MM-yyyy").format(LocalDate.now()));
 		JTDataNasc.addFocusListener(new FocusAdapter() {
 
 			public void focusLost(FocusEvent e) {
 				try {
 					if(!JTDataNasc.hasFocus()) {
-						alunoChange.setDataNascimento(new SimpleDateFormat("dd-mm-yyyy").parse(JTDataNasc.getText()));
+						alunoChange.setDataNascimento(new SimpleDateFormat("dd/MM/yyyy").parse(JTDataNasc.getText()));
 						//JOptionPane.showMessageDialog(null,"Saiu");
 					}
 				} catch (ParseException e1) {
@@ -244,20 +257,7 @@ public class CadastroAlunos extends MasterDialogCad {
 
 		});
 		JTBairro.setBounds(100, 375, 250, 26);
-		getContentPane().add(JTBairro);
-
-		JTEstado = new JTextField();
-		JTEstado.addFocusListener(new FocusAdapter() {
-
-			public void focusLost(FocusEvent e) {
-				if(!e.isTemporary()) {
-					alunoChange.setEstado(JTEstado.getText());
-				}
-			}
-
-		});
-		JTEstado.setBounds(100, 405, 250, 26);
-		getContentPane().add(JTEstado);
+		getContentPane().add(JTBairro);		
 
 		JTCEP = new JTextField();
 		JTCEP.addFocusListener(new FocusAdapter() {
@@ -285,31 +285,7 @@ public class CadastroAlunos extends MasterDialogCad {
 		JTNumero.setBounds(420, 315, 250, 26);
 		getContentPane().add(JTNumero);
 
-		JTCidade = new JTextField();
-		JTCidade.addFocusListener(new FocusAdapter() {
 
-			public void focusLost(FocusEvent e) {
-				if(!e.isTemporary()) {
-					alunoChange.setCidade(JTCidade.getText());
-				}
-			}
-
-		});
-		JTCidade.setBounds(420, 375, 250, 26);
-		getContentPane().add(JTCidade);
-
-		JTPais = new JTextField();
-		JTPais.addFocusListener(new FocusAdapter() {
-
-			public void focusLost(FocusEvent e) {
-				if(!e.isTemporary()) {
-					alunoChange.setPais(JTPais.getText());
-				}
-			}
-
-		});
-		JTPais.setBounds(420, 405, 250, 26);
-		getContentPane().add(JTPais);
 
 		JTCel = new JTextField();
 		JTCel.addFocusListener(new FocusAdapter() {
@@ -422,7 +398,123 @@ public class CadastroAlunos extends MasterDialogCad {
 		Obs.setBounds(10, 130, 110, 100);
 		getContentPane().add(Obs);
 
+		ComboPais = new JComboBox<>();
+		ComboPais.addFocusListener(new FocusAdapter() {
+
+			public void focusLost(FocusEvent e) {
+				if(!e.isTemporary()) {
+					alunoChange.setPais(ComboPais.getItemAt(ComboPais.getSelectedIndex()));
+				}
+			}
+
+		});
+		ComboPais.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// TODO Auto-generated method stub
+				if(!isFillingCombos) {
+					try {
+						isFillingCombos = true;
+						fillEstado();						
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					} finally {
+						isFillingCombos = false;
+					}
+				}
+			}
+		});
+		ComboPais.setBounds(420, 405, 250, 26);
+		getContentPane().add(ComboPais);
+
+		ComboEstado = new JComboBox<>();
+		ComboEstado.addFocusListener(new FocusAdapter() {
+
+			public void focusLost(FocusEvent e) {
+				if(!e.isTemporary()) {
+					alunoChange.setEstado(ComboEstado.getItemAt(ComboEstado.getSelectedIndex()));
+				}
+			}
+
+		});
+		ComboEstado.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// TODO Auto-generated method stub
+				if(!isFillingCombos) {
+					try {
+						isFillingCombos = true;
+						fillCidade();
+
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					} finally {
+						isFillingCombos = false;
+					}
+				}
+			}
+		});
+		ComboEstado.setBounds(100, 405, 250, 26);
+		getContentPane().add(ComboEstado);
+
+		ComboCidade = new JComboBox<>();
+		ComboCidade.addFocusListener(new FocusAdapter() {
+
+			public void focusLost(FocusEvent e) {
+				if(!e.isTemporary()) {
+					alunoChange.setCidade(ComboCidade.getItemAt(ComboCidade.getSelectedIndex()));
+				}
+			}
+
+		});		
+		ComboCidade.setBounds(420, 375, 250, 26);
+		getContentPane().add(ComboCidade);
+
 		childContainer = getContentPane();
 
 	}
+
+	private void fillPais() throws SQLException {
+
+		ArrayList<String> list = cidadeDAO.getPaises();		
+
+		ComboCidade.removeAllItems();
+		ComboCidade.addItem("-Selecione-");
+
+		ComboEstado.removeAllItems();
+		ComboEstado.addItem("-Selecione-");
+
+		ComboPais.removeAllItems();
+		ComboPais.addItem("-Selecione-");
+		for(int i = 0; i < list.size(); i++) {
+			ComboPais.addItem(list.get(i));		
+		}
+
+	}
+
+	private void fillEstado() throws SQLException {
+		ArrayList<String> list = cidadeDAO.getEstados(ComboPais.getItemAt(ComboPais.getSelectedIndex()));
+
+		ComboCidade.removeAllItems();
+		ComboCidade.addItem("-Selecione-");
+
+		ComboEstado.removeAllItems();
+		ComboEstado.addItem("-Selecione-");
+		for(int i = 0; i < list.size(); i++) {
+			ComboEstado.addItem(list.get(i));		
+		}
+	}
+
+	private void fillCidade() throws SQLException {
+		ArrayList<String> list = cidadeDAO.getCidades(ComboPais.getItemAt(ComboPais.getSelectedIndex()), ComboEstado.getItemAt(ComboEstado.getSelectedIndex()));
+
+		ComboCidade.removeAllItems();
+		ComboCidade.addItem("-Selecione-");
+		for(int i = 0; i < list.size(); i++) {
+			ComboCidade.addItem(list.get(i));		
+		}
+	}
+
 }

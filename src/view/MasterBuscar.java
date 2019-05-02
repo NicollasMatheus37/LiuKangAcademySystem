@@ -23,10 +23,12 @@ public class MasterBuscar extends JFrame {
 
 	protected JTextField jTxtBusca;
 	private JButton btnOk;
-	protected JTable table;
-	private DefaultTableModel model;
+	protected JTable table;	
 	protected AlunoDAO alunoDao; 
 	protected Utils utils;
+	protected DefaultTableModel model;
+	
+	
 	JComboBox<String> campos;
 
 	
@@ -45,6 +47,10 @@ public class MasterBuscar extends JFrame {
 		
 		setVisible(true);
 		
+	}
+	
+	protected void clean() {	
+		model.setRowCount(0);		
 	}
 
 	public void createComponnents() {
@@ -67,11 +73,10 @@ public class MasterBuscar extends JFrame {
 			}
 		});
 		btnOk.setBounds(338, 6, 100, 30);	
-		getContentPane().add(btnOk);
+		getContentPane().add(btnOk);		
 
 		String colunas1[] = { "Código", "Nome" };
-		model = new DefaultTableModel(colunas1, 0);		
-
+		model = new DefaultTableModel(colunas1, 0);
 		table = new JTable(model);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.getColumnModel().getColumn(0).setPreferredWidth(75);

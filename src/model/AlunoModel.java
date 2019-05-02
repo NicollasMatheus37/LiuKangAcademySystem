@@ -1,5 +1,7 @@
 package model;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -32,7 +34,7 @@ public class AlunoModel {
 		
 		setCodigoAluno(0);
 		setAluno("");
-		setDataNascimento(new Date(0));
+		setDataNascimento(new Date(LocalDate.now().toEpochDay()));
 		setSexo(' ');
 		setTelefone("");
 		setCelular("");
@@ -54,7 +56,7 @@ public class AlunoModel {
 		return codigoAluno;
 	}
 	public AlunoModel setCodigoAluno(int codigo_aluno) {
-		codigo_aluno = this.codigoAluno;	
+		this.codigoAluno = codigo_aluno;	
 		return this;
 	}
 
@@ -65,13 +67,20 @@ public class AlunoModel {
 		this.aluno = aluno;
 		return this;
 	}
-	public Date getDataNascimento() {
+	
+	public Date getDataNascimentoDate() {
 		return dataNascimento;
 	}
+	
+	public String getDataNascimento() {
+		return new SimpleDateFormat("dd/MM/yyyy").format(dataNascimento);
+	}
+	
 	public AlunoModel setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 		return this;
 	}
+	
 	public char getSexo() {
 		return sexo;
 	}
