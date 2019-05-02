@@ -65,8 +65,13 @@ public class Menu extends JFrame {
 
 				fecharJanelaAberta();
 				janelaAberta = 1;
-
+				
+				try {
 				fUsuario = new Usuarios();
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				}
 				fUsuario.setVisible(true);
 				desktopPane.add(fUsuario);
 			}

@@ -20,7 +20,7 @@ public class UsuarioDAO extends BaseDAO {
 			usuarioList.add(new UsuarioModel()
 					
 					.setPerfil(result.getString("perfil"))
-					.setUsuario(result.getInt("usuario"))
+					.setUsuario(result.getString("usuario"))
 					);
 					result.next();
 					}
@@ -36,7 +36,7 @@ public class UsuarioDAO extends BaseDAO {
 		
 		UsuarioModel usuario = new UsuarioModel();
 		return usuario .setPerfil(result.getString("perfil"))
-				.setUsuario(result.getInt("usuario"));
+				.setUsuario(result.getString("usuario"));
 	}
 	
 	public void createUsuario(UsuarioModel usuario) throws SQLException{
@@ -44,18 +44,17 @@ public class UsuarioDAO extends BaseDAO {
 		this.insertInto("usuario", fields)
 		.values(
 				usuario.getPerfil()+","+
-				Integer.toString(usuario.getUsuario())
+				usuario.getUsuario()
 				)
 		.commit();
 	}
 	
-	public void updateUsuario(UsuarioModel usuario, Integer id) throws SQLException{
+	public void updateUsuario(UsuarioModel usuario) throws SQLException{
 		this.update("usuario")
 		.setValue(
 				"perfil = "+usuario.getPerfil()+
 				"usuario = "+usuario.getUsuario()
 				)
-		.where("id", "=", id.toString())
 		.commit();
 	}
 	
