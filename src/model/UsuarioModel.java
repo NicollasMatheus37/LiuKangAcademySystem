@@ -2,15 +2,25 @@ package model;
 
  public class UsuarioModel {	
 
- 	private int usuario;		
-	private String perfil; 	
+ 	private String usuario;		
+	private String perfil;
+	private String senha;
 
-
- 	public int getUsuario() {	
+	public UsuarioModel(){
+		clean();
+	}
+	
+	public void clean() {
+		setUsuario("");
+		setSenha("");
+		setPerfil("");
+	}
+	
+ 	public String getUsuario() {	
 		return usuario;	
 	}	
 
- 	public UsuarioModel setUsuario(int usuario) {	
+ 	public UsuarioModel setUsuario(String usuario) {	
 		this.usuario = usuario ;	
 		return this;
 	}	
@@ -20,6 +30,11 @@ package model;
 	}	
 	public UsuarioModel setPerfil(String perfil) {	
 		this.perfil = perfil;	
+		return this;
+	}
+
+	public UsuarioModel setSenha(String senha) {
+		this.senha = senha;
 		return this;
 	}	
 
