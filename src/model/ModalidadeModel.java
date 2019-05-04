@@ -6,6 +6,13 @@ package model;
  	private String modalidade;	
 
 
+ 	public ModalidadeModel() {
+ 		clean();
+ 	}
+ 	
+ 	public void clean() {
+ 		modalidade = "";
+ 	}
 
  	public String getModalidade() {	
 		return modalidade;	

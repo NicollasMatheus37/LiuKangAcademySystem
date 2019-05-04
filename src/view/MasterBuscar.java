@@ -107,7 +107,11 @@ public class MasterBuscar extends JFrame {
 	}	
 
 	protected void InsertRow(int Codigo, String nome) {
-		model.addRow(new String[]{Integer.toString(Codigo),nome});
+		if(Codigo == 0) {
+			model.addRow(new String[]{nome});
+		}else {
+			model.addRow(new String[]{Integer.toString(Codigo),nome});
+		}
 	}
 	
 	protected void buscar() {

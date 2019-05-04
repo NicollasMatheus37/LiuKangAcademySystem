@@ -10,56 +10,52 @@ public class ModalidadeDAO extends BaseDAO {
 	public ArrayList<ModalidadeModel> getAllModalidades() throws SQLException{
 		ResultSet result = null;
 		result = this.select("*")
-			.from("modalidades")
-			.apply();
-		
-		result.first();
-		
+				.from("modalidades")
+				.apply();
+
 		ArrayList<ModalidadeModel> modalidadeList = new ArrayList<ModalidadeModel>();
-		while((result.getRow() != 0) && (!result.isAfterLast())) {
+		while(result.next()) {
 			modalidadeList.add(new ModalidadeModel()
-					
 					.setModalidade(result.getString("modalidade"))
 					);
-					result.next();
-					}
-					return modalidadeList;
+		}
+
+		return modalidadeList;
 	}
-	
-	public ModalidadeModel getOneModalidade(Integer id) throws SQLException{
+
+	/*	
+	public ModalidadeModel getOneModalidade(String modalidade) throws SQLException{
+
 		ResultSet result = null;
 		result = this.select("*")
 			.from("modalidades")
 			.where("id", "=", id.toString())
 			.apply();
-		
+
 		ModalidadeModel modalidade = new ModalidadeModel();
 		return modalidade .setModalidade(result.getString("modalidade"));
-	}
-	
+	}	
+	 */	
+
 	public void createModalidade(ModalidadeModel modalidade) throws SQLException{
 		String fields = "modalidade";
 		this.insertInto("modalidades", fields)
-		.values(
-				modalidade.getModalidade()
-				)
+		.values(quoteStr(modalidade.getModalidade()))
 		.commit();
 	}
-	
-	public void updateModalidade(ModalidadeModel modalidade, Integer id) throws SQLException{
+
+	public void updateModalidade(String oldModalidade,String newModalidade) throws SQLException{
 		this.update("modalidades")
-		.setValue(
-				"modalidade = "+modalidade.getModalidade()
-				)
-		.where("id", "=", id.toString())
+		.setValue("modalidade = "+quoteStr(newModalidade))
+		.where("modalidade", "=", quoteStr(oldModalidade))
 		.commit();
 	}
-	
-	public void deleteModalidade(Integer id) throws SQLException{
+
+	public void deleteModalidade(String modalidade) throws SQLException{
 		this.delete()
 		.from("modalidades")
-		.where("id", "=", id.toString())
+		.where("modalidade", "=", quoteStr(modalidade))
 		.commit();
 	}
-	
+
 }

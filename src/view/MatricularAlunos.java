@@ -21,8 +21,6 @@ public class MatricularAlunos extends MasterDialogCad {
 	private JTextField JTCodigoAluno, JTAluno, JTMat, JTDataMat, JTDataFat;
 	private DefaultTableModel model;
 	private JTable tableMod;
-	private JDesktopPane desktopPane;
-	private AdicionarModalidades frameDezesseis;
 		
 
 	public MatricularAlunos() {
@@ -33,12 +31,11 @@ public class MatricularAlunos extends MasterDialogCad {
 		setResizable(false);
 		setClosable(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		createComponnents();
 		setVisible(true);
 
 	}
 
-	public void createComponnents() {
+	protected void subComponents() {
 
 		Matricula = new JLabel("Matricula:");
 		Matricula.setBounds(10, 10, 100, 100);
@@ -101,6 +98,8 @@ public class MatricularAlunos extends MasterDialogCad {
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		this.getContentPane().add(scrollPane);
 		tableMod.getTableHeader().setEnabled(false);
+		
+		childContainer = getContentPane();
 
 	}
 }

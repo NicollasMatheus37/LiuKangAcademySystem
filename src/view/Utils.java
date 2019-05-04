@@ -8,9 +8,11 @@ import java.util.Locale;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JViewport;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.JTextComponent;
 
 public class Utils {
@@ -35,7 +37,8 @@ public class Utils {
 			JFormattedTextField.class,
 			JComboBox.class,
 			JTextArea.class,
-			JScrollPane.class
+			JScrollPane.class,
+			JTable.class
 	};
 
 
@@ -52,7 +55,9 @@ public class Utils {
 						((JComboBox<?>) component).setSelectedIndex(0);;	
 					}else if (JScrollPane.class.isInstance(component)) {
 						cleanComponents(getSubComponents(component));
-					}else {					
+					}else if (JTable.class.isInstance(component)){
+						((DefaultTableModel) ((JTable) component).getModel()).setRowCount(0);
+					} else {
 						((JTextComponent) component).setText("");
 					}
 				}
@@ -138,6 +143,20 @@ public class Utils {
 
 		return coll.compare(strA, StrB) == 0;
 
+	}
+	
+	public boolean tableContains(JTable table, int column, String str) {
+		DefaultTableModel model = ((DefaultTableModel) table.getModel());
+		
+		for(int i = 0; i < model.getRowCount(); i++) {
+			
+			if (model.getValueAt(i, column).toString().equals(str)) {
+				return true;
+			}
+			
+		}
+		
+		return false;		
 	}
 
 

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class ConnectionFactory {
 	
 	public static Connection getConnection(final String nomeBanco, final String usuario, final String senha) {
-		return getConnection("localhost", "5433", nomeBanco, usuario, senha);
+		return getConnection("localhost", "5432", nomeBanco, usuario, senha);
 	}
 	
 	public static Connection getConnection(final String ipBanco, final String portaBanco, final String nomeBanco, final String usuario, final String senha) {

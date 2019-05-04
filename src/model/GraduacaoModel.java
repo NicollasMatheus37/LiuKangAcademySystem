@@ -6,6 +6,15 @@ public class GraduacaoModel {
 	private String graduacao; 	
 
 
+	public GraduacaoModel() {
+		clean();
+	}
+	
+	public void clean() {
+		modalidade = "";
+		graduacao = "";
+	}
+	
  	public String getModalidade() {	
 		return modalidade;	
 	}	

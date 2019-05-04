@@ -30,7 +30,7 @@ public class MasterDialogCad extends JInternalFrame {
 			// TODO Auto-generated method stub
 			if (actionDelete()) {
 				setFieldsEnabled(false);
-				
+				clean();
 			}
 		}
 	};
@@ -41,9 +41,9 @@ public class MasterDialogCad extends JInternalFrame {
 		public void actionPerformed(ActionEvent e) {
 			if(actionAdd()) {
 				isInserting = true;
+				clean();
 				fillFields();
-				setFieldsEnabled(true);
-				utils.cleanSubComponents(childContainer);
+				setFieldsEnabled(true);				
 			}
 		}
 	};
@@ -61,6 +61,7 @@ public class MasterDialogCad extends JInternalFrame {
 		public void windowClosed(WindowEvent e) {
 			// TODO Auto-generated method stub			
 			if(afterSearch()) {
+				clean();
 				fillFields();
 				isInserting = false;
 				setFieldsEnabled(true);
@@ -83,6 +84,7 @@ public class MasterDialogCad extends JInternalFrame {
 			if(actionSave()) {
 				if(isInserting) {
 					btnCancel.doClick();
+					clean();
 				}
 			}
 			

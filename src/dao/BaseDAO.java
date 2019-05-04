@@ -47,7 +47,7 @@ public abstract class BaseDAO {
 	}
 	
 	protected BaseDAO values(String statement) {
-		this.setSql(getSql() + " VALUES " + statement);
+		this.setSql(getSql() + " VALUES ( " + statement + " ) ");
 		return this;
 	}
 	
@@ -135,6 +135,12 @@ public abstract class BaseDAO {
 		whereFilter = ((whereFilter.isEmpty()) ? " " : whereFilter+" AND " ) + sql;		
 	}
 	
+	public ResultSet freeSqlQuery(String sql) throws SQLException {
+		this.sql = sql;
+		
+		return excecuteQuery();
+	}
+	
 	protected ResultSet apply() throws SQLException {		
 		return this.excecuteQuery();
 	}
@@ -189,6 +195,11 @@ public abstract class BaseDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	//Util
+	public String quoteStr(String str) {
+		return "'"+str+"'";
 	}
 
 }
