@@ -23,7 +23,7 @@ public class MatriculaModalidadeDAO extends BaseDAO {
 					.setModalidade(result.getString("modalidade"))
 					.setGraduacao(result.getString("graduacao"))
 					.setPlano(result.getString("plano"))
-					.setDataInicio(result.getDate("data_inicio"))
+					.setDataMatricula(result.getDate("data_inicio"))
 					.setDataFim(result.getDate("data_fim"))
 					);
 					result.next();
@@ -43,7 +43,7 @@ public class MatriculaModalidadeDAO extends BaseDAO {
 				.setModalidade(result.getString("modalidade"))
 				.setGraduacao(result.getString("graduacao"))
 				.setPlano(result.getString("plano"))
-				.setDataInicio(result.getDate("data_inicio"))
+				.setDataMatricula(result.getDate("data_inicio"))
 				.setDataFim(result.getDate("data_fim"));
 	}
 	
@@ -56,7 +56,7 @@ public class MatriculaModalidadeDAO extends BaseDAO {
 				matriculaModalidade.getGraduacao()+","+
 				matriculaModalidade.getPlano()+","+
 				matriculaModalidade.getDataMatricula()+","+
-				matriculaModalidade.getData_fim()
+				matriculaModalidade.getDataFim()
 				)
 		.commit();
 	}
@@ -69,7 +69,7 @@ public class MatriculaModalidadeDAO extends BaseDAO {
 				  "graduacao = "+matriculaModaliade.getGraduacao()+
 				  "plano = "+matriculaModaliade.getPlano()+
 				  "data_inicio = "+matriculaModaliade.getDataMatricula()+
-				  "data_fim = "+matriculaModaliade.getData_fim()
+				  "data_fim = "+matriculaModaliade.getDataFim()
 				)
 		.where("id", "=", id.toString())
 		.commit();

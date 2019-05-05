@@ -52,12 +52,12 @@ package model;
 		return data_inicio;	
 	}	
 
- 	public MatriculaModalidadeModel setDatamMatricula(Date data_inicio) {	
+ 	public MatriculaModalidadeModel setDataMatricula(Date data_inicio) {	
 		this.data_inicio = data_inicio;	
 		return this;
 	}	
 
- 	public Date getData_fim() {	
+ 	public Date getDataFim() {	
 		return data_fim;	
 	}	
 
