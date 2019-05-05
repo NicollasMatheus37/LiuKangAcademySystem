@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Container;
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -21,22 +22,27 @@ public class MasterDialogCad extends JInternalFrame {
 	protected JButton btnCancel;
 	protected Container childContainer;
 	protected Utils utils;
-	
+
 	protected boolean isInserting;
 	protected AbstractAction actDel = new AbstractAction() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			if (actionDelete()) {
-				setFieldsEnabled(false);
-				clean();
+			try {
+				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));			
+				if (actionDelete()) {
+					setFieldsEnabled(false);
+					clean();
+				}
+			}finally {
+				setCursor(Cursor.getDefaultCursor());
 			}
 		}
 	};
-	
+
 	protected AbstractAction actAdd = new AbstractAction() {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(actionAdd()) {
@@ -47,17 +53,17 @@ public class MasterDialogCad extends JInternalFrame {
 			}
 		}
 	};
-	
+
 	protected AbstractAction actSearch = new AbstractAction() {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			actionSearch();
 		}
 	};
-	
+
 	protected WindowListener eventWindowSearchClosed = new WindowListener() {
-		
+
 		public void windowClosed(WindowEvent e) {
 			// TODO Auto-generated method stub			
 			if(afterSearch()) {
@@ -67,7 +73,7 @@ public class MasterDialogCad extends JInternalFrame {
 				setFieldsEnabled(true);
 			}
 		}
-		
+
 		public void windowOpened(WindowEvent e) {}
 		public void windowIconified(WindowEvent e) {}
 		public void windowDeiconified(WindowEvent e) {}
@@ -75,30 +81,39 @@ public class MasterDialogCad extends JInternalFrame {
 		public void windowActivated(WindowEvent e) {}
 		public void windowClosing(WindowEvent e) {}
 	};
-	
+
 	protected AbstractAction actSave = new AbstractAction() {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
-			if(actionSave()) {
-				if(isInserting) {
-					btnCancel.doClick();
-					clean();
+			try {
+				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+				if(actionSave()) {
+					if(isInserting) {
+						btnCancel.doClick();
+						clean();
+					}
 				}
+			} finally {
+				setCursor(Cursor.getDefaultCursor());
 			}
-			
+
 		}
 	};
-	
+
 	protected AbstractAction actCancel = new AbstractAction() {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			if(actionCancel()) {
-				isInserting = false;
-				setFieldsEnabled(false);
-				clean();
+				if(!isInserting) {
+					fillFields();
+				}else {
+					isInserting = false;
+					setFieldsEnabled(false);
+					clean();
+				}
+
 			}
 		}
 	};
@@ -115,7 +130,7 @@ public class MasterDialogCad extends JInternalFrame {
 		setFieldsEnabled(false);
 
 	}
-	
+
 	protected void setFieldsEnabled(boolean enabled) {
 		utils.setSubComponentsEnabled(childContainer, enabled);
 	}
@@ -127,30 +142,30 @@ public class MasterDialogCad extends JInternalFrame {
 	protected boolean actionDelete() {
 		return false;
 	}
-	
+
 	protected boolean actionAdd() {
 		return true;
 	}
-	
+
 	protected void actionSearch() {
 	}
-	
+
 	protected boolean actionSave() {
 		return false;
 	}
-	
+
 	protected boolean actionCancel() {
 		return false;
 	}
-	
+
 	protected boolean afterSearch() {
 		return false;		
 	}
-	
+
 	protected void fillFields() {
-		
+
 	}
-	
+
 	private void clean() {
 		utils.cleanSubComponents(childContainer);
 	}

@@ -64,7 +64,7 @@ public class ModalidadesGraduacoes extends MasterDialogCad {
 		setVisible(true);
 
 	}
-	
+
 	protected boolean actionDelete() {
 		try {
 			graduacaoDAO.deleteGraduacoes(oldModalidade);
@@ -73,7 +73,7 @@ public class ModalidadesGraduacoes extends MasterDialogCad {
 		} catch (Exception e) {
 			return false;
 		}
-			
+
 	}
 
 	protected void actionSearch() {
@@ -122,12 +122,19 @@ public class ModalidadesGraduacoes extends MasterDialogCad {
 
 	protected boolean actionCancel() {
 		try {
-			modalidade = null;
-			modalidadeChange = null;
-			graduacao = null;
-			graduacoes = null;			
-			graduacoesChange =null;
-			model.setRowCount(0);
+			if(modalidadeChange!=null) {
+				if(!isInserting) {
+					modalidadeChange = modalidade;
+					graduacoesChange = graduacoes;					
+				}else {
+					modalidade = null;
+					modalidadeChange = null;
+					graduacao = null;
+					graduacoes = null;			
+					graduacoesChange =null;
+					model.setRowCount(0);					
+				}				
+			}
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -168,7 +175,7 @@ public class ModalidadesGraduacoes extends MasterDialogCad {
 		}
 		fillTable();		
 	}
-	
+
 	private void fillTable() {
 		model.setRowCount(0);
 		for(GraduacaoModel graduacaoModel : graduacoesChange) {
@@ -192,8 +199,8 @@ public class ModalidadesGraduacoes extends MasterDialogCad {
 						}
 					}
 					modalidade.setModalidade(txtModalidade.getText());
-					model.setRowCount(0);
-					graduacao = new GraduacaoModel();
+					//model.setRowCount(0);
+					//graduacao = new GraduacaoModel();
 				}
 			}
 
@@ -237,7 +244,11 @@ public class ModalidadesGraduacoes extends MasterDialogCad {
 		String colunas[] = { "Graduação" };
 
 		//add - Jtable
-		model = new DefaultTableModel(null, colunas);
+		model = new DefaultTableModel(null, colunas) {
+			public boolean isCellEditable(int row,int column) {
+				return false;				
+			}
+		};
 		table = new JTable(model);
 		table.setBorder(BorderFactory.createLineBorder(Color.black));
 		table.setEnabled(true);
@@ -258,12 +269,15 @@ public class ModalidadesGraduacoes extends MasterDialogCad {
 		table.addMouseListener(new MouseAdapter() {
 
 			public void mousePressed(MouseEvent mouseEvent) {
-		        JTable table =(JTable) mouseEvent.getSource();
-		        if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
-		        	graduacoesChange.remove(table.getSelectedRow());
-		        	fillTable();	            
-		        }
-		    }
+				JTable table =(JTable) mouseEvent.getSource();
+				if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
+					graduacoesChange.remove(table.getSelectedRow());
+
+					txtGraduacao.requestFocus();
+
+					fillTable();	            
+				}
+			}
 
 		});
 
@@ -284,13 +298,10 @@ public class ModalidadesGraduacoes extends MasterDialogCad {
 		setTitle("Modalidade e Graduações");
 		setVisible(true);
 
-		btnCancel.setVisible(false);
+		//btnCancel.setVisible(false);
 
 		childContainer = getContentPane();
 
-	}
-	public boolean isCellEditable(int row, int col) {
-		return false;
 	}
 
 }
