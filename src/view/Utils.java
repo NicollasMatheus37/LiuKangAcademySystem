@@ -5,6 +5,7 @@ import java.awt.Container;
 import java.text.Collator;
 import java.util.Locale;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JScrollPane;
@@ -38,7 +39,8 @@ public class Utils {
 			JComboBox.class,
 			JTextArea.class,
 			JScrollPane.class,
-			JTable.class
+			JTable.class,
+			JButton.class
 	};
 
 
@@ -57,6 +59,8 @@ public class Utils {
 						cleanComponents(getSubComponents(component));
 					}else if (JTable.class.isInstance(component)){
 						((DefaultTableModel) ((JTable) component).getModel()).setRowCount(0);
+					} else if (JButton.class.isInstance(component)) {
+						//Ignore;
 					} else {
 						((JTextComponent) component).setText("");
 					}
