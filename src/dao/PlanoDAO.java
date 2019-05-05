@@ -52,21 +52,20 @@ public class PlanoDAO extends BaseDAO {
 		.commit();
 	}
 	
-	public void updatePlano(PlanoModel plano, Integer id) throws SQLException{
+	public void updatePlano(PlanoModel plano) throws SQLException{
 		this.update("planos")
 			.setValue(
 					"modalidade = "+plano.getModalidade()+
 					"planos = "+plano.getPlano()+
 					"valor_mensal = "+plano.getValorMensal()
 					)
-			.where("id", "=", id.toString())
 			.apply();
 	}
 	
-	public void deletePlano(Integer id) throws SQLException{
+	public void deletePlano(String plano) throws SQLException{
 		this.delete()
 		.from("planos")
-		.where("id", "=", id.toString())
+		.where("plano", "=", plano)
 		.commit();
 	}
 	
