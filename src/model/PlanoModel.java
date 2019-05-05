@@ -6,8 +6,15 @@ package model;
 	private String plano; 	
 	private float valor_mensal; 	
 
-
-
+	public PlanoModel() {
+		Clean();
+	}
+	
+	public void Clean() {
+		modalidade = "";
+		plano = "";
+		valor_mensal=0;
+	}
 
  	public String getModalidade() {	
 		return modalidade;	
