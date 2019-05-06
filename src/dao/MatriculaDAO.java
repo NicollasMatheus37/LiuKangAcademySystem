@@ -43,20 +43,25 @@ public class MatriculaDAO extends BaseDAO {
 				.setDataEncerramento(result.getDate("data_encerramento"));
 	}
 
-	public void createMatricula(MatriculaModel matricula) throws SQLException{
-		String fields ="codigo_matricula, codigo_aluno,  data_matricula, dia_vencimento, data_encerramento";
-		this.insertInto("matriculas", fields)
+	public int createMatricula(MatriculaModel matricula) throws SQLException{
+		String fields ="codigo_aluno,  data_matricula, dia_vencimento, data_encerramento";
+		ResultSet result = this.insertInto("matriculas", fields)
 		.values(
-				Integer.toString(matricula.getCodigoMatricula())+","+
 						Integer.toString(matricula.getCodigoAluno())+","+
-						matricula.getDataMatricula()+","+
+						quoteStr(matricula.getDataMatricula())+","+
 						Integer.toString(matricula.getDiaVencimento())+","+
-						matricula.getDataEncerramento()	
+						quoteStr(matricula.getDataEncerramento())	
 				)
-		.commit();
+		.returning("codigo_matricula")
+		.apply();
+		if(result.next()) {
+			return result.getInt(1);
+		}else {
+			return 0;
+		}
 	}
 
-	public void updateMatricula(MatriculaModel matricula, Integer id) throws SQLException{
+	public void updateMatricula(MatriculaModel matricula) throws SQLException{
 		this.update("matriculas")
 		.setValue(
 				"codigo_matricula = "+matricula.getCodigoMatricula()+
@@ -65,7 +70,7 @@ public class MatriculaDAO extends BaseDAO {
 				"dia_vencimento = "+matricula.getDiaVencimento()+
 				"data_encerramento = "+matricula.getDataEncerramento()
 				)
-		.where("matricula", "=", id.toString())
+		.where("matricula", "=", Integer.toString(matricula.getCodigoMatricula()))
 		.commit();
 	}
 

@@ -86,7 +86,9 @@ public class Utils {
 					//Tratamento especifico para SrollPane, é passado todos componentes dentro do Scroll de forma recursiva
 					setComponentsEnabled( getSubComponents(component), enabled);			
 				}else {
-					component.setEnabled(enabled);
+					if(component.getName()==null) {
+						component.setEnabled(enabled);
+					}
 				}				
 			}
 

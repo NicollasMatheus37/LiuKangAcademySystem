@@ -34,7 +34,7 @@ import java.util.Date;
 	}	
 
  	public MatriculaModel setCodigoMatricula(int codigo_matricula) {	
-		codigo_matricula = this.codigo_matricula;	
+		this.codigo_matricula = codigo_matricula;	
 		return this;
 	}	
 
@@ -43,7 +43,7 @@ import java.util.Date;
 	}	
 
  	public MatriculaModel setCodigoAluno(int codigo_aluno) {	
-		codigo_aluno = this.codigo_aluno;			
+		this.codigo_aluno = codigo_aluno;			
 		return this;
 	}	
 
@@ -52,7 +52,7 @@ import java.util.Date;
 	}	
  	
  	public String getDataMatricula() {
- 		return new SimpleDateFormat("##/##/####").format(data_matricula);
+ 		return new SimpleDateFormat("dd/MM/yyyy").format(data_matricula);
  	}
 
  	public MatriculaModel setDataMatricula(Date data_matricula) {	
@@ -74,7 +74,7 @@ import java.util.Date;
 	}	
  	
  	public String getDataEncerramento() {
- 		return new SimpleDateFormat("##/##/####").format(data_encerramento);
+ 		return new SimpleDateFormat("dd/MM/yyyy").format(data_encerramento);
  	}
 
  	public MatriculaModel setDataEncerramento(Date data_encerramento) {	

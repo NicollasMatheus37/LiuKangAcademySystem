@@ -34,7 +34,7 @@ import java.util.Date;
 	}	
 
  	public MatriculaModalidadeModel setCodigoMatricula(int codigo_matricula) {	
-		codigo_matricula = this.codigo_matricula;		
+		this.codigo_matricula = codigo_matricula;		
 		return this;
 	}	
 
@@ -43,16 +43,16 @@ import java.util.Date;
 	}	
 
  	public MatriculaModalidadeModel setModalidade(String modalidade) {	
-		modalidade = this.modalidade;			
+		this.modalidade = modalidade ;			
 		return this;
 	}	
 
  	public String getGraduacao() {	
-		return modalidade;	
+		return graduacao;	
 	}	
 
  	public MatriculaModalidadeModel setGraduacao(String graduacao) {	
-		graduacao = this.graduacao;			
+		this.graduacao = graduacao ;			
 		return this;
 	}	
 
@@ -61,7 +61,7 @@ import java.util.Date;
 	}	
 
  	public MatriculaModalidadeModel setPlano(String plano) {	
-		plano = this.plano;		
+		this.plano = plano;		
 		return this;
 	}	
 
@@ -70,7 +70,7 @@ import java.util.Date;
 	}	
  	
  	public String getData_inicio() {
- 		return new SimpleDateFormat("##/##/####").format(data_inicio);
+ 		return new SimpleDateFormat("dd/MM/yyyy").format(data_inicio);
  	}
 
  	public MatriculaModalidadeModel setData_inicio(Date data_inicio) {
@@ -83,7 +83,7 @@ import java.util.Date;
 	}	
  	
  	public String getData_fim() {
- 		return new SimpleDateFormat("##/##/####").format(data_fim);
+ 		return new SimpleDateFormat("dd/MM/yyyy").format(data_fim);
  	}
 
  	public MatriculaModalidadeModel setData_Fim(Date data_fim) {	

@@ -44,12 +44,12 @@ public class MatriculaModalidadeDAO extends BaseDAO {
 		for(MatriculaModalidadeModel matriculaModalidade : matModalidades) {
 			this.insertInto("matriculas_modalidades", fields)
 			.values(
-					Integer.toString(matriculaModalidade.getCodigoMatricula())+",'"+
-							matriculaModalidade.getModalidade()+"','"+
-							matriculaModalidade.getGraduacao()+"','"+
-							matriculaModalidade.getPlano()+"','"+
-							matriculaModalidade.getData_inicio()+"','"+
-							matriculaModalidade.getData_fim()+"'"
+					Integer.toString(matricula)+",'"+
+							quoteStr(matriculaModalidade.getModalidade())+","+
+							quoteStr(matriculaModalidade.getGraduacao())+","+
+							quoteStr(matriculaModalidade.getPlano())+","+
+							quoteStr(matriculaModalidade.getData_inicio())+","+
+							quoteStr(matriculaModalidade.getData_fim())
 					)
 			.commit();
 		}
@@ -72,7 +72,7 @@ public class MatriculaModalidadeDAO extends BaseDAO {
 	public void deleteMatriculaModalidade(Integer id) throws SQLException{
 		this.delete()
 		.from("matriculas_modalidades")
-		.where("matricula", "=", id.toString())
+		.where("codigo_matricula", "=", id.toString())
 		.commit();
 	}
 

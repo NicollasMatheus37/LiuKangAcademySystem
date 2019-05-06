@@ -1,13 +1,15 @@
 package view;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
@@ -33,14 +35,13 @@ import model.MatriculaModel;
 @SuppressWarnings("serial")
 public class MatricularAlunos extends MasterDialogCad {
 
-	private JButton btnModalidade, btnBuscaAluno;
+	private JButton btnModalidade;
 	private JLabel lblMatricula, lblAluno, lblDataMat, lblDataFat;
-	private JTextField JTCodigoAluno, JTAluno, JTMat;
-	private JFormattedTextField JTDataMat, JTDataFat;
+	private JTextField JTCodigoAluno, JTAluno, JTMat, JTDataFat;
+	private JFormattedTextField JTDataMat;
 	private DefaultTableModel model;
 	private JTable tableMod;
 	private MatriculaModel matricula, matriculaChange;
-	private MatriculaModalidadeModel matModalidade;
 	private ArrayList<MatriculaModalidadeModel> matModalidades, matModalidadesChange;
 
 	private BuscarMatricula buscaMat;
@@ -84,7 +85,7 @@ public class MatricularAlunos extends MasterDialogCad {
 	protected boolean actionAdd() {
 		try {
 			matricula = new MatriculaModel();
-			matModalidades = new ArrayList<>();
+			matModalidadesChange = new ArrayList<>();
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -118,10 +119,14 @@ public class MatricularAlunos extends MasterDialogCad {
 	protected boolean actionSave() {
 		if(matriculaChange!=null) {
 			if(matModalidadesChange.size()>0) {
-
 				try {
-					matriculaDAO.createMatricula(matriculaChange);
-					matModalidadeDAO.createMatriculaModalidade(matModalidadesChange, matriculaChange.getCodigoMatricula());
+					int matriculaId = matriculaChange.getCodigoMatricula();
+					if(isInserting) {
+						matriculaId = matriculaDAO.createMatricula(matriculaChange);
+					}else {
+						matriculaDAO.updateMatricula(matriculaChange);
+					}
+					matModalidadeDAO.createMatriculaModalidade(matModalidadesChange, matriculaId);
 					return true;
 				} catch (SQLException e) {
 					return false;
@@ -160,7 +165,7 @@ public class MatricularAlunos extends MasterDialogCad {
 
 		}
 		JTDataMat.setText(matricula.getDataMatricula());
-		JTDataFat.setText(matricula.getDataEncerramento());	
+		JTDataFat.setText(Integer.toString(matricula.getDiaVencimento()));	
 
 		matriculaChange = matricula;
 
@@ -202,6 +207,8 @@ public class MatricularAlunos extends MasterDialogCad {
 
 
 		JTMat = new JTextField();
+		JTMat.setName("ignore");
+		JTMat.setEnabled(false);
 		JTMat.setBounds(135, 50, 250, 26);
 		getContentPane().add(JTMat);
 
@@ -217,44 +224,60 @@ public class MatricularAlunos extends MasterDialogCad {
 		});
 
 
-		JTCodigoAluno.setBounds(135, 80, 70, 26);
-		JTCodigoAluno.setEnabled(false);
-		getContentPane().add(JTCodigoAluno);
+		JTCodigoAluno.setBounds(135, 80, 115, 26);
+		JTCodigoAluno.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_F9) {
+					buscaAluno = new BuscarAluno();
+					buscaAluno.addWindowListener(new WindowAdapter() {
 
-		btnBuscaAluno = new JButton("...");
-		btnBuscaAluno.addActionListener(new AbstractAction() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				buscaAluno = new BuscarAluno();
-				buscaAluno.addWindowListener(new WindowAdapter() {
-
-					public void windowClosed(WindowEvent e) {
-						if(buscaAluno.alunoReturn!=null) {
-							matriculaChange.setCodigoAluno(buscaAluno.alunoReturn.getcodigoAluno());
-							JTAluno.setText(buscaAluno.alunoReturn.getAluno());
-							JTCodigoAluno.setText(Integer.toString(buscaAluno.alunoReturn.getcodigoAluno()));
+						public void windowClosed(WindowEvent e) {
+							if(buscaAluno.alunoReturn!=null) {
+								matriculaChange.setCodigoAluno(buscaAluno.alunoReturn.getcodigoAluno());
+								JTAluno.setText(buscaAluno.alunoReturn.getAluno());
+								JTCodigoAluno.setText(Integer.toString(buscaAluno.alunoReturn.getcodigoAluno()));
+							}
 						}
-					}
 
-				});
-
+					});
+				}
 			}
 		});
-		btnBuscaAluno.setBounds(205, 80, 45, 26);
-		getContentPane().add(btnBuscaAluno);
+		JTCodigoAluno.setEnabled(true);
+		getContentPane().add(JTCodigoAluno);
+
 
 		JTAluno = new JTextField();
+		JTAluno.setName("ignore");
 		JTAluno.setEnabled(false);
 		JTAluno.setBounds(255, 80, 435, 26);
 		getContentPane().add(JTAluno);		
 
 		try {
 			JTDataMat = new JFormattedTextField(new MaskFormatter("##/##/####"));
+			JTDataMat.addFocusListener(new FocusAdapter() {
+				public void focusLost(FocusEvent e) {
+					if(!e.isTemporary()) {
+						try {
+							matriculaChange.setDataMatricula(new SimpleDateFormat("dd/MM/yyyy").parse(JTDataMat.getText()));
+						} catch (ParseException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+				}
+			});
 			JTDataMat.setBounds(135, 110, 120, 26);
 			getContentPane().add(JTDataMat);
 
-			JTDataFat = new JFormattedTextField(new MaskFormatter("##/##/####"));
+			JTDataFat = new JTextField();
+			JTDataFat.addFocusListener(new FocusAdapter() {
+				public void focusLost(FocusEvent e) {
+					if(!e.isTemporary()) {
+						matriculaChange.setDiaVencimento(Integer.parseInt(JTDataFat.getText()));
+					}
+				}
+			});
 			JTDataFat.setBounds(615, 110, 55, 26);
 			getContentPane().add(JTDataFat);		
 
@@ -262,7 +285,7 @@ public class MatricularAlunos extends MasterDialogCad {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		btnModalidade = new JButton("Adicionar Modalidade");
 		btnModalidade.setBounds(10, 155, 160, 26);
 		btnModalidade.addActionListener(new AbstractAction() {
