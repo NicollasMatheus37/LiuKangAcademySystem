@@ -10,10 +10,16 @@ package model;
 		Clean();
 	}
 	
+	public PlanoModel(PlanoModel plano) {
+		this.modalidade = plano.getModalidade();
+		this.plano = plano.getPlano();
+		this.valor_mensal = plano.getValorMensal();
+	}
+	
 	public void Clean() {
 		modalidade = "";
 		plano = "";
-		valor_mensal=0;
+		valor_mensal = 0;
 	}
 
  	public String getModalidade() {	

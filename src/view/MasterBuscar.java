@@ -106,11 +106,11 @@ public class MasterBuscar extends JFrame {
 
 	}	
 
-	protected void InsertRow(int Codigo, String nome) {
-		if(Codigo == 0) {
-			model.addRow(new String[]{nome});
+	protected void InsertRow(String str1, String str2) {
+		if(str2.trim().isEmpty()) {
+			model.addRow(new String[]{str1});
 		}else {
-			model.addRow(new String[]{Integer.toString(Codigo),nome});
+			model.addRow(new String[]{str1,str2});
 		}
 	}
 	
@@ -126,6 +126,7 @@ public class MasterBuscar extends JFrame {
 		for(int i = 0; i < campos.length; i++) {
 			this.campos.addItem(campos[i]);
 		}
+		table.setModel(model);
 	}
 
 }

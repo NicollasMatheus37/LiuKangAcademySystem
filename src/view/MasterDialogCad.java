@@ -67,13 +67,14 @@ public class MasterDialogCad extends JInternalFrame {
 	protected WindowAdapter eventWindowSearchClosed = new WindowAdapter() {
 		
 		public void windowClosed(WindowEvent e) {
-			// TODO Auto-generated method stub			
+			
 			if(afterSearch()) {
 				clean();
 				fillFields();
 				isInserting = false;
 				setFieldsEnabled(true);
 			}
+			
 		}		
 			
 	};

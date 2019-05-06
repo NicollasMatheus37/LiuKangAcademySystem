@@ -26,7 +26,7 @@ public class BuscarModalidade extends MasterBuscar {
 			for(int i = 0; i < modalidades.size(); i++) {
 
 				if(utils.containsIgnoreCase(modalidades.get(i).getModalidade(), jTxtBusca.getText())) {						
-					InsertRow(0,modalidades.get(i).getModalidade());
+					InsertRow("",modalidades.get(i).getModalidade());
 				}else {
 					modalidades.remove(i);
 					i--;
