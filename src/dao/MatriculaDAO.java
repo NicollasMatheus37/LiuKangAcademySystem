@@ -31,7 +31,7 @@ public class MatriculaDAO extends BaseDAO {
 		ResultSet result = null;
 		result = this.select("*")
 				.from("matriculas")
-				.where("matricula", "=", id.toString())
+				.where("codigo_matricula", "=", id.toString())
 				.apply();
 
 
@@ -64,20 +64,19 @@ public class MatriculaDAO extends BaseDAO {
 	public void updateMatricula(MatriculaModel matricula) throws SQLException{
 		this.update("matriculas")
 		.setValue(
-				"codigo_matricula = "+matricula.getCodigoMatricula()+
 				"codigo_aluno = "+matricula.getCodigoAluno()+
-				"data_matricula = "+matricula.getDataMatricula()+
+				"data_matricula = "+quoteStr(matricula.getDataMatricula())+
 				"dia_vencimento = "+matricula.getDiaVencimento()+
-				"data_encerramento = "+matricula.getDataEncerramento()
+				"data_encerramento = "+quoteStr(matricula.getDataEncerramento())
 				)
-		.where("matricula", "=", Integer.toString(matricula.getCodigoMatricula()))
+		.where("codigo_matricula", "=", Integer.toString(matricula.getCodigoMatricula()))
 		.commit();
 	}
 
 	public void deleteMatricula(Integer id) throws SQLException{
 		this.delete()
 		.from("matriculas")
-		.where("matricula", "=", id.toString())
+		.where("codigo_matricula", "=", id.toString())
 		.commit();
 	}
 
