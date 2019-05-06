@@ -73,7 +73,7 @@ import java.util.Date;
  		return new SimpleDateFormat("##/##/####").format(data_inicio);
  	}
 
- 	public MatriculaModalidadeModel setData_inicio(Date data_inicio) {	
+ 	public MatriculaModalidadeModel setData_inicio(Date data_inicio) {
 		this.data_inicio = data_inicio;	
 		return this;
 	}	

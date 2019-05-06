@@ -35,6 +35,8 @@ public class MatriculaModalidadeDAO extends BaseDAO {
 		}
 		return matriculaModalidadeList;
 	}
+	
+	
 
 	public void createMatriculaModalidade(ArrayList<MatriculaModalidadeModel> matModalidades, int matricula) throws SQLException{
 		String fields = "codigo_matricula, modalidade, graduacao, plano, data_inicio, data_fim";
