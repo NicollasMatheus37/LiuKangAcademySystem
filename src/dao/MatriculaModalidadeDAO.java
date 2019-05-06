@@ -58,12 +58,11 @@ public class MatriculaModalidadeDAO extends BaseDAO {
 	public void updateMatriculaModalidade(MatriculaModalidadeModel matriculaModaliade, Integer id) throws SQLException{
 		this.update("matriculas_modalidades")
 		.setValue(
-				  "codigo_matricula = "+matriculaModaliade.getCodigoMatricula()+
-				  "modalidade = "+matriculaModaliade.getModalidade()+
-				  "graduacao = "+matriculaModaliade.getGraduacao()+
-				  "plano = "+matriculaModaliade.getPlano()+
-				  "data_inicio = "+matriculaModaliade.getData_inicio()+
-				  "data_fim = "+matriculaModaliade.getData_fim()
+				  "modalidade = "+quoteStr(matriculaModaliade.getModalidade())+
+				  "graduacao = "+quoteStr(matriculaModaliade.getGraduacao())+
+				  "plano = "quoteStr(+matriculaModaliade.getPlano())+
+				  "data_inicio = "+quoteStr(matriculaModaliade.getData_inicio())+
+				  "data_fim = "+quoteStr(matriculaModaliade.getData_fim())
 				)
 		.where("id", "=", id.toString())
 		.commit();
