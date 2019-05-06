@@ -175,24 +175,25 @@ public class CadastroAlunos extends MasterDialogCad {
 
 		try {
 			JTDataNasc = new JFormattedTextField(new MaskFormatter("##/##/####"));
+			JTDataNasc.addFocusListener(new FocusAdapter() {
+
+				public void focusLost(FocusEvent e) {
+					try {
+						if(!JTDataNasc.hasFocus()) {
+							alunoChange.setDataNascimento(new SimpleDateFormat("dd/MM/yyyy").parse(JTDataNasc.getText()));
+							//JOptionPane.showMessageDialog(null,"Saiu");
+						}
+					} catch (ParseException e1) {
+						e1.printStackTrace();
+					}
+				}
+
+			});
+			JTDataNasc.setBounds(135, 80, 250, 26);
+			getContentPane().add(JTDataNasc);
 		} catch (ParseException e2) {
 		}
-		JTDataNasc.addFocusListener(new FocusAdapter() {
-
-			public void focusLost(FocusEvent e) {
-				try {
-					if(!JTDataNasc.hasFocus()) {
-						alunoChange.setDataNascimento(new SimpleDateFormat("dd/MM/yyyy").parse(JTDataNasc.getText()));
-						//JOptionPane.showMessageDialog(null,"Saiu");
-					}
-				} catch (ParseException e1) {
-					e1.printStackTrace();
-				}
-			}
-
-		});
-		JTDataNasc.setBounds(135, 80, 250, 26);
-		getContentPane().add(JTDataNasc);
+		
 
 		JTTel = new JTextField();
 		JTTel.addFocusListener(new FocusAdapter() {
