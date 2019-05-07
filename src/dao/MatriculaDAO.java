@@ -7,11 +7,18 @@ import model.MatriculaModel;
 
 public class MatriculaDAO extends BaseDAO {
 
-	public ArrayList<MatriculaModel> getAllMatriculas() throws SQLException{
+	public ArrayList<MatriculaModel> getAllMatriculas(String alunos) throws SQLException{
 		ResultSet result = null;
-		result = this.select("*")
-				.from("matriculas")
-				.apply();
+		if(alunos.isEmpty()) {
+			result = this.select("*")
+					.from("matriculas")
+					.apply();			
+		}else {
+			result = this.select("*")
+					.from("matriculas")
+					.where("codigo_aluno", "in", "("+alunos+")")
+					.apply();
+		}
 
 		ArrayList<MatriculaModel> matriculaList = new ArrayList<MatriculaModel>();
 		while(result.next()) {
@@ -46,14 +53,14 @@ public class MatriculaDAO extends BaseDAO {
 	public int createMatricula(MatriculaModel matricula) throws SQLException{
 		String fields ="codigo_aluno,  data_matricula, dia_vencimento, data_encerramento";
 		ResultSet result = this.insertInto("matriculas", fields)
-		.values(
+				.values(
 						Integer.toString(matricula.getCodigoAluno())+","+
-						quoteStr(matricula.getDataMatricula())+","+
-						Integer.toString(matricula.getDiaVencimento())+","+
-						quoteStr(matricula.getDataEncerramento())	
-				)
-		.returning("codigo_matricula")
-		.apply();
+								quoteStr(matricula.getDataMatricula())+","+
+								Integer.toString(matricula.getDiaVencimento())+","+
+								quoteStr(matricula.getDataEncerramento())	
+						)
+				.returning("codigo_matricula")
+				.apply();
 		if(result.next()) {
 			return result.getInt(1);
 		}else {

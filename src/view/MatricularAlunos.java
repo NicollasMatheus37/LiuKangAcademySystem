@@ -100,6 +100,14 @@ public class MatricularAlunos extends MasterDialogCad {
 
 		}
 	}
+	
+	protected boolean afterSearch() {
+		if(buscaMat.matriculaReturn!=null) {
+			matricula = buscaMat.matriculaReturn;
+			return true;
+		}
+		return false;
+	}
 
 	protected boolean actionDelete() {
 		if(matriculaChange!=null) {

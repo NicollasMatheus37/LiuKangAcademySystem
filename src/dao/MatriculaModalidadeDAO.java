@@ -12,7 +12,7 @@ public class MatriculaModalidadeDAO extends BaseDAO {
 		if(Matricula>0) {
 			result = this.select("*")
 					.from("matriculas_modalidades")
-					.where("matricula", "=", Integer.toString(Matricula))
+					.where("codigo_matricula", "=", Integer.toString(Matricula))
 					.apply();
 		}else {
 			result = this.select("*")
@@ -44,7 +44,7 @@ public class MatriculaModalidadeDAO extends BaseDAO {
 		for(MatriculaModalidadeModel matriculaModalidade : matModalidades) {
 			this.insertInto("matriculas_modalidades", fields)
 			.values(
-					Integer.toString(matricula)+",'"+
+					Integer.toString(matricula)+","+
 							quoteStr(matriculaModalidade.getModalidade())+","+
 							quoteStr(matriculaModalidade.getGraduacao())+","+
 							quoteStr(matriculaModalidade.getPlano())+","+
@@ -60,7 +60,7 @@ public class MatriculaModalidadeDAO extends BaseDAO {
 		.setValue(
 				  "modalidade = "+quoteStr(matriculaModaliade.getModalidade())+
 				  "graduacao = "+quoteStr(matriculaModaliade.getGraduacao())+
-				  "plano = "quoteStr(+matriculaModaliade.getPlano())+
+				  "plano = "+quoteStr(matriculaModaliade.getPlano())+
 				  "data_inicio = "+quoteStr(matriculaModaliade.getData_inicio())+
 				  "data_fim = "+quoteStr(matriculaModaliade.getData_fim())
 				)
