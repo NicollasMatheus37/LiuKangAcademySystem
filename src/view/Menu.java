@@ -343,7 +343,7 @@ public class Menu extends JFrame {
 		setResizable(true);
 		setContentPane(CreateContentPane());
 		FramePrincipal();
-		ImageIcon imagemTituloJanela = new ImageIcon("Images/background/lkicon.png");
+		ImageIcon imagemTituloJanela = new ImageIcon("Images/48x48/icon.jpg");
 		setIconImage(imagemTituloJanela.getImage());
 		setVisible(true);
 	}
