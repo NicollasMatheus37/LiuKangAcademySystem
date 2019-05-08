@@ -18,7 +18,7 @@ public class Usuarios extends MasterDialogCad {
 	private JTextField JTUsuario, JTSenha, JTConfSenha;
 	private UsuarioDAO usuarioDao;
 	private UsuarioModel usuario, usuarioChange;
-
+	
 
 	public Usuarios() throws ParseException{
 
@@ -68,8 +68,12 @@ public class Usuarios extends MasterDialogCad {
 		if(usuarioChange!=null) {
 			try {
 				if(isInserting) {
+					usuarioDao.drop_role(usuarioChange);
+					usuarioDao.create_role(usuarioChange);
 					usuarioDao.createUsuario(usuarioChange);
 				}else {
+					usuarioDao.drop_role(usuarioChange);
+					usuarioDao.update_role(usuario);
 					usuarioDao.updateUsuario(usuarioChange);
 				}
 				return true;

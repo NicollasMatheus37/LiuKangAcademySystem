@@ -36,6 +36,10 @@ package model;
 	public UsuarioModel setSenha(String senha) {
 		this.senha = senha;
 		return this;
-	}	
+	}
+	
+	public String getSenha() {
+		return senha;
+	}
 
  }	
