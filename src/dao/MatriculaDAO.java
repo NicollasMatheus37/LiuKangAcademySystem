@@ -3,6 +3,8 @@ package dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import model.AlunoModel;
 import model.MatriculaModel;
 
 public class MatriculaDAO extends BaseDAO {
@@ -13,10 +15,8 @@ public class MatriculaDAO extends BaseDAO {
 			.from("matriculas")
 			.apply();
 		
-		result.first();
-		
 		ArrayList<MatriculaModel> matriculaList = new ArrayList<MatriculaModel>();
-			while((result.getRow() != 0) && (!result.isAfterLast())) {
+			while(result.next()) {
 				matriculaList.add(new MatriculaModel()
 					.setCodigoMatricula(result.getInt("codigo_matricula"))
 					.setCodigoAluno(result.getInt("codigo_aluno"))
@@ -25,8 +25,7 @@ public class MatriculaDAO extends BaseDAO {
 					.setDataEncerramento(result.getDate("data_encerramento"))
 					);
 				
-				result.next();
-					}
+			}
 			
 		return matriculaList;
 	}

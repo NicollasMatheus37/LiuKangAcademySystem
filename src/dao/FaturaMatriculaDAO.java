@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.FaturaMatriculaModel;
+import model.MatriculaModel;
 
 public class FaturaMatriculaDAO extends BaseDAO {
 	
@@ -13,11 +14,8 @@ public class FaturaMatriculaDAO extends BaseDAO {
 			.from("faturas_matriculas")
 			.apply();
 		
-		
-		result.first();
-		
 		ArrayList<FaturaMatriculaModel> faturaMatriculaList = new ArrayList<FaturaMatriculaModel>();
-		while((result.getRow() != 0) && (!result.isAfterLast())) {
+		while(result.next()) {
 			faturaMatriculaList.add(new FaturaMatriculaModel()
 					
 					.setCodigoMatricula(result.getInt("codigo_matricula"))
@@ -27,8 +25,8 @@ public class FaturaMatriculaDAO extends BaseDAO {
 					.setDataCancelamento(result.getDate("data_cancelamento"))
 					
 					);
-					result.next();
-					}
+					
+		}
 					return faturaMatriculaList;
 	}
 	
@@ -79,6 +77,24 @@ public class FaturaMatriculaDAO extends BaseDAO {
 		.from("faturas_matriculas")
 		.where("id", "=", id.toString())
 		.commit();
+	}
+	
+
+ 	public ArrayList<FaturaMatriculaModel> getFromCustomSql(String sql) throws SQLException {
+		ResultSet result = null;
+		result = this.customSql(sql).apply();
+		ArrayList<FaturaMatriculaModel> faturaMatriculaList = new ArrayList<FaturaMatriculaModel>();
+			while(result.next()) {
+				faturaMatriculaList.add(new FaturaMatriculaModel()
+						.setCodigoMatricula(result.getInt("codigo_matricula"))
+						.setDataVencimento(result.getDate("data_vencimento"))
+						.setValor(result.getFloat("Valor"))
+						.setDataPagamento(result.getDate("data_pagamento"))
+						.setDataCancelamento(result.getDate("data_cancelamento"))
+					);
+			}
+			
+		return faturaMatriculaList;
 	}
 
 }

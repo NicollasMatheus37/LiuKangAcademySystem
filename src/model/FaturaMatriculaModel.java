@@ -1,32 +1,35 @@
 package model;	
 
- import java.util.Date;	
+ import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;	
 
  public class FaturaMatriculaModel {	
 
- 	private int codigo_matricula;	
-	private Date data_vencimento;	
+ 	private int codigoMatricula;	
+	private Date dataVencimento;	
 	private float valor;	
-	private Date data_pagamento;	
-	private Date data_cancelamento;	
+	private Date dataPagamento;	
+	private Date dataCancelamento;	
 
 
 
  	public int getCodigoMatricula() {	
-		return codigo_matricula;	
+		return codigoMatricula;	
 	}	
 
  	public FaturaMatriculaModel setCodigoMatricula(int codigo_matricula) {	
-		this.codigo_matricula = codigo_matricula ;
+		this.codigoMatricula = codigo_matricula ;
 		return this;
 	}		
 
  	public Date getDataVencimento() {	
-		return data_vencimento;	
+		return dataVencimento;	
 	}	
 
  	public FaturaMatriculaModel setDataVencimento(Date data_vencimento) {	
-		this.data_vencimento = data_vencimento;	
+		this.dataVencimento = data_vencimento;	
 		return this;
 	}	
 
@@ -40,21 +43,22 @@ package model;
 	}	
 
  	public Date getDataPagamento() {	
-		return data_pagamento;	
+		return dataPagamento;	
 	}	
 
  	public FaturaMatriculaModel setDataPagamento(Date data_pagamento) {	
-		this.data_pagamento = data_pagamento;	
+		this.dataPagamento = data_pagamento;	
 		return this;
 	}	
 
  	public Date getDataCancelamento() {	
-		return data_cancelamento;	
+		return dataCancelamento;	
 	}	
 
  	public FaturaMatriculaModel setDataCancelamento(Date data_cancelamento) {	
-		this.data_cancelamento = data_cancelamento;	
+		this.dataCancelamento = data_cancelamento;	
 		return this;
-	}	
+ 	}
+ 	
 
  }

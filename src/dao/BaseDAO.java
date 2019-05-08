@@ -127,6 +127,11 @@ public abstract class BaseDAO {
 		this.sql = sql;
 	}
 	
+	protected BaseDAO customSql(String sql) {
+		this.sql = sql;
+		return this;
+	}
+	
 	private String getWhereFilter() {
 		return whereFilter;
 	}
