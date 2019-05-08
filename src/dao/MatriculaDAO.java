@@ -72,10 +72,10 @@ public class MatriculaDAO extends BaseDAO {
 	public void updateMatricula(MatriculaModel matricula) throws SQLException{
 		this.update("matriculas")
 		.setValue(
-				"codigo_aluno = "+matricula.getCodigoAluno()+
-				"data_matricula = "+quoteStr(matricula.getDataMatricula())+
-				"dia_vencimento = "+matricula.getDiaVencimento()+
-				"data_encerramento = "+quoteStr(matricula.getDataEncerramento())
+				" codigo_aluno = "+matricula.getCodigoAluno()+
+				", data_matricula = "+quoteStr(matricula.getDataMatricula())+
+				", dia_vencimento = "+matricula.getDiaVencimento()+
+				", data_encerramento = "+quoteStr(matricula.getDataEncerramento())
 				)
 		.where("codigo_matricula", "=", Integer.toString(matricula.getCodigoMatricula()))
 		.commit();
