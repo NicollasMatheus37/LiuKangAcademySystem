@@ -5,6 +5,8 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
@@ -70,7 +72,7 @@ public class MatricularAlunos extends MasterDialogCad {
 
 	protected boolean actionCancel() {
 		try {
-			if(!isInserting) {
+			if(isInserting) {
 				matricula = null;
 				matModalidades = null;
 			}
@@ -100,7 +102,7 @@ public class MatricularAlunos extends MasterDialogCad {
 
 		}
 	}
-	
+
 	protected boolean afterSearch() {
 		if(buscaMat.matriculaReturn!=null) {
 			matricula = buscaMat.matriculaReturn;
@@ -152,8 +154,12 @@ public class MatricularAlunos extends MasterDialogCad {
 		public void windowClosed(WindowEvent e) {
 
 			if(addModalidade.matModalidadeReturn!=null) {
-				matModalidadesChange.add(addModalidade.matModalidadeReturn);
-				insertTable(addModalidade.matModalidadeReturn);
+				if(!utils.tableContains(tableMod, 0, addModalidade.matModalidadeReturn.getModalidade())){
+					matModalidadesChange.add(addModalidade.matModalidadeReturn);
+					insertTable(addModalidade.matModalidadeReturn);
+				}else {
+					JOptionPane.showMessageDialog(null, "Este aluno ja esta matriculado nesta modalidade");
+				}
 			}
 
 		}
@@ -175,7 +181,7 @@ public class MatricularAlunos extends MasterDialogCad {
 		JTDataMat.setText(matricula.getDataMatricula());
 		JTDataFat.setText(Integer.toString(matricula.getDiaVencimento()));	
 
-		matriculaChange = matricula;
+		matriculaChange = new MatriculaModel(matricula);
 
 		findTable();
 
@@ -185,6 +191,7 @@ public class MatricularAlunos extends MasterDialogCad {
 		if(matriculaChange.getCodigoMatricula()>0) {
 			try {
 				matModalidades = matModalidadeDAO.getAllMatriculasModalidades(matriculaChange.getCodigoMatricula());
+				matModalidadesChange = matModalidades;
 				fillTable();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -197,11 +204,12 @@ public class MatricularAlunos extends MasterDialogCad {
 
 	private void fillTable() {
 		model.setRowCount(0);
-		for(MatriculaModalidadeModel matMod : matModalidades) {
+		for(MatriculaModalidadeModel matMod : matModalidadesChange) {
 
 			insertTable(matMod);
 
 		}
+
 	}
 
 	private void insertTable(MatriculaModalidadeModel matMod) {
@@ -267,7 +275,9 @@ public class MatricularAlunos extends MasterDialogCad {
 				public void focusLost(FocusEvent e) {
 					if(!e.isTemporary()) {
 						try {
-							matriculaChange.setDataMatricula(new SimpleDateFormat("dd/MM/yyyy").parse(JTDataMat.getText()));
+							if(!JTDataMat.getText().replaceAll("/", "").trim().isEmpty()) {
+								matriculaChange.setDataMatricula(new SimpleDateFormat("dd/MM/yyyy").parse(JTDataMat.getText()));
+							}
 						} catch (ParseException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -310,9 +320,27 @@ public class MatricularAlunos extends MasterDialogCad {
 		getContentPane().add(btnModalidade);
 
 		String colunas[] = { "Modalidade", "Graduação", "Plano", "Data início", "Data fim ",  };
-		model = new DefaultTableModel(colunas, 0);
+		model = new DefaultTableModel(colunas, 0){
+			public boolean isCellEditable(int row,int column) {
+				return false;				
+			}
+		};
 
 		tableMod = new JTable(model);
+		tableMod.addMouseListener(new MouseAdapter() {
+
+			public void mousePressed(MouseEvent mouseEvent) {
+				JTable table =(JTable) mouseEvent.getSource();
+				if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
+					matModalidadesChange.remove(table.getSelectedRow());
+
+					btnModalidade.requestFocus();
+
+					fillTable();	            
+				}
+			}
+
+		});
 		tableMod.setBorder(BorderFactory.createLineBorder(Color.black));
 		tableMod.setEnabled(true);
 

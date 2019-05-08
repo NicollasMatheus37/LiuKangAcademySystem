@@ -74,8 +74,7 @@ public class AlunoDAO extends BaseDAO {
 		String fields = "aluno, bairro, celular, cep, cidade, complemento, "+ ((aluno.getDataNascimentoDate().compareTo(new Date(0))==0)? "" : "data_nascimento, ") +"email, endereco, " +
 				"estado, numero, observacao, pais, sexo, telefone";
 		this.insertInto("alunos", fields)
-		.values("('"+
-				aluno.getAluno()+"','"+
+		.values("'"+aluno.getAluno()+"','"+
 				aluno.getBairro()+"','"+
 				aluno.getCelular()+"','"+
 				aluno.getCep()+"','"+
@@ -89,7 +88,7 @@ public class AlunoDAO extends BaseDAO {
 				aluno.getObservacao()+"','"+
 				aluno.getPais()+"','"+
 				aluno.getSexo()+"','"+
-				aluno.getTelefone()+"')"
+				aluno.getTelefone()+"'"
 				)
 		.commit();
 	}
