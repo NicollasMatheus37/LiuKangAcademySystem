@@ -15,7 +15,7 @@ public class Menu extends JFrame {
 	private JMenuBar menuBar;
 	private JMenu faturas, faturamento, matricular, sistema, cadastro, processos, utilitarios, ajuda;
 	private JMenuItem alunos, gerarF, realizaP, consultarF, planos, usuarios, sair, cadaluno, modalidades, utility,
-			help, faturasemaberto, faturaspagas;
+			help, faturasemaberto, faturaspagas, backupRestore;
 	// Classes/frames
 	private Usuarios fUsuario;
 	private Sair fSair;
@@ -35,6 +35,7 @@ public class Menu extends JFrame {
 	private FaturasPagas fFaturasPagas;
 	private ControleAlunos fControleAlunos;
 	private BuscarAluno fBuscarAluno;
+	private BackupRestore fBackupRestore;
 
 	private int janelaAberta = 0;
 
@@ -109,6 +110,7 @@ public class Menu extends JFrame {
 				desktopPane.add(fCadastroAlunos);
 			}
 		});
+		
 
 		modalidades = new JMenuItem("Modalidades");
 		modalidades.addActionListener(new ActionListener() {
@@ -293,6 +295,20 @@ public class Menu extends JFrame {
 				desktopPane.add(fFaturasPagas);
 			}
 		});
+		
+		backupRestore = new JMenuItem("Backup");
+		backupRestore.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent evt) {
+
+				fecharJanelaAberta();
+				janelaAberta = 19;
+
+				fBackupRestore = new BackupRestore();
+				fBackupRestore.setVisible(true);
+				desktopPane.add(fBackupRestore);
+			}
+		});
 
 		setContentPane(desktopPane);
 
@@ -324,6 +340,7 @@ public class Menu extends JFrame {
 		menuBar.add(processos);
 
 		utilitarios = new JMenu("Utilitários");
+		utilitarios.add(backupRestore);
 		utilitarios.add(utility);
 
 		menuBar.add(utilitarios);
