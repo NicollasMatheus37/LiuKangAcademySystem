@@ -1,6 +1,8 @@
 package model;	
 
- import java.util.Date;	
+ import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
  public class MatriculaModel {	
 
@@ -10,13 +12,29 @@ package model;
 	private int dia_vencimento;	
 	private Date data_encerramento;	
 
+	
+	public MatriculaModel() {
+		
+		clean();
+				
+	}
+	
+	public void clean() {
+		
+		codigo_matricula = 0;
+		codigo_aluno = 0;
+		data_matricula = new Date();
+		data_encerramento = new Date();
+		dia_vencimento = Calendar.DAY_OF_MONTH;
+		
+	}
 
  	public int getCodigoMatricula() {	
 		return codigo_matricula;	
 	}	
 
  	public MatriculaModel setCodigoMatricula(int codigo_matricula) {	
-		codigo_matricula = this.codigo_matricula;	
+		this.codigo_matricula = codigo_matricula;	
 		return this;
 	}	
 
@@ -25,13 +43,17 @@ package model;
 	}	
 
  	public MatriculaModel setCodigoAluno(int codigo_aluno) {	
-		codigo_aluno = this.codigo_aluno;			
+		this.codigo_aluno = codigo_aluno;			
 		return this;
 	}	
 
- 	public Date getDataMatricula() {	
+ 	public Date getDataMatriculaDate() {	
 		return data_matricula;	
 	}	
+ 	
+ 	public String getDataMatricula() {
+ 		return new SimpleDateFormat("dd/MM/yyyy").format(data_matricula);
+ 	}
 
  	public MatriculaModel setDataMatricula(Date data_matricula) {	
 		this.data_matricula = data_matricula;	
@@ -47,9 +69,13 @@ package model;
 		return this;
 	}	
 
- 	public Date getDataEncerramento() {	
+ 	public Date getDataEncerramentoDate() {	
 		return data_encerramento;	
 	}	
+ 	
+ 	public String getDataEncerramento() {
+ 		return new SimpleDateFormat("dd/MM/yyyy").format(data_encerramento);
+ 	}
 
  	public MatriculaModel setDataEncerramento(Date data_encerramento) {	
 		this.data_encerramento = data_encerramento;	

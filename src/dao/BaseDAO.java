@@ -111,6 +111,11 @@ public abstract class BaseDAO {
 		return this;
 	}
 	
+	protected BaseDAO returning(String statement) {
+		setSql(getSql() + " RETURNING "+ statement);
+		return this;
+	}
+	
 	private String getGroup() {
 		return group;
 	}

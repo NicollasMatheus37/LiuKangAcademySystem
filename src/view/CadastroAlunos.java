@@ -7,8 +7,6 @@ import java.awt.event.ItemListener;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
@@ -126,8 +124,10 @@ public class CadastroAlunos extends MasterDialogCad {
 	}
 
 	protected boolean actionCancel() {
-		try {			
-			aluno = null;
+		try {		
+			if(isInserting) {
+				aluno = null;
+			}
 			alunoChange = null;			
 		}catch (Exception e) {
 			return false;
@@ -175,24 +175,25 @@ public class CadastroAlunos extends MasterDialogCad {
 
 		try {
 			JTDataNasc = new JFormattedTextField(new MaskFormatter("##/##/####"));
+			JTDataNasc.addFocusListener(new FocusAdapter() {
+
+				public void focusLost(FocusEvent e) {
+					try {
+						if(!JTDataNasc.hasFocus()) {
+							alunoChange.setDataNascimento(new SimpleDateFormat("dd/MM/yyyy").parse(JTDataNasc.getText()));
+							//JOptionPane.showMessageDialog(null,"Saiu");
+						}
+					} catch (ParseException e1) {
+						e1.printStackTrace();
+					}
+				}
+
+			});
+			JTDataNasc.setBounds(135, 80, 250, 26);
+			getContentPane().add(JTDataNasc);
 		} catch (ParseException e2) {
 		}
-		JTDataNasc.addFocusListener(new FocusAdapter() {
-
-			public void focusLost(FocusEvent e) {
-				try {
-					if(!JTDataNasc.hasFocus()) {
-						alunoChange.setDataNascimento(new SimpleDateFormat("dd/MM/yyyy").parse(JTDataNasc.getText()));
-						//JOptionPane.showMessageDialog(null,"Saiu");
-					}
-				} catch (ParseException e1) {
-					e1.printStackTrace();
-				}
-			}
-
-		});
-		JTDataNasc.setBounds(135, 80, 250, 26);
-		getContentPane().add(JTDataNasc);
+		
 
 		JTTel = new JTextField();
 		JTTel.addFocusListener(new FocusAdapter() {

@@ -3,18 +3,20 @@ package view;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
+import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")
 public class MasterDialogCad extends JInternalFrame {
 	// Botoes
+	protected JToolBar toolbar;
 	protected JButton btnAdd;
 	protected JButton btnSearch;	
 	protected JButton btnDelete;
@@ -62,24 +64,19 @@ public class MasterDialogCad extends JInternalFrame {
 		}
 	};
 
-	protected WindowListener eventWindowSearchClosed = new WindowListener() {
-
+	protected WindowAdapter eventWindowSearchClosed = new WindowAdapter() {
+		
 		public void windowClosed(WindowEvent e) {
-			// TODO Auto-generated method stub			
+			
 			if(afterSearch()) {
 				clean();
 				fillFields();
 				isInserting = false;
 				setFieldsEnabled(true);
 			}
-		}
-
-		public void windowOpened(WindowEvent e) {}
-		public void windowIconified(WindowEvent e) {}
-		public void windowDeiconified(WindowEvent e) {}
-		public void windowDeactivated(WindowEvent e) {}
-		public void windowActivated(WindowEvent e) {}
-		public void windowClosing(WindowEvent e) {}
+			
+		}		
+			
 	};
 
 	protected AbstractAction actSave = new AbstractAction() {
@@ -172,6 +169,9 @@ public class MasterDialogCad extends JInternalFrame {
 
 	private void Componnents() {
 
+		toolbar = new JToolBar();
+		toolbar.setAlignmentX(LEFT_ALIGNMENT);
+		toolbar.setAlignmentY(TOP_ALIGNMENT);
 
 		//Botao Search
 		btnSearch = new JButton("Buscar", new ImageIcon(System.getProperty("user.dir") + "\\images\\22x22\\localizar.png"));
@@ -179,7 +179,7 @@ public class MasterDialogCad extends JInternalFrame {
 		btnSearch.setHorizontalAlignment(SwingConstants.LEFT);
 		btnSearch.setHorizontalTextPosition(SwingConstants.RIGHT);
 		btnSearch.setBounds(10, 10, 120, 35);
-		getContentPane().add(btnSearch);	
+		//getContentPane().add(btnSearch);	
 
 
 		// Botao Add
@@ -188,7 +188,7 @@ public class MasterDialogCad extends JInternalFrame {
 		btnAdd.setHorizontalAlignment(SwingConstants.LEFT);
 		btnAdd.setHorizontalTextPosition(SwingConstants.RIGHT);
 		btnAdd.setBounds(130, 10, 120, 35);
-		getContentPane().add(btnAdd);
+		//getContentPane().add(btnAdd);
 
 		// Botao Delete
 		btnDelete = new JButton("Remover", new ImageIcon(System.getProperty("user.dir") + "\\images\\22x22\\remover.png"));
@@ -196,7 +196,7 @@ public class MasterDialogCad extends JInternalFrame {
 		btnDelete.setHorizontalAlignment(SwingConstants.LEFT);
 		btnDelete.setHorizontalTextPosition(SwingConstants.RIGHT);
 		btnDelete.setBounds(250, 10, 120, 35);
-		getContentPane().add(btnDelete);
+		//getContentPane().add(btnDelete);
 
 		// Botao Save
 		btnSave = new JButton("Salvar", new ImageIcon(System.getProperty("user.dir") + "\\images\\22x22\\salvar.png"));
@@ -204,7 +204,7 @@ public class MasterDialogCad extends JInternalFrame {
 		btnSave.setHorizontalAlignment(SwingConstants.LEFT);
 		btnSave.setHorizontalTextPosition(SwingConstants.RIGHT);
 		btnSave.setBounds(370, 10, 120, 35);
-		getContentPane().add(btnSave);
+		//getContentPane().add(btnSave);
 
 		// Botao Cancel
 		btnCancel = new JButton("Cancelar", new ImageIcon(System.getProperty("user.dir") + "\\images\\22x22\\cancelar.png"));
@@ -212,7 +212,24 @@ public class MasterDialogCad extends JInternalFrame {
 		btnCancel.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCancel.setHorizontalTextPosition(SwingConstants.RIGHT);
 		btnCancel.setBounds(490, 10, 120, 35);
-		getContentPane().add(btnCancel);
+		//getContentPane().add(btnCancel);
+		toolbar.add(btnSearch);
+		toolbar.addSeparator();;
+		toolbar.add(btnAdd);
+		toolbar.addSeparator();
+		toolbar.add(btnDelete);
+		toolbar.addSeparator();
+		toolbar.add(btnSave);
+		toolbar.addSeparator();
+		toolbar.add(btnCancel);
+		
+		toolbar.setBounds(10, 10, 600, 40);		
+		getContentPane().add(toolbar);
+		
+		
+		
+		
+		
 
 
 	}

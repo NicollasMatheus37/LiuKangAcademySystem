@@ -11,7 +11,7 @@ public class BuscarAluno extends MasterBuscar {
 	public AlunoModel alunoReturn;
 	private ArrayList<AlunoModel> alunos;
 
-	public BuscarAluno() {
+	public BuscarAluno() {		
 		updateComp(new String[]{"Código","Nome"});
 		alunoReturn = null;
 	}
@@ -24,7 +24,7 @@ public class BuscarAluno extends MasterBuscar {
 				for(int i = 0; i < alunos.size(); i++) {
 
 					if(utils.containsIgnoreCase(alunos.get(i).getAluno(), jTxtBusca.getText())) {						
-						InsertRow(alunos.get(i).getcodigoAluno(), alunos.get(i).getAluno());
+						InsertRow(Integer.toString(alunos.get(i).getcodigoAluno()), alunos.get(i).getAluno());
 					}else {
 						alunos.remove(i);
 						i--;
@@ -37,7 +37,7 @@ public class BuscarAluno extends MasterBuscar {
 					AlunoModel alunoResult = alunoDao.getOneAluno(Integer.parseInt(jTxtBusca.getText().trim()));
 					if(alunoResult!=null) {
 						alunos.add(alunoResult);
-						InsertRow(alunos.get(0).getcodigoAluno(), alunos.get(0).getAluno());
+						InsertRow(Integer.toString(alunos.get(0).getcodigoAluno()), alunos.get(0).getAluno());
 					}
 				}
 			}	

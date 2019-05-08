@@ -54,8 +54,8 @@ public class GerarFaturas extends JInternalFrame {
 		
 	}
 	
-	public ArrayList<FaturaMatriculaModel> getMatriculas(String data) throws SQLException {
-		ArrayList<FaturaMatriculaModel> faturaMatriculas = (new FaturaMatriculaDAO()).getFromCustomSql(data);
+	public ArrayList<FaturaMatriculaModel> getMatriculas(String query) throws SQLException {
+		ArrayList<FaturaMatriculaModel> faturaMatriculas = (new FaturaMatriculaDAO()).getFromCustomSql(query);
 		return faturaMatriculas;
 	}
 	

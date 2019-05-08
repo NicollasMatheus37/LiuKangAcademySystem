@@ -58,7 +58,7 @@ public class Login extends JFrame {
 
 		desktopPane = new JDesktopPane();
 
-		setSize(300, 300);
+		setSize(500, 300);
 		setTitle("Login");
 		setLayout(null);
 		setResizable(false);
@@ -67,7 +67,7 @@ public class Login extends JFrame {
 		setContentPane(CreateContentPane());
 		setContentPane(desktopPane);
 		ComponentLogin();
-		ImageIcon imagemTituloJanela = new ImageIcon("Images/background/lkicon.png");
+		ImageIcon imagemTituloJanela = new ImageIcon("Images/48x48/icon.jpg");
 		setIconImage(imagemTituloJanela.getImage());
 		setVisible(true);
 	}
@@ -137,7 +137,7 @@ public class Login extends JFrame {
 
 		JPanel contentPane = new JPanel(new BorderLayout());
 		desktopPane = new JDesktopPane() {
-			Image im = (new ImageIcon("C:\\6362.jpg")).getImage();
+			Image im = (new ImageIcon("Images/background/login.png")).getImage();
 
 			public void paintComponent(Graphics g) {
 				g.drawImage(im, 0, 0, getWidth(), getHeight(), this);
