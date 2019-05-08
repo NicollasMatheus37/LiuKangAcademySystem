@@ -1,9 +1,14 @@
 package dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.naming.spi.DirStateFactory.Result;
+
+import database.ConnectionFactory;
 import model.FaturaMatriculaModel;
 import model.UsuarioModel;
 
@@ -95,6 +100,30 @@ public class UsuarioDAO extends BaseDAO {
 		is_drop_role = is_drop_role.replace("?1", usuario.getUsuario());
 		result = this.customSql(is_drop_role).excecuteQuery();		
 	}
+ 	
+ 	public boolean userLogin(String login, String senha) {
+ 		Connection con = ConnectionFactory.getConnection("master", "admin", "admin");
+ 		boolean verify = false;
+ 		PreparedStatement stm = null;
+ 		ResultSet rs = null;
+ 		
+ 		try {
+			stm = con.prepareStatement("SELECT * FROM usuario WHERE login = ? and senha = ?");
+			stm.setString(1, login);
+			stm.setString(2, senha);
+			
+			rs = stm.executeQuery();
+			
+			if(rs.next()) {
+				verify = true;
+			}
+ 			
+		} catch (Exception e) {
+			// TODO: handle exception
+		} 
+ 		
+ 		return verify;
+ 	}
 
 
 }

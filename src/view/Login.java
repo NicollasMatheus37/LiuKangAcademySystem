@@ -29,6 +29,8 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.AbstractBorder;
 
+import dao.UsuarioDAO;
+
 public class Login extends JFrame {
 
 	private JDesktopPane desktopPane;
@@ -97,15 +99,18 @@ public class Login extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (txfNome.getText().toString().equals("admin")
-						&& txfSenha.getText().toString().equals("admin") == true) {
-
-					dispose();
-					new Menu();
-
+				if (!txfNome.getText().isEmpty() && !txfSenha.getText().isEmpty()) {
+					if(new UsuarioDAO().userLogin(txfNome.getText(), txfSenha.getText()) || txfNome.getText().equals("admin") && txfSenha.getText().equals("admin")) {
+						dispose();
+						new Menu();
+				}
+					else {
+						JOptionPane.showMessageDialog(null, "Usuario ou senha Incorretos");
+						txfNome.setText(null);txfSenha.setText(null);
+					}
 				} else {
 
-					JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos, faça o login novamente.");
+					JOptionPane.showMessageDialog(null, "Preencher todos os campos");
 
 				}
 			}
