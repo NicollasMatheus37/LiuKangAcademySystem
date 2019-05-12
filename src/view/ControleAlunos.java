@@ -9,7 +9,10 @@ import java.awt.event.WindowEvent;
 import java.beans.PropertyVetoException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -131,10 +134,20 @@ public class ControleAlunos extends JInternalFrame {
 								try {
 									matricula = matriculaDAO.getOneMatricula(aluno.getcodigoAluno(), false);
 									modalidades = matriculaModalidadeDAO.getAllMatriculasModalidades(matricula.getCodigoMatricula());
-									
+									fillModalidade();
 									assiduidadeDAO.createAssiduidade(new AssiduidadeModel().setCodigoMatricula(matricula.getCodigoMatricula()));
-									assiduidades = assiduidadeDAO.getAllAssiduidades(matricula.getCodigoMatricula(), new SimpleDateFormat("yyyy-MM-dd").format(data.getDate()), new SimpleDateFormat("yyyy-MM-dd").format(data.getDate()));
 									
+									Calendar calIni = Calendar.getInstance();
+									calIni.setTime(data.getDate());
+									Calendar calFin = Calendar.getInstance();
+									calIni.setTime(data.getDate());
+									calIni.set(Calendar.DAY_OF_MONTH, calIni.getActualMinimum(Calendar.DAY_OF_MONTH));
+									calFin.set(Calendar.DAY_OF_MONTH, calFin.getActualMaximum(Calendar.DAY_OF_MONTH));
+									assiduidades = assiduidadeDAO.getAllAssiduidades(matricula.getCodigoMatricula(),
+																			new SimpleDateFormat("yyyy/MM/dd").format(calIni.getTime()), 
+																			new SimpleDateFormat("yyyy/MM/dd").format(calFin.getTime()));
+									fillAssiduidade();
+								
 								} catch (SQLException e1) {
 									e1.printStackTrace();
 								}
@@ -231,7 +244,7 @@ public class ControleAlunos extends JInternalFrame {
 		table3.getTableHeader().setEnabled(false);
 	}
 	
-	public void fillMatricula() {
+	public void fillModalidade() {
 		for(MatriculaModalidadeModel matModalidade : modalidades) {
 			
 			modelModalidade.addRow(new String[] {matModalidade.getModalidade(), matModalidade.getGraduacao(), matModalidade.getPlano(), matModalidade.getData_inicio(), matModalidade.getData_fim()});

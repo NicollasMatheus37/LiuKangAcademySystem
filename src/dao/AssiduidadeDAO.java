@@ -3,6 +3,8 @@ package dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
+
 import model.AssiduidadeModel;
 
 public class AssiduidadeDAO extends BaseDAO {
@@ -21,7 +23,7 @@ public class AssiduidadeDAO extends BaseDAO {
 					.filter("codigo_matricula", "=", id.toString())
 					.filter("data_entrada", "between", " '"+dataIni+"' and '"+dataFin+"' ")
 					.where()
-					.orderBy("data_entrada")
+					.orderBy("data_entrada desc")
 					.apply();
 		}
 
@@ -29,7 +31,7 @@ public class AssiduidadeDAO extends BaseDAO {
 		while(result.next()) {
 			assiduidadeList.add(new AssiduidadeModel()
 					.setCodigoMatricula(result.getInt("codigo_matricula"))
-					.setDataEntrada(result.getDate("data_entrada"))					
+					.setDataEntrada( new Date((result.getTimestamp("data_entrada").getTime())))					
 					);
 		}
 		return assiduidadeList;
