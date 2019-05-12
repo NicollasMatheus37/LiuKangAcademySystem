@@ -7,6 +7,8 @@ import java.text.ParseException;
 
 import javax.swing.*;
 
+import model.UsuarioModel;
+
 @SuppressWarnings("serial")
 public class Menu extends JFrame {
 
@@ -36,10 +38,13 @@ public class Menu extends JFrame {
 	private ControleAlunos fControleAlunos;
 	private BuscarAluno fBuscarAluno;
 	private BackupRestore fBackupRestore;
+	private String perfil, usuario;
 
 	private int janelaAberta = 0;
 
-	public Menu() {
+	public Menu(String Perfil, String Usuario) {
+		usuario = Usuario;
+		perfil = Perfil;
 
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
@@ -315,27 +320,36 @@ public class Menu extends JFrame {
 		menuBar = new JMenuBar();
 		sistema = new JMenu("Sistema");
 
+		if(perfil.equals("Completo"))
 		sistema.add(usuarios);
 		sistema.add(sair);
 		menuBar.add(sistema);
 
 		cadastro = new JMenu("Cadastros");
 
+		
 		cadastro.add(cadaluno);
 		cadastro.add(modalidades);
 		cadastro.add(planos);
+		
 
+		if(perfil.equals("Cadastral") || perfil.equals("Completo"))
 		menuBar.add(cadastro);
 
 		processos = new JMenu("Processos");
 
+
 		matricular.add(alunos);
+		
 
 		faturamento.add(gerarF);
 		faturamento.add(consultarF);
 		faturamento.add(realizaP);
-
+		
+		if(perfil.equals("Matricular") || perfil.equals("Completo"))
 		processos.add(matricular);
+		
+		if(perfil.equals("Financeiro") || perfil.equals("Completo"))
 		processos.add(faturamento);
 		menuBar.add(processos);
 
@@ -465,6 +479,6 @@ public class Menu extends JFrame {
 
 	public static void main(String args[]) {
 
-		new Menu();
+		new Menu("Completo", "admin");
 	}
 }

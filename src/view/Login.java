@@ -11,6 +11,9 @@ import java.awt.event.ActionEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.print.DocFlavor.URL;
 import javax.swing.AbstractAction;
@@ -30,6 +33,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.AbstractBorder;
 
 import dao.UsuarioDAO;
+import database.ConnectionFactory;
+import model.UsuarioModel;
 
 public class Login extends JFrame {
 
@@ -39,6 +44,10 @@ public class Login extends JFrame {
 	private JLabel lblNome, lblSenha;
 	private JButton btnLogin;
 	private Shape shape;
+
+	private UsuarioModel userLogged = new UsuarioModel();
+	
+
 
 	public Login() {
 
@@ -73,6 +82,7 @@ public class Login extends JFrame {
 		setIconImage(imagemTituloJanela.getImage());
 		setVisible(true);
 	}
+	
 
 	public void ComponentLogin() {
 
@@ -99,10 +109,17 @@ public class Login extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (!txfNome.getText().isEmpty() && !txfSenha.getText().isEmpty()) {
-					if(new UsuarioDAO().userLogin(txfNome.getText(), txfSenha.getText()) || txfNome.getText().equals("admin") && txfSenha.getText().equals("admin")) {
+				if (!txfNome.getText().isEmpty() && !txfSenha.getPassword().toString().isEmpty()) {
+					if(checkUser()) {
+						try {
+							perfilLogged();
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
 						dispose();
-						new Menu();
+						new Menu(userLogged.getPerfil(), userLogged.getUsuario());
 				}
 					else {
 						JOptionPane.showMessageDialog(null, "Usuario ou senha Incorretos");
@@ -117,6 +134,33 @@ public class Login extends JFrame {
 		});
 		btnLogin.setBounds(105, 180, 90, 26);
 		getContentPane().add(btnLogin);
+
+	}
+	
+	private void perfilLogged() throws SQLException {
+		UsuarioDAO usuarioDao = new UsuarioDAO();
+		ArrayList<UsuarioModel> array = new ArrayList<>();
+		array = usuarioDao.getAllUsuarios();
+		UsuarioModel aux = new UsuarioModel();
+		
+		for(int i = 0; i < array.size(); i++) {
+			if(userLogged.getUsuario().equals(array.get(i).getUsuario())) {
+				userLogged.setPerfil(array.get(i).getPerfil());
+				System.out.println("perfil: "+ array.get(i).getPerfil());
+			}
+		}
+
+	}
+	
+	private boolean checkUser() {
+		Connection conn = null;
+		conn = ConnectionFactory.getConnection("master"
+				, txfNome.getText(), txfSenha.getText());
+		if(conn == null)
+			return false;
+			else
+				userLogged.setUsuario(txfNome.getText());
+				return true;
 
 	}
 
