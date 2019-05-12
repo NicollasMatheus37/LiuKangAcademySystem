@@ -54,7 +54,7 @@ public class MatricularAlunos extends MasterDialogCad {
 
 	private AlunoDAO alunoDAO;		
 
-	public MatricularAlunos() {
+	private void create() {
 
 		matriculaDAO = new MatriculaDAO();
 		matModalidadeDAO = new MatriculaModalidadeDAO();
@@ -68,6 +68,26 @@ public class MatricularAlunos extends MasterDialogCad {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setVisible(true);
 
+	}
+
+	public MatricularAlunos() {
+
+		create();
+
+	}
+
+	public MatricularAlunos(MatriculaModel matricula) {
+
+		if(matricula != null) {
+			create();
+
+			this.matricula = matricula;
+			clean();
+			fillFields();
+			isInserting = false;
+			setFieldsEnabled(false);
+			utils.setComponentsEnabled(toolbar.getComponents(), false);
+		}
 	}
 
 	protected boolean actionCancel() {

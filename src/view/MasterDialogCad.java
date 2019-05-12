@@ -163,7 +163,7 @@ public class MasterDialogCad extends JInternalFrame {
 
 	}
 
-	private void clean() {
+	protected void clean() {
 		utils.cleanSubComponents(childContainer);
 	}
 
