@@ -39,7 +39,7 @@ public class BuscarMatricula extends MasterBuscar {
 				}
 			} else {
 
-				MatriculaModel matricula = matriculaDAO.getOneMatricula(Integer.parseInt(jTxtBusca.getText()));
+				MatriculaModel matricula = matriculaDAO.getOneMatricula(Integer.parseInt(jTxtBusca.getText()), true);
 				if(matricula!=null) {
 					InsertRow(Integer.toString(matricula.getCodigoMatricula()), new AlunoDAO().getOneAluno(matricula.getCodigoAluno()).getAluno());
 					matriculas = new ArrayList<>();

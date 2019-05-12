@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import model.AlunoModel;
 import model.MatriculaModel;
 
 public class MatriculaDAO extends BaseDAO {
@@ -35,20 +34,20 @@ public class MatriculaDAO extends BaseDAO {
 		return matriculaList;
 	}
 
-	public MatriculaModel getOneMatricula(Integer id) throws SQLException{
+	public MatriculaModel getOneMatricula(Integer id, boolean isIdMatricula) throws SQLException{
 		ResultSet result = null;
 		result = this.select("*")
 				.from("matriculas")
-				.where("codigo_matricula", "=", id.toString())
+				.where(isIdMatricula? "codigo_matricula" : "codigo_aluno", "=", id.toString())
 				.apply();
 
 
 		MatriculaModel matricula = new MatriculaModel();
-		return matricula.setCodigoMatricula(result.getInt("codigo_matricula"))
+		return result.next() ? matricula.setCodigoMatricula(result.getInt("codigo_matricula"))
 				.setCodigoAluno(result.getInt("codigo_aluno"))
 				.setDataMatricula(result.getDate("data_matricula"))
 				.setDiaVencimento(result.getInt("dia_vencimento"))
-				.setDataEncerramento(result.getDate("data_encerramento"));
+				.setDataEncerramento(result.getDate("data_encerramento")) : null;
 	}
 
 	public int createMatricula(MatriculaModel matricula) throws SQLException{

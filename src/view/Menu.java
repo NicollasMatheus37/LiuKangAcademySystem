@@ -13,7 +13,7 @@ import model.UsuarioModel;
 public class Menu extends JFrame {
 
 	// Painéis e items do menu
-	private JDesktopPane desktopPane;
+	public JDesktopPane desktopPane;
 	private JMenuBar menuBar;
 	private JMenu faturas, faturamento, matricular, sistema, cadastro, processos, utilitarios, ajuda;
 	private JMenuItem alunos, gerarF, realizaP, consultarF, planos, usuarios, sair, cadaluno, modalidades, utility,
@@ -398,7 +398,7 @@ public class Menu extends JFrame {
 
 	public void FramePrincipal() {
 
-		fControleAlunos = new ControleAlunos();
+		fControleAlunos = new ControleAlunos(this);
 		fControleAlunos.setVisible(true);
 		desktopPane.add(fControleAlunos);
 
