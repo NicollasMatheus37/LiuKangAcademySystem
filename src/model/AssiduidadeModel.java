@@ -35,7 +35,7 @@ public class AssiduidadeModel {
 	}
 	
 	public String getDataEntrada() {
-		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(data_entrada);
+		return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(data_entrada);
 	}
 	
 	public AssiduidadeModel setDataEntrada(Date data_entrada) {

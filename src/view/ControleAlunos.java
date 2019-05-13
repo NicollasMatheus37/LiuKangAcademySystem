@@ -99,7 +99,11 @@ public class ControleAlunos extends JInternalFrame {
 		getContentPane().add(panelConsultas);
 						
 				
-		data = new BaseMonthChooser();
+		data = new BaseMonthChooser() {
+			public void ExecuteSomething() {
+				fillAssiduidade();
+			}
+		};		
 		data.setBounds(17, 200, 185, 26);
 		getContentPane().add(data);
 		
@@ -136,16 +140,7 @@ public class ControleAlunos extends JInternalFrame {
 									modalidades = matriculaModalidadeDAO.getAllMatriculasModalidades(matricula.getCodigoMatricula());
 									fillModalidade();
 									assiduidadeDAO.createAssiduidade(new AssiduidadeModel().setCodigoMatricula(matricula.getCodigoMatricula()));
-									
-									Calendar calIni = Calendar.getInstance();
-									calIni.setTime(data.getDate());
-									Calendar calFin = Calendar.getInstance();
-									calIni.setTime(data.getDate());
-									calIni.set(Calendar.DAY_OF_MONTH, calIni.getActualMinimum(Calendar.DAY_OF_MONTH));
-									calFin.set(Calendar.DAY_OF_MONTH, calFin.getActualMaximum(Calendar.DAY_OF_MONTH));
-									assiduidades = assiduidadeDAO.getAllAssiduidades(matricula.getCodigoMatricula(),
-																			new SimpleDateFormat("yyyy/MM/dd").format(calIni.getTime()), 
-																			new SimpleDateFormat("yyyy/MM/dd").format(calFin.getTime()));
+																		
 									fillAssiduidade();
 								
 								} catch (SQLException e1) {
@@ -245,6 +240,7 @@ public class ControleAlunos extends JInternalFrame {
 	}
 	
 	public void fillModalidade() {
+		modelModalidade.setRowCount(0);
 		for(MatriculaModalidadeModel matModalidade : modalidades) {
 			
 			modelModalidade.addRow(new String[] {matModalidade.getModalidade(), matModalidade.getGraduacao(), matModalidade.getPlano(), matModalidade.getData_inicio(), matModalidade.getData_fim()});
@@ -253,6 +249,7 @@ public class ControleAlunos extends JInternalFrame {
 	}
 	
 	public void fillFatura() {
+		modelFatura.setRowCount(0);
 		for(FaturaMatriculaModel fatura : faturas) {
 			
 			modelFatura.addRow(new String[] {});
@@ -261,6 +258,23 @@ public class ControleAlunos extends JInternalFrame {
 	}
 	
 	public void fillAssiduidade() {
+		
+		Calendar calIni = Calendar.getInstance();
+		calIni.setTime(data.getDate());
+		Calendar calFin = Calendar.getInstance();
+		calFin.setTime(data.getDate());
+		calIni.set(Calendar.DAY_OF_MONTH, calIni.getActualMinimum(Calendar.DAY_OF_MONTH));
+		calFin.set(Calendar.DAY_OF_MONTH, calFin.getActualMaximum(Calendar.DAY_OF_MONTH));
+		try {
+			assiduidades = assiduidadeDAO.getAllAssiduidades(matricula.getCodigoMatricula(),
+													new SimpleDateFormat("yyyy/MM/dd").format(calIni.getTime()), 
+													new SimpleDateFormat("yyyy/MM/dd").format(calFin.getTime()));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		modelAssiduidade.setRowCount(0);
 		for(AssiduidadeModel assiduidade : assiduidades) {
 			
 			modelAssiduidade.addRow(new String[] {assiduidade.getDataEntrada()});
