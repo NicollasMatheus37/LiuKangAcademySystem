@@ -69,7 +69,6 @@ public class Usuarios extends MasterDialogCad {
 			try {
 				if(isInserting) {
 					usuarioDao.createUsuario(usuarioChange);
-					System.out.println("passou aqui");
 					usuarioDao.drop_role(usuarioChange);
 					usuarioDao.create_role(usuarioChange);
 				}else {

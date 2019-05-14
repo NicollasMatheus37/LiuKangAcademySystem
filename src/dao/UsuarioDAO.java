@@ -89,24 +89,25 @@ public class UsuarioDAO extends BaseDAO {
 	
  	public void create_role(UsuarioModel usuario) throws SQLException {
  		
-
-		is_create_role  = is_create_role.replace("?1", usuario.getUsuario()).replace("?2", usuario.getSenha());
+		UsuarioModel user = usuario;
+		is_create_role  = is_create_role.replace("?1", user.getUsuario()).replace("?2", user.getSenha());
 		pre_create_role = conn.prepareStatement(is_create_role);
 		pre_create_role.execute();
-		
  		System.out.println("passou create_role");
 
  		
 	}
  	
  	public void alter_role(UsuarioModel usuario) throws SQLException {
-		is_alter_role = is_alter_role.replace("?1", usuario.getUsuario()).replace("?2", usuario.getPerfil());
+ 		UsuarioModel user = usuario;
+		is_alter_role = is_alter_role.replace("?1", user.getUsuario()).replace("?2", user.getPerfil());
 		pre_alter_role = conn.prepareStatement(is_alter_role);
 		pre_alter_role.execute();
 	}
  	
  	public void drop_role(UsuarioModel usuario) throws SQLException {
-		is_drop_role = is_drop_role.replace("?1", usuario.getUsuario());
+ 		UsuarioModel user = usuario;
+		is_drop_role = is_drop_role.replace("?1", user.getUsuario());
 		pre_drop_role = conn.prepareStatement(is_drop_role);
 		pre_drop_role.execute();
 	}
