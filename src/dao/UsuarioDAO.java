@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.naming.spi.DirStateFactory.Result;
 
@@ -72,11 +73,12 @@ public class UsuarioDAO extends BaseDAO {
 	}
 	
 	public void updateUsuario(UsuarioModel usuario) throws SQLException{
-		this.update("usuario")
+		this.update("usuarios")
 		.setValue(
-				"perfil = "+usuario.getPerfil()+
-				"usuario = "+usuario.getUsuario()
-				)
+				"perfil = '"+usuario.getPerfil()+"' "+
+						", usuario = '"+usuario.getUsuario()+"' "
+						)
+		.where("usuario", "=", usuario.getUsuario())
 		.commit();
 	}
 	

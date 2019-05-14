@@ -6,6 +6,7 @@ import java.text.ParseException;
 import javax.swing.JComboBox;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import dao.UsuarioDAO;
 import model.UsuarioModel;
@@ -18,6 +19,7 @@ public class Usuarios extends MasterDialogCad {
 	private JTextField JTUsuario, JTSenha, JTConfSenha;
 	private UsuarioDAO usuarioDao;
 	private UsuarioModel usuario, usuarioChange;
+	private BuscarUsuario busca;
 	
 
 	public Usuarios() throws ParseException{
@@ -61,29 +63,48 @@ public class Usuarios extends MasterDialogCad {
 	}
 
 	protected void actionSearch() {
-		
+		busca = new BuscarUsuario();
+		try {						
+			busca.addWindowListener(eventWindowSearchClosed);				
+		} catch (Exception e2) {
+			busca = null;
+		}
 	}
+	
+	protected boolean afterSearch() {
+		if(busca.userReturn!=null) {
+			usuario = busca.userReturn;
+			return true;
+		}
+		return false;
+	}
+	
 
 	protected boolean actionSave() {
-		if(usuarioChange!=null) {
-			try {
+		if(usuarioChange==null || JTSenha.getText().isEmpty() || JTConfSenha.getText().isEmpty() || JTUsuario.getText().isEmpty() || ComboPerfil.getSelectedItem().equals("--Selecione--")) {
+			JOptionPane.showMessageDialog(null, "Há Campos Vazios");
+			return false;
+		}
+		else if(JTConfSenha.getText().length()<5 || JTSenha.getText().length()<5 || JTUsuario.getText().length()<5 ) {
+			JOptionPane.showMessageDialog(null, "Tamanho minimo para os campos de 5 caracteres");
+			return false;
+		}
+		else {	try {
 				if(isInserting) {
 					usuarioDao.createUsuario(usuarioChange);
 					usuarioDao.drop_role(usuarioChange);
 					usuarioDao.create_role(usuarioChange);
 				}else {
 					usuarioDao.updateUsuario(usuarioChange);
-					usuarioDao.drop_role(usuarioChange);
-					usuarioDao.alter_role(usuarioChange);
+					//usuarioDao.drop_role(usuarioChange);
+					//usuarioDao.alter_role(usuarioChange);
 					System.out.println("passou aqui2");
 				}
 				return true;
 			}catch (Exception e) {
 				return false;
 			}
-		}else {
-			return false;
-		}
+	}
 	}
 
 	protected boolean actionCancel() {
