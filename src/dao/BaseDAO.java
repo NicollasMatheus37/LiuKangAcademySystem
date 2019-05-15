@@ -152,8 +152,9 @@ public abstract class BaseDAO {
 	}
 	
 	protected ResultSet apply() throws SQLException {
-		conn.close();
-		return this.excecuteQuery();
+		ResultSet result = this.excecuteQuery();
+		this.conn.close();
+		return result;
 	}
 	
 	protected Boolean commit() throws SQLException {
