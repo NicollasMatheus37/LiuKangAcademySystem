@@ -177,7 +177,7 @@ public class CadastroAlunos extends MasterDialogCad {
 		JTCel.setText(aluno.getCelular());	
 		ComboSexo.setSelectedIndex((aluno.getSexo() == 'M') ? 1 : 2);
 
-		alunoChange = aluno;
+		alunoChange = new AlunoModel(aluno);
 
 	}
 

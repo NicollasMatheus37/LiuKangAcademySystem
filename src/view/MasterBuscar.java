@@ -107,7 +107,7 @@ public class MasterBuscar extends JFrame {
 	}	
 
 	protected void InsertRow(String str1, String str2) {
-		if(/*str2.trim().isEmpty()*/1==1) {
+		if(str2.trim().isEmpty()) {
 			model.addRow(new String[]{str1});
 		}else {
 			model.addRow(new String[]{str1,str2});

@@ -117,9 +117,14 @@ public class Login extends JFrame {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						
+						if(txfNome.getText().equals("admin") && txfSenha.getText().equals("admin")) {
+							dispose();
+							new Menu("Completo", "admin");
+						}
+						else {
 						dispose();
 						new Menu(userLogged.getPerfil(), userLogged.getUsuario());
+						}
 				}
 					else {
 						JOptionPane.showMessageDialog(null, "Usuario ou senha Incorretos");

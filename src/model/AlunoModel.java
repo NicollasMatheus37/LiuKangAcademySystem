@@ -30,6 +30,27 @@ public class AlunoModel {
 		
 	}
 	
+	public AlunoModel(AlunoModel aluno) {
+		
+		codigoAluno = aluno.getcodigoAluno();
+		this.aluno = aluno.getAluno();
+		dataNascimento = aluno.getDataNascimentoDate();
+		sexo = aluno.getSexo();
+		telefone = aluno.getTelefone();
+		celular = aluno.getCelular();
+		email = aluno.getEmail();
+		observacao = aluno.getObservacao();
+		endereco = aluno.getEndereco();
+		numero = aluno.getNumero();
+		complemento = aluno.getComplemento();
+		bairro = aluno.getBairro();
+		cidade = aluno.getCidade();
+		estado = aluno.getEstado();
+		pais = aluno.getPais();
+		cep = aluno.getCep();
+		
+	}
+	
 	public void Clean() {
 		
 		setCodigoAluno(0);

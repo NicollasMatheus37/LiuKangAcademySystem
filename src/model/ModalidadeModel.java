@@ -10,6 +10,10 @@ package model;
  		clean();
  	}
  	
+ 	public ModalidadeModel(ModalidadeModel modalidade) {
+ 		this.modalidade = modalidade.getModalidade();
+ 	}
+ 	
  	public void clean() {
  		modalidade = "";
  	}

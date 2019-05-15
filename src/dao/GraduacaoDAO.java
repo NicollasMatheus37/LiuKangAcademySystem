@@ -34,9 +34,13 @@ public class GraduacaoDAO extends BaseDAO {
 	public void insertGraduacoes(ArrayList<GraduacaoModel> graduacoes, String modalidade) {
 		deleteGraduacoes(modalidade);
 		for(GraduacaoModel graduacaoModel : graduacoes) {
-			this.insertInto("graduacoes", "modalidade, graduacao")
-			.values(quoteStr(modalidade)+","+quoteStr(graduacaoModel.getGraduacao()))
-			.commit();
+			try {
+				this.insertInto("graduacoes", "modalidade, graduacao")
+				.values(quoteStr(modalidade)+","+quoteStr(graduacaoModel.getGraduacao()))
+				.commit();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 	}
@@ -69,10 +73,14 @@ public class GraduacaoDAO extends BaseDAO {
 
 	public void deleteGraduacoes(String modalidade) {
 
-		this.delete()
-		.from("graduacoes")
-		.where("modalidade", "=", quoteStr(modalidade))
-		.commit();
+		try {
+			this.delete()
+			.from("graduacoes")
+			.where("modalidade", "=", quoteStr(modalidade))
+			.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 	}
 
