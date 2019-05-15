@@ -388,10 +388,11 @@ public class Menu extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(true);
 		setContentPane(CreateContentPane());
-		FramePrincipal();
+		/*FramePrincipal();*/
 		ImageIcon imagemTituloJanela = new ImageIcon("Images/48x48/icon.jpg");
 		setIconImage(imagemTituloJanela.getImage());
 		setVisible(true);
+		FramePrincipal();
 	}
 
 	public Container CreateContentPane() {
@@ -414,9 +415,10 @@ public class Menu extends JFrame {
 	public void FramePrincipal() {
 
 		fControleAlunos = new ControleAlunos(this);
-		fControleAlunos.setVisible(true);
 		desktopPane.add(fControleAlunos);
-
+		fControleAlunos.setVisible(true);
+		fControleAlunos.setPosicao();
+		
 	}
 
 	public void mostrarJanela(boolean o) {
