@@ -1,4 +1,6 @@
 package view;
+import java.awt.Dimension;
+
 import javax.swing.JInternalFrame;
 
 public class Utilitarios extends JInternalFrame{
@@ -14,5 +16,11 @@ public class Utilitarios extends JInternalFrame{
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setVisible(true);
 
+	}
+	public void setPosicao() {
+		
+		Dimension d = this.getDesktopPane().getSize();
+	    this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
+	
 	}
 }

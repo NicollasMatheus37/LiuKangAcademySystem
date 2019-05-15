@@ -111,8 +111,10 @@ public class Menu extends JFrame {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				fCadastroAlunos.setVisible(true);
 				desktopPane.add(fCadastroAlunos);
+				fCadastroAlunos.setVisible(true);
+				fCadastroAlunos.setPosicao();
+				
 			}
 		});
 		
@@ -126,8 +128,10 @@ public class Menu extends JFrame {
 				janelaAberta = 4;
 
 				fModalidades = new ModalidadesGraduacoes();
-				fModalidades.setVisible(true);
 				desktopPane.add(fModalidades);
+				fModalidades.setVisible(true);
+				fModalidades.setPosicao();
+				
 			}
 		});
 
@@ -140,8 +144,9 @@ public class Menu extends JFrame {
 				janelaAberta = 5;
 
 				fPlanos = new Planos();
-				fPlanos.setVisible(true);
 				desktopPane.add(fPlanos);
+				fPlanos.setVisible(true);
+				fPlanos.setPosicao();
 			}
 		});
 
@@ -154,8 +159,10 @@ public class Menu extends JFrame {
 				janelaAberta = 6;
 
 				fMatricularAlunos = new MatricularAlunos();
-				fMatricularAlunos.setVisible(true);
 				desktopPane.add(fMatricularAlunos);
+				fMatricularAlunos.setVisible(true);
+				fMatricularAlunos.setPosicao();
+				
 			}
 		});
 
@@ -196,8 +203,10 @@ public class Menu extends JFrame {
 				janelaAberta = 10;
 
 				fUtilitarios = new Utilitarios();
-				fUtilitarios.setVisible(true);
 				desktopPane.add(fUtilitarios);
+				fUtilitarios.setVisible(true);
+				fUtilitarios.setPosicao();
+				
 
 			}
 		});
@@ -211,8 +220,9 @@ public class Menu extends JFrame {
 				janelaAberta = 11;
 
 				fAjuda = new Ajuda();
-				fAjuda.setVisible(true);
 				desktopPane.add(fAjuda);
+				fAjuda.setVisible(true);
+				fAjuda.setPosicao();
 
 			}
 		});
@@ -240,8 +250,9 @@ public class Menu extends JFrame {
 				janelaAberta = 13;
 
 				fGerarFaturas = new GerarFaturas();
-				fGerarFaturas.setVisible(true);
 				desktopPane.add(fGerarFaturas);
+				fGerarFaturas.setVisible(true);
+				fGerarFaturas.setPosicao();
 			}
 		});
 
@@ -254,8 +265,9 @@ public class Menu extends JFrame {
 				janelaAberta = 14;
 
 				fConsultarFaturas = new ConsultarFaturas();
-				fConsultarFaturas.setVisible(true);
 				desktopPane.add(fConsultarFaturas);
+				fConsultarFaturas.setVisible(true);
+				fConsultarFaturas.setPosicao();
 			}
 		});
 
@@ -268,8 +280,9 @@ public class Menu extends JFrame {
 				janelaAberta = 15;
 
 				fPagamentosFaturas = new PagamentosFaturas();
-				fPagamentosFaturas.setVisible(true);
 				desktopPane.add(fPagamentosFaturas);
+				fPagamentosFaturas.setVisible(true);
+				fPagamentosFaturas.setPosicao();
 			}
 		});
 
@@ -310,8 +323,10 @@ public class Menu extends JFrame {
 				janelaAberta = 19;
 
 				fBackupRestore = new BackupRestore();
-				fBackupRestore.setVisible(true);
 				desktopPane.add(fBackupRestore);
+				fBackupRestore.setVisible(true);
+				fBackupRestore.setPosicao();
+				
 			}
 		});
 

@@ -1,4 +1,5 @@
 package view;
+import java.awt.Dimension;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.sql.SQLException;
@@ -38,7 +39,13 @@ public class Planos extends MasterDialogCad {
 		setVisible(true);
 
 	}
-
+	
+	public void setPosicao() {
+		
+		Dimension d = this.getDesktopPane().getSize();
+	    this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
+	}
+	
 	protected void actionSearch() {
 		busca = new BuscarPlano();
 		busca.addWindowListener(eventWindowSearchClosed);
