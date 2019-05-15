@@ -151,17 +151,19 @@ public abstract class BaseDAO {
 		return excecuteQuery();
 	}
 	
-	protected ResultSet apply() throws SQLException {		
+	protected ResultSet apply() throws SQLException {
+		conn.close();
 		return this.excecuteQuery();
 	}
 	
-	protected Boolean commit() {
+	protected Boolean commit() throws SQLException {
 		try {
 			this.excecuteUpdate();
 			return true;
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
+		conn.close();
 		return false;
 		
 	}
