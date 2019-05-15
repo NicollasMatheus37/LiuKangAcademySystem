@@ -15,11 +15,11 @@ public class BuscarUsuario extends MasterBuscar {
 	private ArrayList<UsuarioModel> userList;
 	
 	public BuscarUsuario() {
+		model = new DefaultTableModel(new String[]{"Usuario","Perfil"}, 0);
 		updateComp(new String[] {"Usuario"});
+		table.getColumnModel().getColumn(0).setPreferredWidth(210);
+		table.getColumnModel().getColumn(1).setPreferredWidth(210);
 		userReturn = null;
-		//String colunas[]={"Usuario","Perfil"};
-		//model = new DefaultTableModel(colunas,0);
-		System.out.println("Construtor");
 	}
 
 	protected void buscar() {

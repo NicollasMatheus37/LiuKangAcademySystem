@@ -9,6 +9,9 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import org.postgresql.util.GT;
+
 import dao.UsuarioDAO;
 import model.UsuarioModel;
 
@@ -90,7 +93,9 @@ public class Usuarios extends MasterDialogCad {
 			JOptionPane.showMessageDialog(null, "Tamanho minimo para os campos de 5 caracteres!");
 			return false;
 		}
-		else if(JTConfSenha.getText().equals(JTSenha.getText())) {
+		else if(JTConfSenha.getText().trim().equals(JTSenha.getText().trim())) {
+			System.out.println(JTConfSenha.getText());
+			System.out.println(JTSenha.getText());
 			JOptionPane.showMessageDialog(null, "Senhas não coincidem!");
 			return false;
 		}

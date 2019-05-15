@@ -10,6 +10,13 @@ public class GraduacaoModel {
 		clean();
 	}
 	
+	public GraduacaoModel(GraduacaoModel graduacaoModel) {
+		
+		modalidade = graduacaoModel.getModalidade();
+		graduacao = graduacaoModel.getGraduacao();
+		
+	}
+	
 	public void clean() {
 		modalidade = "";
 		graduacao = "";

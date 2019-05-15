@@ -123,22 +123,22 @@ public class ModalidadesGraduacoes extends MasterDialogCad {
 	protected boolean actionCancel() {
 		try {
 			if(modalidadeChange!=null) {
-				if(!isInserting) {
-					modalidadeChange = modalidade;
-					graduacoesChange = graduacoes;					
-				}else {
+				if(isInserting) {
 					modalidade = null;
-					modalidadeChange = null;
-					graduacao = null;
-					graduacoes = null;			
-					graduacoesChange =null;
-					model.setRowCount(0);					
-				}				
+					graduacoes = null;
+					graduacao = null;	
+					//modalidadeChange = modalidade;
+					//graduacoesChange = graduacoes;					
+				}
+				modalidadeChange = null;	
+				graduacoesChange =null;
+				model.setRowCount(0);					
+				return true;
 			}
-			return true;
 		} catch (Exception e) {
 			return false;
 		}
+		return false;
 	}
 
 	protected boolean actionAdd() {
@@ -159,21 +159,20 @@ public class ModalidadesGraduacoes extends MasterDialogCad {
 	protected void fillFields() {
 
 		txtModalidade.setText(modalidade.getModalidade());
+		modalidadeChange = new ModalidadeModel(modalidade);
+		
 		findGrad();
-
-		modalidadeChange = modalidade;
-
 	}
 
 	private void findGrad() {
 		try {
 			if(!modalidade.getModalidade().trim().isEmpty()) {
 				graduacoes = graduacaoDAO.getAllGraduacoes(modalidade.getModalidade());				
-				graduacoesChange = graduacoes;				
+				graduacoesChange = graduacoes;
+				fillTable();
 			}
 		} catch (SQLException e) {
-		}
-		fillTable();		
+		}		
 	}
 
 	private void fillTable() {
@@ -193,12 +192,12 @@ public class ModalidadesGraduacoes extends MasterDialogCad {
 
 			public void focusLost(FocusEvent e) {
 				if(!e.isTemporary()) {
-					if(modalidade!=null) {
+					/*if(modalidade!=null) {
 						if(modalidade.getModalidade().trim().equals(txtModalidade.getText().trim())) {
 							return;
 						}
-					}
-					modalidade.setModalidade(txtModalidade.getText());
+					}*/
+					modalidadeChange.setModalidade(txtModalidade.getText());
 					//model.setRowCount(0);
 					//graduacao = new GraduacaoModel();
 				}
