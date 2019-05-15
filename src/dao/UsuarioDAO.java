@@ -5,10 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.naming.spi.DirStateFactory.Result;
 
 import database.ConnectionFactory;
+import model.AlunoModel;
 import model.FaturaMatriculaModel;
 import model.UsuarioModel;
 
@@ -25,31 +27,33 @@ public class UsuarioDAO extends BaseDAO {
 	
 	private String is_drop_role		=	"drop	role		?1";
 	
-	public ArrayList<UsuarioModel> getAllUsuarios() throws SQLException{
+	private PreparedStatement pre_create_role;
+	private PreparedStatement pre_drop_role;
+	private PreparedStatement pre_alter_role;
+	
+
+	
+	public ArrayList<UsuarioModel> getAllUsuarios() throws SQLException {
 		ResultSet result = null;
 		result = this.select("*")
-			.from("usuario")
-			.apply();
-		
-		result.first();
-		
+				.from("usuarios")
+				.apply();
 		ArrayList<UsuarioModel> usuarioList = new ArrayList<UsuarioModel>();
-		while((result.getRow() != 0) && (!result.isAfterLast())) {
+		while(result.next()) {
 			usuarioList.add(new UsuarioModel()
-					
-					.setPerfil(result.getString("perfil"))
 					.setUsuario(result.getString("usuario"))
+					.setPerfil(result.getString("perfil"))
 					);
-					result.next();
-					}
-					return usuarioList;
+
+		}
+		return usuarioList;
 	}
 	
-	public UsuarioModel getOneUsuario(Integer id) throws SQLException{
+	public UsuarioModel getOneUsuario(String Usuario) throws SQLException{
 		ResultSet result = null;
 		result = this.select("*")
-			.from("usuario")
-			.where("id", "=", id.toString())
+			.from("usuarios")
+			.where("usuario", "=", Usuario)
 			.apply();
 		
 		UsuarioModel usuario = new UsuarioModel();
@@ -58,72 +62,58 @@ public class UsuarioDAO extends BaseDAO {
 	}
 	
 	public void createUsuario(UsuarioModel usuario) throws SQLException{
-		String fields = "perfil, usuario, senha";
-		this.insertInto("usuario", fields)
-		.values(
-				usuario.getPerfil()+","+
-				usuario.getUsuario()
+		String fields = "usuario, perfil";
+		this.insertInto("usuarios", fields)
+		.values("'"+
+				usuario.getUsuario()+"','"+
+				usuario.getPerfil()+"'"
 				)
 		.commit();
 	}
 	
 	public void updateUsuario(UsuarioModel usuario) throws SQLException{
-		this.update("usuario")
+		this.update("usuarios")
 		.setValue(
-				"perfil = "+usuario.getPerfil()+
-				"usuario = "+usuario.getUsuario()
-				)
+				"usuario = '"+usuario.getUsuario()+"' "+
+						", perfil = '"+usuario.getPerfil()+"' "
+						)
+		.where("usuario", "=", usuario.getUsuario())
 		.commit();
 	}
 	
-	public void deleteUsuario(Integer id) throws SQLException{
+	public void deleteUsuario(UsuarioModel user) throws SQLException{
 		this.delete()
-		.from("usuario")
-		.where("id", "=", id.toString())
+		.from("usuarios")
+		.where("usuario", "=", user.getUsuario())
 		.commit();
 	}
 	
  	public void create_role(UsuarioModel usuario) throws SQLException {
-		ResultSet result = null;
-		is_create_role = is_create_role.replace(usuario.getUsuario(), usuario.getSenha());
-		result = this.customSql(is_create_role).excecuteQuery();		
+ 		
+		UsuarioModel user = usuario;
+		is_create_role  = is_create_role.replace("?1", user.getUsuario()).replace("?2", user.getSenha());
+		pre_create_role = conn.prepareStatement(is_create_role);
+		pre_create_role.execute();
+ 		System.out.println("passou create_role");
+
+ 		
 	}
  	
- 	public void update_role(UsuarioModel usuario) throws SQLException {
-		ResultSet result = null;
-		is_alter_role = is_alter_role.replace(usuario.getUsuario(), usuario.getPerfil());
-		result = this.customSql(is_alter_role).excecuteQuery();		
+ 	public void alter_role(UsuarioModel usuario) throws SQLException {
+ 		UsuarioModel user = usuario;
+		is_alter_role = is_alter_role.replace("?1", user.getUsuario()).replace("?2", user.getPerfil());
+		pre_alter_role = conn.prepareStatement(is_alter_role);
+		pre_alter_role.execute();
 	}
  	
  	public void drop_role(UsuarioModel usuario) throws SQLException {
-		ResultSet result = null;
-		is_drop_role = is_drop_role.replace("?1", usuario.getUsuario());
-		result = this.customSql(is_drop_role).excecuteQuery();		
+ 		UsuarioModel user = usuario;
+		is_drop_role = is_drop_role.replace("?1", user.getUsuario());
+		pre_drop_role = conn.prepareStatement(is_drop_role);
+		pre_drop_role.execute();
 	}
  	
- 	public boolean userLogin(String login, String senha) {
- 		Connection con = ConnectionFactory.getConnection("master", "admin", "admin");
- 		boolean verify = false;
- 		PreparedStatement stm = null;
- 		ResultSet rs = null;
- 		
- 		try {
-			stm = con.prepareStatement("SELECT * FROM usuario WHERE login = ? and senha = ?");
-			stm.setString(1, login);
-			stm.setString(2, senha);
-			
-			rs = stm.executeQuery();
-			
-			if(rs.next()) {
-				verify = true;
-			}
- 			
-		} catch (Exception e) {
-			// TODO: handle exception
-		} 
- 		
- 		return verify;
- 	}
+
 
 
 }

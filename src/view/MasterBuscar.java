@@ -17,6 +17,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
 import dao.AlunoDAO;
+import dao.UsuarioDAO;
 
 @SuppressWarnings("serial")
 public class MasterBuscar extends JFrame {
@@ -24,7 +25,7 @@ public class MasterBuscar extends JFrame {
 	protected JTextField jTxtBusca;
 	private JButton btnOk;
 	protected JTable table;	
-	protected AlunoDAO alunoDao; 
+	protected AlunoDAO alunoDao;
 	protected Utils utils;
 	protected DefaultTableModel model;
 	
@@ -67,7 +68,6 @@ public class MasterBuscar extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				buscar();
 
 			}
@@ -107,7 +107,7 @@ public class MasterBuscar extends JFrame {
 	}	
 
 	protected void InsertRow(String str1, String str2) {
-		if(str2.trim().isEmpty()) {
+		if(/*str2.trim().isEmpty()*/1==1) {
 			model.addRow(new String[]{str1});
 		}else {
 			model.addRow(new String[]{str1,str2});

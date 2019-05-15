@@ -37,11 +37,8 @@ public class CadastroAlunos extends MasterDialogCad {
 	private AlunoModel aluno, alunoChange;
 	private BuscarAluno busca;
 	private boolean isFillingCombos;
-
-
-
-	public CadastroAlunos() throws ParseException {
-
+	
+	private void create() {
 		alunoDao = new AlunoDAO();
 		cidadeDAO = new CidadeDAO();
 
@@ -59,7 +56,25 @@ public class CadastroAlunos extends MasterDialogCad {
 		}finally {
 			isFillingCombos = false;
 		}
+	}
 
+	public CadastroAlunos() throws ParseException {
+
+		create();
+
+	}
+	
+	public CadastroAlunos(AlunoModel preAluno) {
+		
+		create();
+		
+		aluno = preAluno;
+		clean();
+		fillFields();
+		isInserting = false;
+		setFieldsEnabled(false);
+		utils.setComponentsEnabled(toolbar.getComponents(), false);
+		
 	}
 
 	protected boolean actionDelete() {
@@ -400,6 +415,7 @@ public class CadastroAlunos extends MasterDialogCad {
 		getContentPane().add(Obs);
 
 		ComboPais = new JComboBox<>();
+		ComboPais.addItem("-Selecione-");
 		ComboPais.addFocusListener(new FocusAdapter() {
 
 			public void focusLost(FocusEvent e) {
@@ -430,6 +446,7 @@ public class CadastroAlunos extends MasterDialogCad {
 		getContentPane().add(ComboPais);
 
 		ComboEstado = new JComboBox<>();
+		ComboEstado.addItem("-Selecione-");
 		ComboEstado.addFocusListener(new FocusAdapter() {
 
 			public void focusLost(FocusEvent e) {
@@ -461,6 +478,7 @@ public class CadastroAlunos extends MasterDialogCad {
 		getContentPane().add(ComboEstado);
 
 		ComboCidade = new JComboBox<>();
+		ComboCidade.addItem("-Selecione-");
 		ComboCidade.addFocusListener(new FocusAdapter() {
 
 			public void focusLost(FocusEvent e) {

@@ -3,16 +3,24 @@ package dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import model.FaturaMatriculaModel;
-import model.MatriculaModel;
 
 public class FaturaMatriculaDAO extends BaseDAO {
 	
-	public ArrayList<FaturaMatriculaModel> getAllFaturasMatriculas() throws SQLException{
+	public ArrayList<FaturaMatriculaModel> getAllFaturasMatriculas(Integer matricula) throws SQLException{
 		ResultSet result = null;
-		result = this.select("*")
-			.from("faturas_matriculas")
-			.apply();
+		if(matricula > 0) {
+			result = this.select("*")
+					.from("faturas_matriculas")
+					.apply();
+		}else {
+			result = this.select("*")
+					.from("faturas_matriculas")
+					.where("codigo_matricula", "=", matricula.toString())
+					.apply();
+			
+		}
 		
 		ArrayList<FaturaMatriculaModel> faturaMatriculaList = new ArrayList<FaturaMatriculaModel>();
 		while(result.next()) {
@@ -30,11 +38,13 @@ public class FaturaMatriculaDAO extends BaseDAO {
 					return faturaMatriculaList;
 	}
 	
-	public FaturaMatriculaModel getOneFaturaMatricula(Integer id) throws SQLException{
+	public FaturaMatriculaModel getOneFaturaMatricula(Integer matricula, String vencimento) throws SQLException{
 		ResultSet result = null;
 		result = this.select("*")
 			.from("faturas_matriculas")
-			.where("id", "=", id.toString())
+			.filter("codigo_matricula", "=", matricula.toString())
+			.filter("data_vencimento", "=", quoteStr(vencimento))
+			.where()
 			.apply();
 		
 		FaturaMatriculaModel faturaMatricula = new FaturaMatriculaModel();
@@ -47,14 +57,15 @@ public class FaturaMatriculaDAO extends BaseDAO {
 	}
 	
 	public void createFaturaMatricula(FaturaMatriculaModel faturaMatricula) throws SQLException{
-		String fields = "codigo_matricula, data_vencimento, valor, data_pagamento, data_cancelamento";
+		String fields = "codigo_matricula, data_vencimento, valor, data_pagamento, data_cancelamento, situacao";
 		this.insertInto("faturas_matriculas", fields)
 		.values(
 				Integer.toString(faturaMatricula.getCodigoMatricula())+","+
-				faturaMatricula.getDataVencimento()+","+
+				quoteStr(faturaMatricula.getDataVencimento())+","+
 				Float.toString(faturaMatricula.getValor())+","+
-				faturaMatricula.getDataPagamento()+","+
-				faturaMatricula.getDataCancelamento()
+				quoteStr(faturaMatricula.getDataPagamento())+","+
+				quoteStr(faturaMatricula.getDataCancelamento())+","+
+				quoteStr(faturaMatricula.getSituacao())
 				)
 		.commit();
 	}
@@ -63,19 +74,22 @@ public class FaturaMatriculaDAO extends BaseDAO {
 		this.update("faturas_matriculas")
 		.setValue(
 				  "codigo_matricula = "+faturaMatricula.getCodigoMatricula()+
-				  "data_vencimento = "+faturaMatricula.getDataVencimento()+
+				  "data_vencimento = "+quoteStr(faturaMatricula.getDataVencimento())+
 				  "valor = "+faturaMatricula.getValor()+
-				  "data_pagamento = "+faturaMatricula.getDataPagamento()+
-				  "data_cancelamento = "+faturaMatricula.getDataCancelamento()				
+				  "data_pagamento = "+quoteStr(faturaMatricula.getDataPagamento())+
+				  "data_cancelamento = "+quoteStr(faturaMatricula.getDataCancelamento())+
+				  "situacao = "+quoteStr(faturaMatricula.getSituacao())
 				 )
 		.where("id", "=", id.toString())
 		.commit();
 	}
 	
-	public void deleteFaturaMatricula(Integer id) throws SQLException{
+	public void deleteFaturaMatricula(Integer matricula, String vencimento) throws SQLException{
 		this.delete()
 		.from("faturas_matriculas")
-		.where("id", "=", id.toString())
+		.filter("codigo_matricula", "=", matricula.toString())
+		.filter("data_vencimento", "=", quoteStr(vencimento))
+		.where()
 		.commit();
 	}
 	

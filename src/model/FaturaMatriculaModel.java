@@ -1,8 +1,6 @@
 package model;	
 
- import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import java.util.Date;	
 
  public class FaturaMatriculaModel {	
@@ -12,6 +10,7 @@ import java.util.Date;
 	private float valor;	
 	private Date dataPagamento;	
 	private Date dataCancelamento;	
+	private String situacao;
 
 
 
@@ -24,7 +23,11 @@ import java.util.Date;
 		return this;
 	}		
 
- 	public Date getDataVencimento() {	
+ 	public String getDataVencimento() {	
+		return new SimpleDateFormat("dd/MM/yyyy").format(dataVencimento);	
+	}	
+ 	
+ 	public Date getDataVencimentoDate() {	
 		return dataVencimento;	
 	}	
 
@@ -41,8 +44,12 @@ import java.util.Date;
 		this.valor = valor;	
 		return this;
 	}	
+ 	
+ 	public String getDataPagamento() {	
+		return new SimpleDateFormat("dd/MM/yyyy").format(dataPagamento);	
+	}
 
- 	public Date getDataPagamento() {	
+ 	public Date getDataPagamentoDate() {	
 		return dataPagamento;	
 	}	
 
@@ -50,14 +57,27 @@ import java.util.Date;
 		this.dataPagamento = data_pagamento;	
 		return this;
 	}	
+ 	
+ 	public String getDataCancelamento() {	
+		return  new SimpleDateFormat("dd/MM/yyyy").format(dataCancelamento);	
+	}
 
- 	public Date getDataCancelamento() {	
+ 	public Date getDataCancelamentoDate() {	
 		return dataCancelamento;	
 	}	
 
  	public FaturaMatriculaModel setDataCancelamento(Date data_cancelamento) {	
 		this.dataCancelamento = data_cancelamento;	
 		return this;
+ 	}
+ 	
+ 	public String getSituacao() {
+ 		return situacao;
+ 	}
+ 	
+ 	public FaturaMatriculaModel setSituacao(String situacao) {
+ 		this.situacao = situacao;
+ 		return this;
  	}
  	
 

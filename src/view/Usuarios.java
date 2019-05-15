@@ -1,11 +1,13 @@
 package view;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.sql.SQLException;
 import java.text.ParseException;
 
 import javax.swing.JComboBox;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import dao.UsuarioDAO;
 import model.UsuarioModel;
@@ -13,11 +15,12 @@ import model.UsuarioModel;
 @SuppressWarnings("serial")
 public class Usuarios extends MasterDialogCad {
 	
-	private JLabel Usuario, Senha, ConfSenha, Perfil;
+	private JLabel lbUsuario, lbSenha, lbConfSenha, lbPerfil;
 	private JComboBox<String> ComboPerfil;
 	private JTextField JTUsuario, JTSenha, JTConfSenha;
 	private UsuarioDAO usuarioDao;
 	private UsuarioModel usuario, usuarioChange;
+	private BuscarUsuario busca;
 	
 
 	public Usuarios() throws ParseException{
@@ -34,7 +37,7 @@ public class Usuarios extends MasterDialogCad {
 
 	}
 	
-	/*protected boolean actionDelete() {
+	protected boolean actionDelete() {
 		if((usuario!=null) && (!isInserting)) {
 			try {
 				usuarioDao.deleteUsuario(usuarioChange);
@@ -45,7 +48,7 @@ public class Usuarios extends MasterDialogCad {
 		}else {
 			return false;
 		}
-	}*/
+	}
 
 	protected boolean actionAdd() {
 		if(!isInserting) {
@@ -61,28 +64,52 @@ public class Usuarios extends MasterDialogCad {
 	}
 
 	protected void actionSearch() {
-		
+		busca = new BuscarUsuario();
+		try {						
+			busca.addWindowListener(eventWindowSearchClosed);				
+		} catch (Exception e2) {
+			busca = null;
+		}
 	}
+	
+	protected boolean afterSearch() {
+		if(busca.userReturn!=null) {
+			usuario = busca.userReturn;
+			return true;
+		}
+		return false;
+	}
+	
 
 	protected boolean actionSave() {
-		if(usuarioChange!=null) {
-			try {
+		if(usuarioChange==null || JTSenha.getText().isEmpty() || JTConfSenha.getText().isEmpty() || JTUsuario.getText().isEmpty() || ComboPerfil.getSelectedItem().equals("--Selecione--")) {
+			JOptionPane.showMessageDialog(null, "Há Campos Vazios!");
+			return false;
+		}
+		else if(JTConfSenha.getText().length()<5 || JTSenha.getText().length()<5 || JTUsuario.getText().length()<5 ) {
+			JOptionPane.showMessageDialog(null, "Tamanho minimo para os campos de 5 caracteres!");
+			return false;
+		}
+		else if(JTConfSenha.getText().equals(JTSenha.getText())) {
+			JOptionPane.showMessageDialog(null, "Senhas não coincidem!");
+			return false;
+		}
+		else {	try {
 				if(isInserting) {
-					usuarioDao.drop_role(usuarioChange);
-					usuarioDao.create_role(usuarioChange);
 					usuarioDao.createUsuario(usuarioChange);
+					//usuarioDao.drop_role(usuarioChange);
+					usuarioDao.create_role(usuarioChange);
 				}else {
-					usuarioDao.drop_role(usuarioChange);
-					usuarioDao.update_role(usuario);
 					usuarioDao.updateUsuario(usuarioChange);
+					usuarioDao.drop_role(usuarioChange);
+					//usuarioDao.alter_role(usuarioChange);
+					System.out.println("passou aqui2");
 				}
 				return true;
 			}catch (Exception e) {
 				return false;
 			}
-		}else {
-			return false;
-		}
+	}
 	}
 
 	protected boolean actionCancel() {
@@ -151,21 +178,23 @@ public class Usuarios extends MasterDialogCad {
 		ComboPerfil.setBounds(110, 140, 200, 26);
 		getContentPane().add(ComboPerfil);
 	
-		Usuario = new JLabel("Usuário:");
-		Usuario.setBounds(10, 10, 100, 100);
-		getContentPane().add(Usuario);
+		lbUsuario = new JLabel("Usuário:");
+		lbUsuario.setBounds(10, 10, 100, 100);
+		getContentPane().add(lbUsuario);
 
-		Senha = new JLabel("Senha:");
-		Senha.setBounds(10, 40, 50, 100);
-		getContentPane().add(Senha);
+		lbSenha = new JLabel("Senha:");
+		lbSenha.setBounds(10, 40, 50, 100);
+		getContentPane().add(lbSenha);
 
-		ConfSenha = new JLabel("Confirmar Senha:");
-		ConfSenha.setBounds(10, 70, 200, 100);
-		getContentPane().add(ConfSenha);
+		lbConfSenha = new JLabel("Confirmar Senha:");
+		lbConfSenha.setBounds(10, 70, 200, 100);
+		getContentPane().add(lbConfSenha);
 
-		Perfil = new JLabel("Perfil:");
-		Perfil.setBounds(10, 100, 110, 100);
-		getContentPane().add(Perfil);
+		lbPerfil = new JLabel("Perfil:");
+		lbPerfil.setBounds(10, 100, 110, 100);
+		getContentPane().add(lbPerfil);
+		
+
 		
 		childContainer = getContentPane();
 	}
