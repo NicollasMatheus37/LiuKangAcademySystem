@@ -6,7 +6,11 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -188,51 +192,54 @@ public class BackupRestore extends JInternalFrame{
     }      
 
     public void Backup() throws IOException, InterruptedException{      
-        final ArrayList<String> comandos = new ArrayList<String>();      
-          
+        List<String> comandos = new ArrayList<String>();     
+             comandos.add(dirArquivo);
+      
+                    comandos.add("-h");      
+                    comandos.add("localhost");
+                    comandos.add("-p");      
+                    comandos.add("5432");      
+                    comandos.add("-U");      
+                    comandos.add("postgres");      
+                    comandos.add("-F");      
+                    comandos.add("c");      
+                    comandos.add("-b");      
+                    comandos.add("-v");      
+                    comandos.add("-f"); 
 
-        comandos.add(dirArquivo);  
-        comandos.add("-i");      
-        comandos.add("-h");      
-        comandos.add("localhost");
-        comandos.add("-p");      
-        comandos.add("5432");      
-        comandos.add("-U");      
-        comandos.add("admin");      
-        comandos.add("-F");      
-        comandos.add("c");      
-        comandos.add("-b");      
-        comandos.add("-v");      
-        comandos.add("-f");      
-          
-        comandos.add(dirDestino);
-        comandos.add("BackupBanco");      
-        ProcessBuilder pb = new ProcessBuilder(comandos);      
-          
-        pb.environment().put("PGPASSWORD", "admin");
-          
-        try {      
-            final Process process = pb.start();      
-      
-            final BufferedReader r = new BufferedReader(      
-                new InputStreamReader(process.getErrorStream()));      
-            String line = r.readLine();      
-            while (line != null) {      
-            System.err.println(line);      
-            line = r.readLine();      
-            }      
-            r.close();      
-      
-            process.waitFor();    
-            process.destroy(); 
-            JOptionPane.showMessageDialog(null,"backup realizado com sucesso.");  
-      
-        } catch (IOException e) {      
-            e.printStackTrace();      
-        } catch (InterruptedException ie) {      
-            ie.printStackTrace();      
-        }         
-            
-    }      
+                    comandos.add(dirDestino);       
+                    ProcessBuilder pb = new ProcessBuilder(comandos);      
+
+                    //pb.environment().put("PGPASSWORD", "admin");              
+
+                    try {      
+                        Process process = pb.start();  
+
+
+                        BufferedReader r = new BufferedReader(      
+                            new InputStreamReader(process.getErrorStream()));      
+                        String line = r.readLine();      
+                        while (line != null) {      
+                        System.err.println(line);      
+                        line = r.readLine();      
+                        }      
+                        r.close();      
+
+                        process.waitFor();    
+                        process.destroy(); 
+                        JOptionPane.showMessageDialog(null,"backup realizado com sucesso.");  
+
+                    } catch (IOException e) {      
+                        e.printStackTrace();      
+                    } catch (InterruptedException ie) {      
+                        ie.printStackTrace();      
+                    } 
+  }
+    
+    private String getDateTime() {
+        DateFormat dateFormat = new SimpleDateFormat("ddMMyyyy HHmm");
+        Date date = new Date();
+        return dateFormat.format(date);
+    } 
 
 }

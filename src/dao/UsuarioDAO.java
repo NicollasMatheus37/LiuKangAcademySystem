@@ -69,23 +69,22 @@ public class UsuarioDAO extends BaseDAO {
 				usuario.getPerfil()+"'"
 				)
 		.commit();
-
 	}
 	
 	public void updateUsuario(UsuarioModel usuario) throws SQLException{
 		this.update("usuarios")
 		.setValue(
-				"perfil = '"+usuario.getPerfil()+"' "+
-						", usuario = '"+usuario.getUsuario()+"' "
+				"usuario = '"+usuario.getUsuario()+"' "+
+						", perfil = '"+usuario.getPerfil()+"' "
 						)
 		.where("usuario", "=", usuario.getUsuario())
 		.commit();
 	}
 	
-	public void deleteUsuario(Integer id) throws SQLException{
+	public void deleteUsuario(UsuarioModel user) throws SQLException{
 		this.delete()
 		.from("usuarios")
-		.where("id", "=", id.toString())
+		.where("usuario", "=", user.getUsuario())
 		.commit();
 	}
 	

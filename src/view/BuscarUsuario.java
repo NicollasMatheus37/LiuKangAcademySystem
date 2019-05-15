@@ -33,6 +33,7 @@ public class BuscarUsuario extends MasterBuscar {
 
 					if(utils.containsIgnoreCase(userList.get(i).getUsuario(), jTxtBusca.getText())) {						
 						InsertRow((userList.get(i).getUsuario()), userList.get(i).getPerfil());
+						System.out.println("id:" + userList.get(i).getidUsuario());
 					}else {
 						userList.remove(i);
 						i--;

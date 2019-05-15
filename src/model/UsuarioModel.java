@@ -5,6 +5,7 @@ package model;
  	private String usuario;		
 	private String perfil;
 	private String senha;
+	private int idUsuario;
 
 	public UsuarioModel(){
 		clean();
@@ -14,6 +15,14 @@ package model;
 		setUsuario("");
 		setSenha("");
 		setPerfil("");
+	}
+	
+	public int getidUsuario() {
+		return idUsuario;
+	}
+	public UsuarioModel setidUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;	
+		return this;
 	}
 	
  	public String getUsuario() {	
