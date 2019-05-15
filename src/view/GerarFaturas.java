@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Dimension;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -34,6 +35,12 @@ public class GerarFaturas extends JInternalFrame {
 
 	}
 
+	public void setPosicao() {
+		
+		Dimension d = this.getDesktopPane().getSize();
+	    this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
+	}
+	
 	public void createComponents() {
 
 		data = new BaseMonthChooser();

@@ -1,5 +1,6 @@
 package view;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -65,6 +66,12 @@ public class ModalidadesGraduacoes extends MasterDialogCad {
 
 	}
 
+	public void setPosicao() {
+		
+		Dimension d = this.getDesktopPane().getSize();
+	    this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
+	}	
+	
 	protected boolean actionDelete() {
 		try {
 			graduacaoDAO.deleteGraduacoes(oldModalidade);

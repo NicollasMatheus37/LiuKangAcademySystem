@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -53,7 +54,7 @@ public class AdicionarModalidades extends JDialog {
 		setVisible(true);
 
 	}
-
+	
 	public void createComponents() {
 
 		JComboMod = new JComboBox<String>();

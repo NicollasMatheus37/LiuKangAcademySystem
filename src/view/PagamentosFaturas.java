@@ -1,5 +1,6 @@
 package view;
 import java.awt.Color;
+import java.awt.Dimension;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -34,6 +35,12 @@ public class PagamentosFaturas extends JInternalFrame {
 
 	}
 
+	public void setPosicao() {
+		
+		Dimension d = this.getDesktopPane().getSize();
+	    this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
+	}
+	
 	public void createComponnents() {
 
 		De = new JLabel("De:");
@@ -57,7 +64,7 @@ public class PagamentosFaturas extends JInternalFrame {
 		getContentPane().add(JTAte);
 
 		btnPesq = new JButton("Pesquisar");
-		btnPesq.setBounds(560, 5, 110, 35);
+		btnPesq.setBounds(560, 10, 110, 26);
 		getContentPane().add(btnPesq);
 
 		JComboSituacao = new JComboBox<String>();

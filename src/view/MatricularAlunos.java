@@ -1,5 +1,6 @@
 package view;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -53,7 +54,7 @@ public class MatricularAlunos extends MasterDialogCad {
 	private MatriculaModalidadeDAO matModalidadeDAO;
 
 	private AlunoDAO alunoDAO;		
-
+	
 	private void create() {
 
 		matriculaDAO = new MatriculaDAO();
@@ -70,6 +71,13 @@ public class MatricularAlunos extends MasterDialogCad {
 
 	}
 
+	public void setPosicao() {
+		
+		Dimension d = this.getDesktopPane().getSize();
+	    this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
+	}
+	
+	
 	public MatricularAlunos() {
 
 		create();
@@ -245,7 +253,7 @@ public class MatricularAlunos extends MasterDialogCad {
 		JTMat = new JTextField();
 		JTMat.setName("ignore");
 		JTMat.setEnabled(false);
-		JTMat.setBounds(135, 50, 250, 26);
+		JTMat.setBounds(100, 56, 250, 26);
 		getContentPane().add(JTMat);
 
 		JTCodigoAluno = new JTextField();
@@ -260,7 +268,7 @@ public class MatricularAlunos extends MasterDialogCad {
 		});
 
 
-		JTCodigoAluno.setBounds(135, 80, 115, 26);
+		JTCodigoAluno.setBounds(100, 86, 115, 26);
 		JTCodigoAluno.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_F9) {
@@ -286,7 +294,7 @@ public class MatricularAlunos extends MasterDialogCad {
 		JTAluno = new JTextField();
 		JTAluno.setName("ignore");
 		JTAluno.setEnabled(false);
-		JTAluno.setBounds(255, 80, 435, 26);
+		JTAluno.setBounds(220, 86, 450, 26);
 		getContentPane().add(JTAluno);		
 
 		try {
@@ -305,7 +313,7 @@ public class MatricularAlunos extends MasterDialogCad {
 					}
 				}
 			});
-			JTDataMat.setBounds(135, 110, 120, 26);
+			JTDataMat.setBounds(100, 116, 115, 26);
 			getContentPane().add(JTDataMat);
 
 			JTDataFat = new JTextField();
@@ -316,7 +324,7 @@ public class MatricularAlunos extends MasterDialogCad {
 					}
 				}
 			});
-			JTDataFat.setBounds(615, 110, 55, 26);
+			JTDataFat.setBounds(615, 116, 55, 26);
 			getContentPane().add(JTDataFat);		
 
 		} catch (ParseException e1) {
@@ -371,19 +379,19 @@ public class MatricularAlunos extends MasterDialogCad {
 		tableMod.getTableHeader().setEnabled(false);
 
 		lblMatricula = new JLabel("Matricula:");
-		lblMatricula.setBounds(10, 10, 100, 100);
+		lblMatricula.setBounds(40, 20, 100, 100);
 		getContentPane().add(lblMatricula);
 
 		lblAluno = new JLabel("Aluno:");
-		lblAluno.setBounds(10, 40, 150, 100);
+		lblAluno.setBounds(57, 50, 150, 100);
 		getContentPane().add(lblAluno);
 
 		lblDataMat = new JLabel("Data Matricula:");
-		lblDataMat.setBounds(10, 70, 200, 100);
+		lblDataMat.setBounds(12, 80, 200, 100);
 		getContentPane().add(lblDataMat);
 
 		lblDataFat = new JLabel("Dia de vencimento da fatura:");
-		lblDataFat.setBounds(450, 70, 200, 100);
+		lblDataFat.setBounds(450, 80, 200, 100);
 		getContentPane().add(lblDataFat);
 
 		childContainer = getContentPane();
