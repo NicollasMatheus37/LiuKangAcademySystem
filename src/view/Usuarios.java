@@ -1,4 +1,5 @@
 package view;
+import java.awt.Dimension;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.sql.SQLException;
@@ -38,6 +39,13 @@ public class Usuarios extends MasterDialogCad {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setVisible(true);
 
+	}
+	
+
+	public void setPosicao() {
+		
+		Dimension d = this.getDesktopPane().getSize();
+	    this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
 	}
 	
 	protected boolean actionDelete() {

@@ -78,8 +78,9 @@ public class Menu extends JFrame {
 					// TODO: handle exception
 					e.printStackTrace();
 				}
-				fUsuario.setVisible(true);
 				desktopPane.add(fUsuario);
+				fUsuario.setVisible(true);
+				fUsuario.setPosicao();
 			}
 		});
 
@@ -381,7 +382,6 @@ public class Menu extends JFrame {
 
 		setJMenuBar(menuBar);
 		setTitle("Liu Kang Academy System");
-		/* setSize(705, 600); */
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setLocationRelativeTo(null);
 		setBackground(null);
@@ -417,7 +417,7 @@ public class Menu extends JFrame {
 		fControleAlunos = new ControleAlunos(this);
 		desktopPane.add(fControleAlunos);
 		fControleAlunos.setVisible(true);
-		fControleAlunos.setPosicao();
+	/*	fControleAlunos.setPosicao();*/
 		
 	}
 
